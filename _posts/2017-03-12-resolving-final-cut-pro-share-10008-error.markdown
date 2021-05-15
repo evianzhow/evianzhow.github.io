@@ -2,6 +2,7 @@
 layout: post
 title: Resolve Final Cut Pro share 10008 error
 date: '2017-03-12 10:21:32'
+permalink: "/resolving-final-cut-pro-share-10008-error/"
 tags:
 - final-cut-pro
 ---

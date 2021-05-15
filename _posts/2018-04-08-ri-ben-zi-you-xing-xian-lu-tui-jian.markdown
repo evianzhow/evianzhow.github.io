@@ -2,6 +2,7 @@
 layout: post
 title: 日本自由行线路推荐
 date: '2018-04-08 14:45:43'
+permalink: "/ri-ben-zi-you-xing-xian-lu-tui-jian/"
 tags:
 - japan
 - travel

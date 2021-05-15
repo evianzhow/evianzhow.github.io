@@ -2,6 +2,7 @@
 layout: post
 title: All the terrible things in migrating to iOS 9
 date: '2015-09-14 10:54:45'
+permalink: "/all-the-terrible-things-in-migrating-to-ios-9/"
 ---
 
 I'm going to keep updating this post since these are so many changes in migrating your app to iOS 9. 

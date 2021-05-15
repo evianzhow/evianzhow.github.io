@@ -2,6 +2,7 @@
 layout: post
 title: 关于比亚迪云服务 App 逆向过程的经验
 date: '2017-06-08 04:40:30'
+permalink: "/guan-yu-bi-ya-di-yun-fu-wu-app-ni-xiang-guo-cheng-de-jing-yan/"
 tags:
 - ios
 - reverse-engineering

@@ -2,6 +2,7 @@
 layout: post
 title: 使用项目模板创建 React Native App
 date: '2018-05-16 09:33:51'
+permalink: "/build-react-native-apps-with-template/"
 tags:
 - react-native
 ---

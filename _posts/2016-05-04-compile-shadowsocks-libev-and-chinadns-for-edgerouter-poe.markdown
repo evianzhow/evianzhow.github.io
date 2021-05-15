@@ -2,6 +2,7 @@
 layout: post
 title: Compile shadowsocks-libev and ChinaDNS for EdgeRouter PoE
 date: '2016-05-04 15:09:29'
+permalink: "/compile-shadowsocks-libev-and-chinadns-for-edgerouter-poe/"
 tags:
 - edgerouter
 - shadowsocks

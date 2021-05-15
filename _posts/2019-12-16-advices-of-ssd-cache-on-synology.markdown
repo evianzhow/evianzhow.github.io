@@ -2,6 +2,7 @@
 layout: post
 title: The expected (and the correct) way to use SSD cache on Synology
 date: '2019-12-16 02:52:05'
+permalink: "/advices-of-ssd-cache-on-synology/"
 tags:
 - synology
 - nas

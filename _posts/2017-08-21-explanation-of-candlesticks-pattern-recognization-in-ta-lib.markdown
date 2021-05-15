@@ -2,6 +2,7 @@
 layout: post
 title: TA-Lib 中蜡烛图模式识别详解
 date: '2017-08-21 12:48:34'
+permalink: "/explanation-of-candlesticks-pattern-recognization-in-ta-lib/"
 tags:
 - ta-lib
 - candlesticks

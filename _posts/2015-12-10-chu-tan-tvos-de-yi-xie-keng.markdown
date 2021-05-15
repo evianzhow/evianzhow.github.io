@@ -2,6 +2,7 @@
 layout: post
 title: 初探 tvOS 的一些坑
 date: '2015-12-10 16:01:03'
+permalink: "/chu-tan-tvos-de-yi-xie-keng/"
 ---
 
 tvOS 是 Apple TV 4 Gen 之后搭载的操作系统，其源自于 iOS，和 iOS 共通一些 Framework，不仅如此，还提供了一种面向前端开发者更加友好的 [TVML](https://developer.apple.com/library/tvos/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/index.html) 来构建 Client-Server 结构的 TV App。使得开发人员甚至是不需要使用 Objective-C 或者 Swift 就可以利用 TVML 的 Template 构建一个看起来不错的 App。

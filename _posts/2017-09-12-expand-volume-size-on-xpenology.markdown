@@ -2,6 +2,7 @@
 layout: post
 title: How to correctly expand volume size on Xpenology
 date: '2017-09-12 02:39:24'
+permalink: "/expand-volume-size-on-xpenology/"
 tags:
 - esxi
 - xpenology

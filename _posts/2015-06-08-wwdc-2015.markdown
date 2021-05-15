@@ -2,6 +2,7 @@
 layout: post
 title: WWDC 2015
 date: '2015-06-08 01:32:04'
+permalink: "/wwdc-2015/"
 tags:
 - wwdc
 - apple

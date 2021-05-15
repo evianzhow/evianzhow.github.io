@@ -2,6 +2,7 @@
 layout: post
 title: 我读「因计算机而强大」
 date: '2020-01-06 15:08:43'
+permalink: "/i-read-mindstorms/"
 tags:
 - reading-notes
 ---

@@ -2,6 +2,7 @@
 layout: post
 title: React Native App 集成友盟页面统计
 date: '2018-08-13 15:52:00'
+permalink: "/react-native-app-umeng-integration/"
 tags:
 - react-native
 ---

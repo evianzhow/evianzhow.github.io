@@ -2,6 +2,7 @@
 layout: post
 title: 通过 usbmux 真机调试 React Native iOS App 的方法
 date: '2018-03-14 14:52:01'
+permalink: "/ios-connect-react-native-development-server-over-usb-like-android-adb-reverse/"
 tags:
 - ios
 - react-native

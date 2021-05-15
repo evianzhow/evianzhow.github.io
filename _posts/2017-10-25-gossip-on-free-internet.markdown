@@ -2,6 +2,7 @@
 layout: post
 title: 谈自由的互联网
 date: '2017-10-25 13:30:40'
+permalink: "/gossip-on-free-internet/"
 ---
 
 > 没有什么比「顺畅」地访问自由互联网世界更让我高兴的事情了。

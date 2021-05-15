@@ -2,6 +2,7 @@
 layout: post
 title: iOS 初级工程师的面试题
 date: '2015-06-21 07:38:26'
+permalink: "/-ge-ios-chu-ji-gong-cheng-shi-de-mian-shi-ti/"
 tags:
 - ios
 - interview

@@ -2,6 +2,7 @@
 layout: post
 title: 2017 年投资笔记
 date: '2017-12-24 09:24:54'
+permalink: "/2017-investment-notes/"
 tags:
 - financial
 - investment

@@ -2,6 +2,7 @@
 layout: post
 title: 在 OpenWRT 上编译 ss-server
 date: '2014-06-16 04:00:00'
+permalink: "/zai-openwrt-shang-bian-yi-ss-server/"
 tags:
 - openwrt
 ---

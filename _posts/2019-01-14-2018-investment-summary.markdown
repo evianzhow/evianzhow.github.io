@@ -2,6 +2,7 @@
 layout: post
 title: 2018 投资总结
 date: '2019-01-14 08:07:14'
+permalink: "/2018-investment-summary/"
 tags:
 - financial
 - investment

@@ -2,6 +2,7 @@
 layout: post
 title: Resolving Apache config problem after upgrading to OS X Server 5
 date: '2015-09-17 10:19:29'
+permalink: "/resolve-apache-config-problem-after-upgrading-to-os-x-server-5/"
 ---
 
 今天，Apple 在 Release iOS 9 的同时对 OS X Server 也更新到了正式版本 (5.0)，OS X Server 虽然拥有一大堆非常华丽的[宣传语](http://www.apple.com/osx/server/)，但是实际在工作环境中使用到它的情况却是不多的。其原因有二：

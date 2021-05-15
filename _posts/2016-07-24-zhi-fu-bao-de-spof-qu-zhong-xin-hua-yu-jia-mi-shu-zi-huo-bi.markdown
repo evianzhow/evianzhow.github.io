@@ -2,6 +2,7 @@
 layout: post
 title: 支付宝的 SPOF，去中心化与加密数字货币
 date: '2016-07-24 07:20:53'
+permalink: "/zhi-fu-bao-de-spof-qu-zhong-xin-hua-yu-jia-mi-shu-zi-huo-bi/"
 tags:
 - bitcoin
 - litecoin

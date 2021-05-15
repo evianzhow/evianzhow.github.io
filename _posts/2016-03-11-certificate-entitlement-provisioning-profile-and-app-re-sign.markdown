@@ -2,6 +2,7 @@
 layout: post
 title: Certificate, Entitlement, Provisioning Profile and App Re-sign
 date: '2016-03-11 05:40:15'
+permalink: "/certificate-entitlement-provisioning-profile-and-app-re-sign/"
 tags:
 - ios
 - cerificate

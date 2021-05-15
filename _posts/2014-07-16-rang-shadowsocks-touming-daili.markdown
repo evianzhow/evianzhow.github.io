@@ -2,6 +2,7 @@
 layout: post
 title: 让 ShadowSocks 透明代理与 Privoxy 一起工作
 date: '2014-07-16 04:00:00'
+permalink: "/rang-shadowsocks-touming-daili/"
 tags:
 - openwrt
 - shadowsocks

@@ -2,6 +2,7 @@
 layout: post
 title: 对金融产品和其衍生品的一些理解
 date: '2017-02-24 08:31:35'
+permalink: "/dui-jie-jin-rong-chan-pin-de/"
 tags:
 - financial
 - derivatives

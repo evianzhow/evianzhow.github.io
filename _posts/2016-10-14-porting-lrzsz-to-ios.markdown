@@ -2,6 +2,7 @@
 layout: post
 title: Porting lrzsz to iOS
 date: '2016-10-14 07:15:57'
+permalink: "/porting-lrzsz-to-ios/"
 tags:
 - ios
 - jailbreak

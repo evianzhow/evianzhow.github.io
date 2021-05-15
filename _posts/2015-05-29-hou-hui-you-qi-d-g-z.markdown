@@ -2,6 +2,7 @@
 layout: post
 title: 后会有期 D.G.Z
 date: '2015-05-29 07:27:32'
+permalink: "/hou-hui-you-qi-d-g-z/"
 ---
 
 今年二月份的时候，在一个比较巧的时间点，我收到了来自 D.G.Z 团队的实习机会，主要工作是 iOS / OS X 应用的相关开发，工作形式是 Remote。

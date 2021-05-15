@@ -2,6 +2,7 @@
 layout: post
 title: Xcode Server Integration
 date: '2015-05-19 14:57:07'
+permalink: "/xcode-server-integration/"
 tags:
 - xcode
 ---

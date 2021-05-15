@@ -2,6 +2,7 @@
 layout: post
 title: 使用 sniproxy 隐藏 SSL 握手时的域名以躲过 ISP 嗅探
 date: '2019-11-27 06:16:44'
+permalink: "/hide-your-domain-using-sniproxy/"
 tags:
 - https
 - isp

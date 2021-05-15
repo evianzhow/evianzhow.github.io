@@ -2,6 +2,7 @@
 layout: post
 title: "【译】关于个人财务管理的 833 字箴言"
 date: '2019-01-06 14:08:05'
+permalink: "/everything-you-need-to-know-about-personal-finance-in-833-words/"
 ---
 
 > 原文来源 [https://www.wsj.com/articles/simple-bedrock-rules-on-personal-finance-1423358434](https://www.wsj.com/articles/simple-bedrock-rules-on-personal-finance-1423358434)

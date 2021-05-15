@@ -2,6 +2,7 @@
 layout: post
 title: Apple Music like Navigation Bar
 date: '2015-07-18 12:32:25'
+permalink: "/apple-music-like-navigation-bar/"
 tags:
 - ios
 - apple-music

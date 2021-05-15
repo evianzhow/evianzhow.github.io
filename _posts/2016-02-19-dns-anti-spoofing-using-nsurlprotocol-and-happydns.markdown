@@ -2,6 +2,7 @@
 layout: post
 title: DNS Anti-spoofing using NSURLProtocol and HappyDNS
 date: '2016-02-19 16:00:54'
+permalink: "/dns-anti-spoofing-using-nsurlprotocol-and-happydns/"
 tags:
 - secpolicycreatessl
 - https

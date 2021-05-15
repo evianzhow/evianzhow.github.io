@@ -2,6 +2,7 @@
 layout: post
 title: Things you should know about using IBInspectable / IBDesignable
 date: '2015-10-14 15:38:29'
+permalink: "/things-you-should-know-about-using-ibinspectable-ibdesignable/"
 ---
 
 Thanks to NSHipster's article [IBInspectable / IBDesignable](http://nshipster.com/ibinspectable-ibdesignable/)

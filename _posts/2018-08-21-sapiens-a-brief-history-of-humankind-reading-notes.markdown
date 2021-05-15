@@ -2,6 +2,7 @@
 layout: post
 title: "「人类简史」读书笔记"
 date: '2018-08-21 11:46:59'
+permalink: "/sapiens-a-brief-history-of-humankind-reading-notes/"
 tags:
 - reading-notes
 ---

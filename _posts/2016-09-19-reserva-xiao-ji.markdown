@@ -2,6 +2,7 @@
 layout: post
 title: Reservá 小记
 date: '2016-09-19 12:47:58'
+permalink: "/reserva-xiao-ji/"
 tags:
 - app-tag
 ---

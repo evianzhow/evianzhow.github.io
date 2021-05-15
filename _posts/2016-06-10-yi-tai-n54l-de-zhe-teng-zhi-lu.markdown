@@ -2,6 +2,7 @@
 layout: post
 title: 一台 N54L 的折腾之旅
 date: '2016-06-10 16:49:45'
+permalink: "/yi-tai-n54l-de-zhe-teng-zhi-lu/"
 tags:
 - esxi
 - n54l

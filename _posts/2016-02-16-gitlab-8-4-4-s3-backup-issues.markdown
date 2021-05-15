@@ -2,6 +2,7 @@
 layout: post
 title: GitLab 8.4.4 S3 Backup Issues
 date: '2016-02-16 03:26:44'
+permalink: "/gitlab-8-4-4-s3-backup-issues/"
 ---
 
 According to https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/raketasks/backup_restore.md, GitLab currently use [Fog](https://github.com/fog/fog) gem to support many backup backends. Underlying is some issues which I met while setting up the Amazon S3 backup. 

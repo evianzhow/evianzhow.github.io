@@ -2,6 +2,7 @@
 layout: post
 title: OpenWRT 带来网络上的新生活
 date: '2015-05-22 18:04:46'
+permalink: "/openwrt-dai-lai-wang-luo-shang-de-xin-sheng-huo/"
 tags:
 - openwrt
 ---

@@ -2,6 +2,7 @@
 layout: post
 title: 在 OS X 应用中解析多重 vCard
 date: '2014-12-14 10:00:00'
+permalink: "/zai-os-x-ying-yong-zhong-jie-xi-duo-zhong-vcard/"
 tags:
 - os-x
 ---

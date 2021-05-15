@@ -2,6 +2,7 @@
 layout: post
 title: Some customizations to XLForm
 date: '2015-11-21 04:25:12'
+permalink: "/some-customization-to-xlform/"
 ---
 
 [XLForm](https://github.com/xmartlabs/XLForm) 是 [Xmartlabs](http://xmartlabs.com) 开源的一个 Form 组件，其设计的核心思想类似 HTML 中 Form 的编写方法，如果你对 HTML 中的表单不是很熟悉，可以看一下[这里](http://www.w3schools.com/html/html_forms.asp)。

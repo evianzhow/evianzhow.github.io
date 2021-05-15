@@ -2,6 +2,7 @@
 layout: post
 title: Export iCloud Keychain passwords to Chrome
 date: '2016-09-22 15:22:41'
+permalink: "/export-icloud-keychain-passwords-to-chrome/"
 tags:
 - icloud-keychain
 ---

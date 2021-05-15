@@ -3,6 +3,7 @@ layout: post
 title: 我和墙斗争的那些年
 featured: true
 date: '2019-11-26 05:46:51'
+permalink: "/days-with-gfw/"
 tags:
 - firewall
 - free-internet

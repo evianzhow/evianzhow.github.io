@@ -2,6 +2,7 @@
 layout: post
 title: 实时音视频：声网 v.s. 网易云信——调研报告
 date: '2019-07-18 08:36:04'
+permalink: "/real-time-communication-agora-vs-netease-im-report/"
 tags:
 - report
 - agora-io

@@ -2,6 +2,7 @@
 layout: post
 title: 一千种方法失败，一种方法成功
 date: '2019-04-16 14:30:32'
+permalink: "/1000-ways-to-failure-but-1-way-to-success/"
 tags:
 - daily
 ---

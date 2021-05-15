@@ -2,6 +2,7 @@
 layout: post
 title: 极光推送 react-native SDK 使用中遇到的问题记录
 date: '2018-03-26 07:05:02'
+permalink: "/traps-in-using-jpush-react-native/"
 tags:
 - react-native
 - ji-guang-tui-song

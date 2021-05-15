@@ -2,6 +2,7 @@
 layout: post
 title: 创业者的技能树
 date: '2016-12-26 07:17:28'
+permalink: "/chuang-ye-zhe-de-ji-neng-shu/"
 tags:
 - startup
 ---
