@@ -9,7 +9,7 @@ tags:
 
 下图是我在这一年半过程中，对创业所需的一些基本技能整理得出的**思维导图**，供大家参考和讨论。运营部分的内容由其他贡献者整理得出。
 
-![Startup Mindnode](https://static.evianzhow.com/startup_mindnode.png)
+![Startup Mindnode](/assets/img/archived/startup_mindnode.png)
 
 截取的图片可能偏小，也可以访问 [这个网址](https://www.mindmeister.com/732088066/_) 查看。
 

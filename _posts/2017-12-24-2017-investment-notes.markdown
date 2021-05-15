@@ -62,6 +62,6 @@ tags:
 
 进入市场的第一年，无论是收获还是收益我都已经满足了——至少没有亏钱。其中部分是因为坚持了对的理念，还有就是市场的整体情况还不错。18 年的经济形势怎么样，我觉得应该不容乐观，最近大宗商品期货价格的大涨，还有我们的周行长提到的「明斯基时刻」，都给我们敲响了警钟，带着质疑的心态去看待很多问题，而非盲目乐观与盲目悲观，这也是投资者必备的素质之一吧。
 
-![Stock Investment Mindnode](https://static.evianzhow.com/stock_investment_mindnode.png)
+![Stock Investment Mindnode](/assets/img/archived/stock_investment_mindnode.png)
 
 最后祝大家新年快乐。

@@ -219,6 +219,3 @@ exit 0
 脚本会检测 mentohust/ss-redir/ss-tunnel 中任意一个是否停止运行，如果停止则重启该服务。
 
 至此，我们的路由器算是完全改造成功了。现在你拥有了一台功能能够秒杀其他 99% 的路由器了，希望这能够给你的生活带来新的体验。
-
-如果本文对你有帮助的话，不妨可以请我喝一杯咖啡！ :)
-<img src="https://static.evianzhow.com/alipay.jpg" alt="austinchou0126@gmail.com" />

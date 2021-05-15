@@ -72,9 +72,6 @@ YouTube:
 
 回过头来，我们再看看 Apple 是用了什么黑科技来做呢？我们在一台越狱的设备上安装了 Reveal Loader。
 
-![Apple Music Navigation Bar](https://static.evianzhow.com/15.png)
+![Apple Music Navigation Bar](/assets/img/archived/15.png)
 
 是的，原来苹果的开发人员也会为了设计做各种各样的 Hack 呀！😄
-
-如果本文对你有帮助的话，不妨可以请我喝一杯咖啡！ :)
-<img src="https://static.evianzhow.com/alipay.jpg" alt="austinchou0126@gmail.com" />

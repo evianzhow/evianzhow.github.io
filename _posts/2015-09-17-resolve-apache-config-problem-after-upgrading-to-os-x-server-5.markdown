@@ -24,11 +24,11 @@ permalink: "/resolve-apache-config-problem-after-upgrading-to-os-x-server-5/"
 
 Before upgrading
 
-<img src="https://static.evianzhow.com/os_x_server_before.png" alt="Before upgrading" />
+![Before upgrading](/assets/img/archived/os_x_server_before.png)
 
 After upgrading
 
-<img src="https://static.evianzhow.com/os_x_server_after.png" alt="After upgrading" />
+![After upgrading](/assets/img/archived/os_x_server_after.png)
 
 简单解释一下 Proxy 这个文件夹是做什么的。我们都知道 OS X Server 中集成了非常多的服务，比如 Wiki、Xcode Server 等，而这些服务几乎都有 Web 页面。苹果在 OS X Server 5 中将这些 Web App 都做成了 Reserve Proxy 的形式，而 Proxy 文件夹正是保存这些 Reserve Proxy 配置文件的地方，按照 conf 的处理顺序，原来 Bind 443 端口的 GitLab 的处理顺序就会在这些 Web App 之后，所以无法被访问到。
 

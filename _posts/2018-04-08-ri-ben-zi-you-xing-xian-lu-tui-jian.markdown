@@ -17,7 +17,7 @@ tags:
 
 整体：大阪进，东京出
 
-![2014_japan_route_map](https://static.evianzhow.com/2014_japan_route_map.jpg)
+![2014_japan_route_map](/assets/img/archived/2014_japan_route_map.jpg)
 
 *图片仅代表整体路线规划，非真实行程，仅供参考！*
 
@@ -31,7 +31,7 @@ tags:
 
 整体：大阪进，大阪出
 
-![2015_japan_route_map](https://static.evianzhow.com/2015_japan_route_map.jpg)
+![2015_japan_route_map](/assets/img/archived/2015_japan_route_map.jpg)
 
 主要路线：京都、宇治、奈良、姬路、神户、大阪
 
@@ -44,7 +44,7 @@ tags:
 
 整体：大阪进，东京出
 
-![2018_japan_route_map](https://static.evianzhow.com/2018_japan_route_map.jpg)
+![2018_japan_route_map](/assets/img/archived/2018_japan_route_map.jpg)
 
 主要路线：大阪、神户、姬路、冈山、直岛、丰岛、东京、富士五湖、东京
 时间：3 月末、4 月上旬

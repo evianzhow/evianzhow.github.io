@@ -7,7 +7,7 @@ permalink: "/everything-you-need-to-know-about-personal-finance-in-833-words/"
 
 > 原文来源 [https://www.wsj.com/articles/simple-bedrock-rules-on-personal-finance-1423358434](https://www.wsj.com/articles/simple-bedrock-rules-on-personal-finance-1423358434)
 
-![everything-about-personal-finance-in-833-words](https://static.evianzhow.com/everything-about-personal-finance-in-833-words.png)
+![everything-about-personal-finance-in-833-words](/assets/img/archived/everything-about-personal-finance-in-833-words.png)
 
 好久不写日志了，水一篇。
 

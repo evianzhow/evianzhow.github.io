@@ -35,7 +35,7 @@ tags:
 
 > SDK：不包含终端用户交互操作界面（UI）的业务逻辑核心库，功能为实现业务、提供调用接口的类库。我们这里定义，一个完整的 SDK 由三部分 SDK 组成，即时消息 SDK（IM SDK）、实时音视频 SDK（RTC SDK）、推送 SDK（Push SDK）
 
-<figure class="kg-card kg-image-card"><img src="/content/images/2019/07/NIM.png" class="kg-image"></figure>
+![](/assets/img/archived/NIM.png)
 
 **对于 Web 前端** ，IM 部分官方提供了 Web SDK，实时音视频部分官方提供了 Web API（有 WebRTC 版本，也有 NRTC）。官方有提供了一个 Demo，其 UI 非常简单，定制难度较大，无法适用于具体业务场景。所以，UI 需要由我们自行实现。
 
@@ -53,24 +53,8 @@ tags:
 
 | IM SDK | 实时音视频 SDK | IM UI | 实时音视频 UI | Pros | Cons |
 | --- | --- | --- | --- | --- | --- |
-| [react-native-netease-im](https://github.com/reactnativecomponent/react-native-netease-im) | 提取自官方 [Demo](https://netease.im/im-demo)，并自己做 binding | [react-native-imui](https://github.com/reactnativecomponent/react-native-imui) | 提取自官方 [Demo](https://netease.im/im-demo) | 
-- 比较完整的解决方案，目前也是最稳定的解决方案
- | 
-- 音视频版本受制于 [react-native-netease-im](https://github.com/reactnativecomponent/react-native-netease-im) 中包含的 SDK 版本
-- 实时音视频话单反馈在安卓平台上有问题
-- 调用 Native 的组件和 UI，跨平台开发调试非常麻烦和不便
-- 软件包体积过大不便于升级 react-native 版本
- |
-| Web SDK | 提取自官方 [Demo](https://netease.im/im-demo)，并自己做 binding | 提取自 [NIM\_ReactNative\_Demo](https://github.com/netease-im/NIM_ReactNative_Demo) | 提取自官方 [Demo](https://netease.im/im-demo) | 
-- IM 和 UI 部分都是 JavaScript 原生，跨平台，方便维护
-- UI 部分可以方便替换为 [react-native-gifted-chat](https://github.com/FaridSafi/react-native-gifted-chat) 或者 [aurora-imui](https://github.com/jpush/aurora-imui) 的版本
- | 
-- 官方未提供音视频的解决方法，导致依旧需要使用到原生 IM SDK
-- 音视频占用另外一个登陆终端数
-- 软件包体积过大
-- 通话话单无法同步到 IM 的聊天界面中
-- IM 和实时音视频部分交互困难
- |
+| [react-native-netease-im](https://github.com/reactnativecomponent/react-native-netease-im) | 提取自官方 [Demo](https://netease.im/im-demo)，并自己做 binding | [react-native-imui](https://github.com/reactnativecomponent/react-native-imui) | 提取自官方 [Demo](https://netease.im/im-demo) | * 比较完整的解决方案，目前也是最稳定的解决方案 | * 音视频版本受制于 [react-native-netease-im](https://github.com/reactnativecomponent/react-native-netease-im) 中包含的 SDK 版本 * 实时音视频话单反馈在安卓平台上有问题 * 调用 Native 的组件和 UI，跨平台开发调试非常麻烦和不便 * 软件包体积过大不便于升级 react-native 版本 |
+| Web SDK | 提取自官方 [Demo](https://netease.im/im-demo)，并自己做 binding | 提取自 [NIM\_ReactNative\_Demo](https://github.com/netease-im/NIM_ReactNative_Demo) | 提取自官方 [Demo](https://netease.im/im-demo) | * IM 和 UI 部分都是 JavaScript 原生，跨平台，方便维护 * UI 部分可以方便替换为 [react-native-gifted-chat](https://github.com/FaridSafi/react-native-gifted-chat) 或者 [aurora-imui](https://github.com/jpush/aurora-imui) 的版本 | * 官方未提供音视频的解决方法，导致依旧需要使用到原生 IM SDK * 音视频占用另外一个登陆终端数 * 软件包体积过大 * 通话话单无法同步到 IM 的聊天界面中 * IM 和实时音视频部分交互困难 |
 
 <!--kg-card-end: markdown-->
 
@@ -112,7 +96,11 @@ tags:
 | 推送通知 | 内置 | 无，需开发者自行实现 |
 | 音视频之间切换 | 需重新加入，不可无缝切换 | 无需重新加入，关闭摄像头即可，可单方面开启摄像头 |
 
-<!--kg-card-end: markdown--><figure class="kg-card kg-image-card kg-card-hascaption"><img src="/content/images/2019/07/---------.png" class="kg-image"><figcaption>图片引用自网易云信多人通话的文档，我们可以看到可以看到声网的逻辑，和网易云信的多人通话是一致的。但网易多人通话集成了声网的信令传送部分，更为简单。</figcaption></figure>
+<!--kg-card-end: markdown-->
+
+![](/assets/img/archived/---------_o.png)
+图片引用自网易云信多人通话的文档，我们可以看到可以看到声网的逻辑，和网易云信的多人通话是一致的。但网易多人通话集成了声网的信令传送部分，更为简单。
+
 ## 流程介绍
 
 下面介绍一个完整声网音视频通话流程次序，流程参考了 GitHub 上 [AgoraIO/Advanced-Video](https://github.com/AgoraIO/Advanced-Video)仓库中 OpenDuo 实现：

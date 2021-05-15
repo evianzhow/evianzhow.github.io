@@ -48,7 +48,7 @@ tags:
 
 在这个过程中，假设我们访问的 URL 是 https://www.google.com/api ，同时 Google 服务器发送的证书是 *.google.com 的这么一个 Hostname 的话，验证通过。但我们在 NSURLProtocol 子类里更改了请求地址，变成了一个这样的地址 https://216.58.221.36/api ，但是这时访问 Google 服务器的 443 端口时，服务器仍返回的是 *.google.com。此时验证就会不通过，你可以利用浏览器测试一下，就会发现提示证书的 Host name mismatch。
 
-<img src="https://static.evianzhow.com/google_ssl_mismatch.png" />
+![Google SSL Mismatch](/assets/img/archived/google_ssl_mismatch.png)
 
 对于这样的问题，Apple 官方在 [Technical Note TN2232](https://developer.apple.com/library/ios/technotes/tn2232/\_index.html#//apple_ref/doc/uid/DTS40012884-CH1-SECSERVERNAME) 里并不推荐你采用忽略错误（Disabling server trust evaluation）这一做法，这样会极大的降低 HTTPS 的安全性。其推荐在 NSURLProtocol 的 delegate 的函数中使用 Security framework 的函数添加正确的 SSL 地址名来解决。
 
@@ -131,6 +131,3 @@ tags:
 - https://github.com/AFNetworking/AFNetworking/issues/1157
 - http://stackoverflow.com/questions/23786259/overriding-tls-server-validation-hostname-doesnt-seem-to-be-working
 - http://stackoverflow.com/questions/30778579/kcfstreamerrordomainssl-9802-when-connecting-to-a-server-by-ip-address-through
-
-如果本文对你有帮助的话，不妨通过支付宝可以请我喝一杯咖啡！ :)
-<img src="https://static.evianzhow.com/alipay.jpg" alt="austinchou0126@gmail.com" />

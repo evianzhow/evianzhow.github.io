@@ -43,4 +43,4 @@ reducerCreate = (params: any) => {
 
 如图所示，最终效果和原生开发的自动收集相差无几了：
 
-![Screen-Shot-2018-08-13-at-11.42.35-PM](/content/images/2018/08/Screen-Shot-2018-08-13-at-11.42.35-PM.png)
+![Screen-Shot-2018-08-13-at-11.42.35-PM](/assets/img/archived/Screen-Shot-2018-08-13-at-11.42.35-PM.png)
