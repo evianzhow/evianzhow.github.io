@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>关于比亚迪云服务 App 逆向过程的经验 | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="关于比亚迪云服务 App 逆向过程的经验" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="在 IT 公论的某期通讯（「IT 公论周五通讯：物联网和共产主义（2015.04.10）」）里写道：" />
+<meta property="og:description" content="在 IT 公论的某期通讯（「IT 公论周五通讯：物联网和共产主义（2015.04.10）」）里写道：" />
+<link rel="canonical" href="https://blog.evianzhow.com/guan-yu-bi-ya-di-yun-fu-wu-app-ni-xiang-guo-cheng-de-jing-yan/" />
+<meta property="og:url" content="https://blog.evianzhow.com/guan-yu-bi-ya-di-yun-fu-wu-app-ni-xiang-guo-cheng-de-jing-yan/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-06-08T04:40:30+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="关于比亚迪云服务 App 逆向过程的经验" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-06-08T04:40:30+00:00","datePublished":"2017-06-08T04:40:30+00:00","description":"在 IT 公论的某期通讯（「IT 公论周五通讯：物联网和共产主义（2015.04.10）」）里写道：","headline":"关于比亚迪云服务 App 逆向过程的经验","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/guan-yu-bi-ya-di-yun-fu-wu-app-ni-xiang-guo-cheng-de-jing-yan/"},"url":"https://blog.evianzhow.com/guan-yu-bi-ya-di-yun-fu-wu-app-ni-xiang-guo-cheng-de-jing-yan/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">关于比亚迪云服务 App 逆向过程的经验</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2017-06-08T04:40:30+00:00" itemprop="datePublished">Jun 8, 2017
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>在 IT 公论的某期通讯（「IT 公论周五通讯：物联网和共产主义（2015.04.10）」）里写道：</p>
+
+<blockquote>
+  <p>当然，接下来就是为什么的问题。和 geek 们的信念相反，「因为我能」从来就不构成足够的理由。我能，我上。互联网早期的先锋们正是这么做的。卷起袖子干的实用主义精神延续到了现在，演化成为对行动力的礼赞和快速发布反复迭代的行动纲领。</p>
+</blockquote>
+
+<p>由于个人实在是无力吐槽国产品牌车配套的应用设计水准，秉持着上面提到的「我行我上」准则，想自行为比亚迪云服务设计一个 App，在逆向过程中踩了一些坑，而且坑比较难填，暂时放弃，现在将分析思路的大概过程写在这里供后来人参考。</p>
+
+<ol>
+  <li>首先从网络请求下手，在进行了一些 HTTPS 抓包实验之后，发现其所有的 API 请求和响应均经过一个叫 <a href="https://www.bangcle.com/solutions/index.html?category_id=9">梆梆安全公司</a> 的加固 SDK 进行加密，大部分的请求和响应都类似于 <code class="language-plaintext highlighter-rouge">{ "Data": "密文" }</code>。由于该 SDK 是非公开的，很有可能是为了比亚迪的 IoT 设备进行了特殊的定制，后续没有深究下去</li>
+  <li>既然从网络请求层面走不通，尝试逆向二进制文件，从 PP 助手网站下载越狱版的 IPA，即是脱壳后的版本，无需我们再有越狱机器去脱壳</li>
+  <li>IPA 解压后，将 Binary 拖入 Hopper Disassembler 分析，同时使用 class-dump 导出头文件。网络请求的大部分函数在 <code class="language-plaintext highlighter-rouge">Communication</code> 类下，且均是类方法。其中尤其注意：
+<code class="language-plaintext highlighter-rouge">+ (void)requestResultByHttps:(id)arg1:(id)arg2:(id)arg3:(id)arg4:(long long)arg5:(id)arg6</code>
+和<code class="language-plaintext highlighter-rouge">+ (id)packageData:(id)arg1 withIdentifier:(id)arg2 key:(id)arg3 parser:(long long)arg4</code>。前者是网络请求主函数，其中调用后者进行数据的加密，最终调用了 BangSafeSDK 的 <code class="language-plaintext highlighter-rouge">checkcode:</code> 方法得到最终发送的字符串</li>
+  <li>既然单纯的逆向 API 无法得到有用的结果，那么换种思路将 Binary 尝试嵌入我们的工程中，思路参考 <a href="http://blog.imjun.net/posts/convert-iOS-app-to-dynamic-library/">http://blog.imjun.net/posts/convert-iOS-app-to-dynamic-library/</a>，具体的步骤：
+    <ul>
+      <li>用 lipo 把 Binary 拆成 armv7 和 arm64 两个 Slice</li>
+      <li>利用杨君给出的工具 <a href="https://github.com/tobefuturer/app2dylib">app2dylib</a>，对两个 Slice 分别转换成 dylib</li>
+      <li>再把两个 dylib 使用 lipo 合并成一个 dylib</li>
+      <li>新建 Xcode 工程，拖入并通过 Objective-C 动态调用机制调用函数</li>
+    </ul>
+  </li>
+  <li>最终发现部分敏感函数（例如网络请求）依旧被保护，调用即闪退，时间仓促没有查明有何种问题，但怀疑与 ptrace、sysctl 等反调试机制有关</li>
+</ol>
+
+<p>如果后来者想继续这方面的研究的话，个人建议从以下两个方向下手：</p>
+
+<ul>
+  <li>逆向 BangSafeSDK 的 <code class="language-plaintext highlighter-rouge">checkcode:</code> 和 <code class="language-plaintext highlighter-rouge">decheckcode:</code> 实现</li>
+  <li>破除反调试保护，可以选择尝试反-反调试手段，具体可以访问 <a href="http://iosre.com">iOSRE</a> 论坛</li>
+</ul>
+
+<p>后话：
+相比于 TESLA 和其他合资品牌厂商，国内厂商做的云服务或者是车联网的 App 简直惨不忍睹，横向比较一下，比亚迪云服务的 App 居然算是做的不错的了。明明已经赶上合资品牌车的价格了，但是内部智能系统的设计还是一团糟，对于现在软件开发工程师和用户界面设计师并不缺乏的互联网时代，实在是显得非常落后。如果他们做不好，就应该把这个权力回归于用户。Tesla 在这点上做的还算不错，虽然没有公开申明开放 API，但是它做的相当的规范和标准、易于理解，也很开放。相比国内公司，真是天壤之别了。</p>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/guan-yu-bi-ya-di-yun-fu-wu-app-ni-xiang-guo-cheng-de-jing-yan/';
+      this.page.identifier = 'https://blog.evianzhow.com/guan-yu-bi-ya-di-yun-fu-wu-app-ni-xiang-guo-cheng-de-jing-yan/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/guan-yu-bi-ya-di-yun-fu-wu-app-ni-xiang-guo-cheng-de-jing-yan/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

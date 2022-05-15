@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>React Native App 集成友盟页面统计 | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="React Native App 集成友盟页面统计" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="在原生开发中，集成友盟之后，它的 SDK 会自动帮助我们统计页面的流转情况，iOS 中它收集的是 ViewController 的类名，同样的，安卓中它收集的是 Activity 的名称。" />
+<meta property="og:description" content="在原生开发中，集成友盟之后，它的 SDK 会自动帮助我们统计页面的流转情况，iOS 中它收集的是 ViewController 的类名，同样的，安卓中它收集的是 Activity 的名称。" />
+<link rel="canonical" href="https://blog.evianzhow.com/react-native-app-umeng-integration/" />
+<meta property="og:url" content="https://blog.evianzhow.com/react-native-app-umeng-integration/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-08-13T15:52:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="React Native App 集成友盟页面统计" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2018-08-13T15:52:00+00:00","datePublished":"2018-08-13T15:52:00+00:00","description":"在原生开发中，集成友盟之后，它的 SDK 会自动帮助我们统计页面的流转情况，iOS 中它收集的是 ViewController 的类名，同样的，安卓中它收集的是 Activity 的名称。","headline":"React Native App 集成友盟页面统计","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/react-native-app-umeng-integration/"},"url":"https://blog.evianzhow.com/react-native-app-umeng-integration/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">React Native App 集成友盟页面统计</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-08-13T15:52:00+00:00" itemprop="datePublished">Aug 13, 2018
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>在原生开发中，集成友盟之后，它的 SDK 会自动帮助我们统计页面的流转情况，iOS 中它收集的是 <code class="language-plaintext highlighter-rouge">ViewController</code> 的类名，同样的，安卓中它收集的是 <code class="language-plaintext highlighter-rouge">Activity</code> 的名称。</p>
+
+<blockquote>
+  <p>页面统计集成正确，才能够获取正确的页面访问路径、访问深度（PV）的数据。</p>
+</blockquote>
+
+<p>以 iOS 为例，那么 React Native 应用在某种程度上是单页应用，全局只有一个 <code class="language-plaintext highlighter-rouge">ViewController</code>，安卓上也是只有一个 <code class="language-plaintext highlighter-rouge">Activity</code>。那么自动的页面统计就失去了效果，幸亏友盟的 SDK 暴露了手动记录页面统计的 API，让这个统计功能重新可用。看了网上很多的所谓 React Native 下的教程，对这部分只是浅尝辄止，或者是根本都不提，所以我想我有必要分享一下我的解决经验。</p>
+
+<p>最初能想到的有两种解决方法。第一种是按照 React 组件的 <a href="https://5a046bf5a6188f4b8fa4938a--reactjs.netlify.com/docs/react-component.html">生命周期</a>，类似于 <code class="language-plaintext highlighter-rouge">- (void)viewWillAppear:(BOOL)animated;</code> 和 <code class="language-plaintext highlighter-rouge">- (void)viewWillDisappear:(BOOL)animated;</code>，在 <code class="language-plaintext highlighter-rouge">componentWillMount()</code> 和 <code class="language-plaintext highlighter-rouge">componentWillUnmount()</code> 中加入统计的代码，但这要求所有的组件 <strong>均继承自这个 BaseComponent</strong>，且子组件在覆写这两个方法是要保证调用 super 方法，因此对现有的代码改动过大，也不符合 React 的 <a href="https://en.wikipedia.org/wiki/Composition_over_inheritance">Composition over Inheritance</a> 原则，所以产生了第二种的解决方法。</p>
+
+<p>假设你的 App 现在已经在使用 <code class="language-plaintext highlighter-rouge">redux</code>、<code class="language-plaintext highlighter-rouge">react-native-router-flux</code> 和 <code class="language-plaintext highlighter-rouge">redux-sagas</code> 这一套主流的框架了。根据观察，<code class="language-plaintext highlighter-rouge">react-native-router-flux</code> 底层的 <code class="language-plaintext highlighter-rouge">react-navigation</code> 在页面流转时，会先 dispatch 一个代表当前页面 disappear 的 action，再 dispatch 一个代表新页面 appear 的 action。这个反映到 <code class="language-plaintext highlighter-rouge">react-native-router-flux</code> 就是 <code class="language-plaintext highlighter-rouge">ActionConst.BLUR</code> 和 <code class="language-plaintext highlighter-rouge">ActionConst.FOCUS</code> 的两个 action。咨询过友盟的客服，这个流程和友盟要求的页面统计方法是一致的（先退出前一个页面，再进入新页面），所以此方案可行。</p>
+
+<p>首先在声明式路由的实现文件中，将 <code class="language-plaintext highlighter-rouge">react-native-router-flux</code> 的路由中产生的所有 action 都 dispatch 到 redux 的 store 中，大致的代码如下：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">reducerCreate</span> <span class="o">=</span> <span class="p">(</span><span class="nx">params</span><span class="p">:</span> <span class="nx">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">defaultReducer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Reducer</span><span class="p">(</span><span class="nx">params</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">(</span><span class="na">state</span><span class="p">:</span> <span class="nb">Object</span><span class="p">,</span> <span class="na">action</span><span class="p">:</span> <span class="nb">Object</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">typeof</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">dispatch</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">(</span><span class="nx">action</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">defaultReducer</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>这样当底层的 <code class="language-plaintext highlighter-rouge">react-navigation</code> 进行页面的流转时，不同的 action 会被正确传到 redux 的 store 中，因为没有任何一个匹配的 reducer，所以不会对 redux 的 store 造成任何影响。</p>
+
+<p>下一步就是监听这些 actions 了。我们创建两个 generator function，把它放到 <code class="language-plaintext highlighter-rouge">redux-sagas</code> 中，大致的代码如下：</p>
+
+<script src="https://gist.github.com/EvianZhow/1eba043dd45ed61a9988095ddac10498.js"></script>
+
+<p>这样当页面的流转时，友盟的 SDK 已经可以正常记录了。</p>
+
+<p>最后有一个细节问题是，这个方法会导致第一个页面记录的失常。比如你在声明式路由的实现中指定了某个组件是 <code class="language-plaintext highlighter-rouge">initial</code> 的，这个组件会成为 App 打开进入的第一个页面，但进入这个页面的事件并不会被触发，所以需要手动补充。我是在 App 根组件 的 <code class="language-plaintext highlighter-rouge">componentDidMount()</code> 中手动补上了。</p>
+
+<p>至此，友盟应该可以以声明式路由中各 Component 的 <code class="language-plaintext highlighter-rouge">key</code> 值来记录各个页面的流转信息。</p>
+
+<p>如图所示，最终效果和原生开发的自动收集相差无几了：</p>
+
+<p><img src="/assets/img/archived/Screen-Shot-2018-08-13-at-11.42.35-PM.png" alt="Screen-Shot-2018-08-13-at-11.42.35-PM" /></p>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/react-native-app-umeng-integration/';
+      this.page.identifier = 'https://blog.evianzhow.com/react-native-app-umeng-integration/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/react-native-app-umeng-integration/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

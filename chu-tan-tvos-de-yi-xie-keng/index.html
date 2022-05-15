@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>初探 tvOS 的一些坑 | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="初探 tvOS 的一些坑" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="tvOS 是 Apple TV 4 Gen 之后搭载的操作系统，其源自于 iOS，和 iOS 共通一些 Framework，不仅如此，还提供了一种面向前端开发者更加友好的 TVML 来构建 Client-Server 结构的 TV App。使得开发人员甚至是不需要使用 Objective-C 或者 Swift 就可以利用 TVML 的 Template 构建一个看起来不错的 App。" />
+<meta property="og:description" content="tvOS 是 Apple TV 4 Gen 之后搭载的操作系统，其源自于 iOS，和 iOS 共通一些 Framework，不仅如此，还提供了一种面向前端开发者更加友好的 TVML 来构建 Client-Server 结构的 TV App。使得开发人员甚至是不需要使用 Objective-C 或者 Swift 就可以利用 TVML 的 Template 构建一个看起来不错的 App。" />
+<link rel="canonical" href="https://blog.evianzhow.com/chu-tan-tvos-de-yi-xie-keng/" />
+<meta property="og:url" content="https://blog.evianzhow.com/chu-tan-tvos-de-yi-xie-keng/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-12-10T16:01:03+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="初探 tvOS 的一些坑" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2015-12-10T16:01:03+00:00","datePublished":"2015-12-10T16:01:03+00:00","description":"tvOS 是 Apple TV 4 Gen 之后搭载的操作系统，其源自于 iOS，和 iOS 共通一些 Framework，不仅如此，还提供了一种面向前端开发者更加友好的 TVML 来构建 Client-Server 结构的 TV App。使得开发人员甚至是不需要使用 Objective-C 或者 Swift 就可以利用 TVML 的 Template 构建一个看起来不错的 App。","headline":"初探 tvOS 的一些坑","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/chu-tan-tvos-de-yi-xie-keng/"},"url":"https://blog.evianzhow.com/chu-tan-tvos-de-yi-xie-keng/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">初探 tvOS 的一些坑</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2015-12-10T16:01:03+00:00" itemprop="datePublished">Dec 10, 2015
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>tvOS 是 Apple TV 4 Gen 之后搭载的操作系统，其源自于 iOS，和 iOS 共通一些 Framework，不仅如此，还提供了一种面向前端开发者更加友好的 <a href="https://developer.apple.com/library/tvos/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/index.html">TVML</a> 来构建 Client-Server 结构的 TV App。使得开发人员甚至是不需要使用 Objective-C 或者 Swift 就可以利用 TVML 的 Template 构建一个看起来不错的 App。</p>
+
+<p>正好赶上一个小的 Break，我利用短暂的时间研究了一下 tvOS 上的开发流程，时间不长，但是遇到了一些比较烦人的坑。因此在这里贴一些小的 Tips 给大家，希望大家可以跳过我遇到的这些坑。</p>
+
+<ol>
+  <li>TVML 是什么？</li>
+</ol>
+
+<p>TVML 是一种 Markup Language，乍一看非常类似 XML，是拥有一些领域专用语言(DSL)的一种描述方法。利用官方提供的 <a href="https://developer.apple.com/library/tvos/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/TextboxTemplate.html#//apple_ref/doc/uid/TP40015064-CH2-SW8">UI 模版</a> 可以不用写 Objective-C 和 Swift 就可以构建一个大致符合苹果设计准则的界面。</p>
+
+<ol>
+  <li>TVML 可以和原生 UIKit 混用吗？</li>
+</ol>
+
+<p>可以，从 TVML 中调用 UIKit 的方式参考这里：https://forums.developer.apple.com/thread/18430。但是没有找到 UIKit 调用 TVML 的相关的答案，但是根据 TVApplicationController 继承自 NSObject 的关系，应该是没有办法在 Navigation Stack 上进行 Push 的操作的。</p>
+
+<blockquote>
+  <p>I find it odd that I have to create a new UIWindow for the TVML to show up at all - I tried using the existing window but no joy.</p>
+</blockquote>
+
+<p>一种可行的方式是 Present TVApplicationController 实例的 navigationController 属性来达到类似的效果。</p>
+
+<ol>
+  <li>为什么提示 <strong>Can’t find variable: navigationDocument</strong></li>
+</ol>
+
+<p>可能是因为你使用了 Objective-C 开发了 tvOS 应用程序，我也遇到了这个问题，只能切换到 Swift 进行开发，怀疑这个苹果的一个 Bug。https://forums.developer.apple.com/thread/22361</p>
+
+<ol>
+  <li>我应该如何选择 UIKit 和 TVML？</li>
+</ol>
+
+<p>我的建议是，如果你的 App 逻辑比较简单，而且内容经常变化的话，可以采用 TVML 来进行开发，因为可以很快加入原生的 View Controller，反之则比较困难。但是 TVML 是需要与服务器连接启动的，这个在使用的时候要斟酌一下。</p>
+
+<ol>
+  <li>有没有一些比较好的教程呢？</li>
+</ol>
+
+<ul>
+  <li>http://www.raywenderlich.com/114886/beginning-tvos-development-with-tvml-tutorial</li>
+  <li>SDK Header is your best friend!</li>
+</ul>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/chu-tan-tvos-de-yi-xie-keng/';
+      this.page.identifier = 'https://blog.evianzhow.com/chu-tan-tvos-de-yi-xie-keng/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/chu-tan-tvos-de-yi-xie-keng/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

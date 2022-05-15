@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>How to correctly expand volume size on Xpenology | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="How to correctly expand volume size on Xpenology" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="tl;dr" />
+<meta property="og:description" content="tl;dr" />
+<link rel="canonical" href="https://blog.evianzhow.com/expand-volume-size-on-xpenology/" />
+<meta property="og:url" content="https://blog.evianzhow.com/expand-volume-size-on-xpenology/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-09-12T02:39:24+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to correctly expand volume size on Xpenology" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-09-12T02:39:24+00:00","datePublished":"2017-09-12T02:39:24+00:00","description":"tl;dr","headline":"How to correctly expand volume size on Xpenology","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/expand-volume-size-on-xpenology/"},"url":"https://blog.evianzhow.com/expand-volume-size-on-xpenology/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">How to correctly expand volume size on Xpenology</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2017-09-12T02:39:24+00:00" itemprop="datePublished">Sep 12, 2017
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="tldr">tl;dr</h2>
+
+<p>You should always <strong>add another new disk</strong> in ESXi if you want to expand your existing volume, and using <code class="language-plaintext highlighter-rouge">Manage</code> under <code class="language-plaintext highlighter-rouge">Storage Manager - Volume</code>, you should be able to see the expand option. From this way, you won’t deal with partition table conversion, LVM resizing and all other kind of <strong>geek</strong> stuff.</p>
+
+<hr />
+
+<p>I’ve been using Xpenology on ESXi since my N54L upgraded with P410 RAID card. Recently, I bought two extra hard drives and would like to expand my Xpenology storage. The process wasn’t so easy and took me some days to finally figure it out, so I’d like to share with you my experiences. Wish it may help you.</p>
+
+<p>Mostly the steps are from <a href="https://www.gadjev.com/2017/06/11/xpenology-on-vmware-disk-extend/">Xpenology on VMware – Disk Extend</a>, my DSM version is <code class="language-plaintext highlighter-rouge">DSM 5.2-5644 Update 5</code>, should be the latest official stable one. Since I did RAID 1+0 from the hardware level, I don’t need Xpenology to do any data protection for me, so I created my volume with RAID type <code class="language-plaintext highlighter-rouge">SHR (without data protection)</code></p>
+
+<p>After inserting and initializing these two new disks with HP RAID software, expanding datastore on ESXi, I opened my Xpenology VM settings and undoubtedly expand the disk size to a larger figure. That’s where I made my mistakes. When Xpenology creates a volume from a disk, <strong>it’s using all the spaces and can not be modified later without losing your data</strong>. In another word, if you resized your existing disk, from <code class="language-plaintext highlighter-rouge">Storage Manager - HDD/SSD</code>, you should be able to see a larger figure expected, but <code class="language-plaintext highlighter-rouge">Manage</code> button under <code class="language-plaintext highlighter-rouge">Storage Manager - Volume</code> is greyed out. Even though, if your disk created earlier is smaller than 2.0TB, you got a MBR partition table, and you should convert to GPT if you want to expand it over 2.0TB.</p>
+
+<p><strong>Backup your data before doing this!</strong></p>
+
+<p>In my situation, I got an 1.8TB MBR-based disk and want to expand to 3.0TB GPT-based disk. There’s the steps:</p>
+
+<ol>
+  <li>GPT Conversion, skip this if you already have an GPT disk. In ESXi, mount the data disk to another ubuntu machine and use <code class="language-plaintext highlighter-rouge">sudo gdisk /dev/sdX</code> (replace <code class="language-plaintext highlighter-rouge">sdX</code> with your own device name) to launch gdisk tool. Type <code class="language-plaintext highlighter-rouge">v</code> to verify first, then type <code class="language-plaintext highlighter-rouge">w</code> to convert your MBR partition table into GPT without data losses.</li>
+  <li>Resize partitions. Type <code class="language-plaintext highlighter-rouge">sudo parted</code> to launch the partition editor, Type <code class="language-plaintext highlighter-rouge">select /dev/sdX</code>, then <code class="language-plaintext highlighter-rouge">unit s</code> for changing metric to sectors. After typing <code class="language-plaintext highlighter-rouge">print free</code>, you should get a brief view about your partition structure, which should be something like this:</li>
+</ol>
+
+<script src="https://gist.github.com/EvianZhow/01779800d2d8463ff0027f5ad1ea76f9.js"></script>
+
+<p>The last sector of our free space (which just extended by ESXi) is <code class="language-plaintext highlighter-rouge">6442450910s</code> in this situation. That’s what we want to change into later. <strong>Every disk varies so do not just copy and paste</strong>. Type <code class="language-plaintext highlighter-rouge">resizepart</code>, correctly select your disk partition and enter the last sector of the free space. Resizing your disk should be done at this moment. Please take care that newer version of <code class="language-plaintext highlighter-rouge">parted</code> has removed <code class="language-plaintext highlighter-rouge">resizepart</code> function so rollback to an older version if your <code class="language-plaintext highlighter-rouge">parted</code> doesn’t come with this.</p>
+<ol>
+  <li>Power off the ubuntu machine, and power on your Xpenology VM, you should be able to see <code class="language-plaintext highlighter-rouge">Manage</code> button under <code class="language-plaintext highlighter-rouge">Storage Manager - Volume</code> isn’t greyed out anymore, you can try the expand option but it will do nothing, although the system log tells you expand successfully.</li>
+  <li>Prepare to resize MD devices and LVG. If you’ve read the references above, you should know we are going to unmount the volume before doing any resizing jobs next. Since I’ve installed GitLab, Plex and so many applications, it was pretty hard to kill all the process and be successfully unmounted. But I found a better way to do this. Connect to Xpenology VM using ESXi Remote Console, login with <code class="language-plaintext highlighter-rouge">root</code> account, the password should be <a href="https://www.synology.com/en-global/knowledgebase/DSM/tutorial/General/How_to_login_to_DSM_with_root_permission_via_SSH_Telnet">the same</a> as <code class="language-plaintext highlighter-rouge">admin</code>. Type <code class="language-plaintext highlighter-rouge">syno_poweroff_task -d</code> and it will leaves you with a shell and everything else is closed. Data volumes should already unmounted during shutdown process.</li>
+  <li>Type <code class="language-plaintext highlighter-rouge">vgdisplay -v</code> or <code class="language-plaintext highlighter-rouge">vgs</code> to identify the LVM on your system. In my situation, I’ve got <code class="language-plaintext highlighter-rouge">vg1000</code> and the path is <code class="language-plaintext highlighter-rouge">/dev/vg1000/lv</code>.</li>
+  <li>Stop and re-assemble the software RAID array by typing <code class="language-plaintext highlighter-rouge">mdadm -S /dev/mdX</code> (replace /dev/mdX with your MD device, should be able to figure out by typing <code class="language-plaintext highlighter-rouge">print devices</code> under <code class="language-plaintext highlighter-rouge">parted</code> tool) and type <code class="language-plaintext highlighter-rouge">mdadm -A /dev/mdX -U devicesize /dev/sdXy</code> (replace /dev/mdX with your MD device and /dev/sdXy with your disk partition)</li>
+  <li>Extend the size of the MD array by typing <code class="language-plaintext highlighter-rouge">mdadm –-grow /dev/mdX -z max</code></li>
+  <li>Extend the LVM physical volume and you’ll see the free space in the physical by typing <code class="language-plaintext highlighter-rouge">pvresize /dev/mdX </code></li>
+  <li>Type <code class="language-plaintext highlighter-rouge">vgs</code> to get a brief overview about your LVM volume group. There should be a lot of <code class="language-plaintext highlighter-rouge">VFree</code> left in your LVM volume if previous steps expanded successfully.</li>
+  <li>Activate the LVM volume group by typing <code class="language-plaintext highlighter-rouge">vgchange -a y vg1000</code>.</li>
+  <li>Extend the VLM Logical Volume to the last full TB or GB <code class="language-plaintext highlighter-rouge">lvextend -L +1.8TB /dev/vg1000/lv</code>.</li>
+  <li>Extend it with the remaining MBs as well (use <code class="language-plaintext highlighter-rouge">vgs</code> to see how much exact MBs are outstanding) by typing <code class="language-plaintext highlighter-rouge">lvextend -L +100MB /dev/vg1000/lv</code>.</li>
+  <li>Type <code class="language-plaintext highlighter-rouge">vgs</code> to confirm there is 0 in <code class="language-plaintext highlighter-rouge">VFree</code>, which means all free spaces have been allocated.</li>
+  <li>Reboot and click <code class="language-plaintext highlighter-rouge">Manage</code> button under <code class="language-plaintext highlighter-rouge">Storage Manager - Volume</code>, select the <code class="language-plaintext highlighter-rouge">Expand the volume with unallocated disk space</code>, and click <code class="language-plaintext highlighter-rouge">Next</code>. This time the expand operation should works as expected.</li>
+</ol>
+
+<h3 id="references">References</h3>
+<ul>
+  <li>https://www.gadjev.com/2017/06/11/xpenology-on-vmware-disk-extend/</li>
+  <li>https://forum.synology.com/enu/viewtopic.php?t=83186</li>
+</ul>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/expand-volume-size-on-xpenology/';
+      this.page.identifier = 'https://blog.evianzhow.com/expand-volume-size-on-xpenology/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/expand-volume-size-on-xpenology/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

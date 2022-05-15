@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Apple Music like Navigation Bar | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Apple Music like Navigation Bar" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Thanks to MoZhouqi, this repository KMNavigationBarTransition provides a cleaner way to achieve this effect. This article is discontinued." />
+<meta property="og:description" content="Thanks to MoZhouqi, this repository KMNavigationBarTransition provides a cleaner way to achieve this effect. This article is discontinued." />
+<link rel="canonical" href="https://blog.evianzhow.com/apple-music-like-navigation-bar/" />
+<meta property="og:url" content="https://blog.evianzhow.com/apple-music-like-navigation-bar/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-07-18T12:32:25+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Apple Music like Navigation Bar" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2015-07-18T12:32:25+00:00","datePublished":"2015-07-18T12:32:25+00:00","description":"Thanks to MoZhouqi, this repository KMNavigationBarTransition provides a cleaner way to achieve this effect. This article is discontinued.","headline":"Apple Music like Navigation Bar","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/apple-music-like-navigation-bar/"},"url":"https://blog.evianzhow.com/apple-music-like-navigation-bar/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Apple Music like Navigation Bar</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2015-07-18T12:32:25+00:00" itemprop="datePublished">Jul 18, 2015
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><strong>Thanks to MoZhouqi, this repository <a href="https://github.com/MoZhouqi/KMNavigationBarTransition">KMNavigationBarTransition</a> provides a cleaner way to achieve this effect. This article is discontinued.</strong></p>
+
+<p>在 iOS 8.4 版本中，Apple 把原来的 Music App 改版了一下，同时增加了 Apple Music 功能，虽然我觉得在国内环境下使用实在是太蛋疼的一件事（同时伴随使用中的一系列问题），但是从 UI 的层面上，还是有不少值得研究的事情。</p>
+
+<p>在使用中，我遇到了一个非常棒的效果，可以看一下这段视频。</p>
+
+<p>YouTube:</p>
+
+<iframe width="420" height="315" src="https://www.youtube.com/embed/CasdrinpQL8" frameborder="0" allowfullscreen=""></iframe>
+
+<p>与以往的 Navigation Bar 不同的是，居然能够在滑动返回的过程中既保留了淡入淡出效果，而且能够保持两种 Navigation Bar 的样式的不一致。</p>
+
+<p>如果你觉得上面那段话比较晦涩难懂的话，我们用代码来说明一下。</p>
+
+<p>一般来说，要实现“透明”的效果，我们首先把 Navigation Bar 设置为 translucent。再需要像下面这样设置 Navigation Bar：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// in UINavigationController subclasses
+[self.navigationBar setShadowImage:[UIImage new]];
+[self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics: UIBarMetricsDefault];
+</code></pre></div></div>
+
+<p>这里我们要说明一下这几个函数的调用顺序：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[self.navigationController pushViewController:animated:] (always success) 
+|-&gt; [newVC viewWillAppear] 
+|-&gt; [newVC viewDidAppear]
+
+[self.navigationController popViewControllerAnimated] (fail or not)
+|-&gt; [oldVC viewWillAppear] 
+|-&gt; [oldVC viewDidAppear]
+</code></pre></div></div>
+
+<p>了解了函数的调用顺序，我们就可以开始动手了。首先在第二个 View Controller 中的 viewWillAppear 中设置 Navigation Bar 为透明，且设置 shadowImage 属性为 [UIImage new]，在第一个 View Controller 中的 viewDidAppear 中设置为正常（不透明），恢复 shadowImage 为 nil。</p>
+
+<p>这样做的之后，当 pushViewController 开始之后，Navigation Bar 就会突然变成透明且没有 Navigation Bar 底下的一小条细阴影，然后动画完成。
+当 popViewController 开始之后，Navigation Bar 会<strong>突然</strong>变成原来的非透明状态，并且恢复底部的 shadowImage 显示，非常的突兀，我们并不希望给用户呈现的是这么一个效果。</p>
+
+<p>然后我就开始猜测苹果是怎么做的，有一个可以确定地方的是，苹果肯定不是重写了 Navigation Bar，用的是 UIKit 提供的 Navigation Bar。</p>
+
+<p>于是想到的一个 Hack 方法也是最直观的方法，就是把 Navigation Bar 始终设置为透明的，在第一个 View Controller 的 view 上再添加一个 UINavigationBar 来达到以假乱真的目的。然后我根据这个的想法去做，大致思路正确，但是遇到了一些小问题：</p>
+
+<ol>
+  <li>
+    <p>设置 backgroundImage 时会自动设置 shadowImage，有的时候这么做会产生一些我们不期望的行为。</p>
+  </li>
+  <li>
+    <p>由于 shadowImage 被设置为 [UIImage new]，所以在设置为 nil，恢复的一瞬间，Navigation Bar 的 titleLabel 会向上偏移，这对于用户体验来说也是不可忍受的。</p>
+  </li>
+</ol>
+
+<p>另外，在实际遇到这个问题的时候，由于第二个透明的 View Controller 是通过一个 Router 去唤起的，所以不确定是从哪个页面 Push 过去的，所以就必须做到耦合性比较低。</p>
+
+<p>一个比较合适处理的地方就是 Navigation Controller，可以通过覆写其中的 pushViewController:animated: 和 popViewControllerAnimated: 来让Push 的过程中对之前的 View Controller 自动插入一个 Navigation Bar，Pop 过程<strong>成功结束</strong>的时候删除插入的这个 Navigation Bar。</p>
+
+<p>对于 titleLabel 偏移的问题，我通过设置 Navigation Bar 的一个私有属性 _backgroundView 的 alpha 来让其变成透明。</p>
+
+<p>大致的实现思路就是如此，具体的代码细节我就不在这里给出了，感兴趣的同学可以去我的 <a href="https://github.com/Her0n/Apple-Music-Navigation-Bar">GitHub</a> 看看。Demo 代码写的有点仓促，如果有问题的话欢迎给我留言。</p>
+
+<p>所以，最终的实现效果是这样的：</p>
+
+<p>YouTube:</p>
+
+<iframe width="420" height="315" src="https://www.youtube.com/embed/wOKA09GDSXY" frameborder="0" allowfullscreen=""></iframe>
+
+<p>回过头来，我们再看看 Apple 是用了什么黑科技来做呢？我们在一台越狱的设备上安装了 Reveal Loader。</p>
+
+<p><img src="/assets/img/archived/15.png" alt="Apple Music Navigation Bar" /></p>
+
+<p>是的，原来苹果的开发人员也会为了设计做各种各样的 Hack 呀！😄</p>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/apple-music-like-navigation-bar/';
+      this.page.identifier = 'https://blog.evianzhow.com/apple-music-like-navigation-bar/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/apple-music-like-navigation-bar/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

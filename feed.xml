@@ -1,0 +1,729 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://blog.evianzhow.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.evianzhow.com/" rel="alternate" type="text/html" /><updated>2022-05-15T09:37:56+00:00</updated><id>https://blog.evianzhow.com/feed.xml</id><title type="html">Time Capsule</title><subtitle>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </subtitle><entry><title type="html">Fixing 11th NUCs occasionally not powering off completely issue (black screen, have to do a forced shutdown)</title><link href="https://blog.evianzhow.com/fixing-11th-nuc-issues/" rel="alternate" type="text/html" title="Fixing 11th NUCs occasionally not powering off completely issue (black screen, have to do a forced shutdown)" /><published>2022-05-05T14:40:00+00:00</published><updated>2022-05-05T14:40:00+00:00</updated><id>https://blog.evianzhow.com/fixing-11th-nuc-issues</id><content type="html" xml:base="https://blog.evianzhow.com/fixing-11th-nuc-issues/"><![CDATA[<p>For years, I’ve been a Mac user. macOS provides a perfect work environment for all programmers. But due to performance issues, I wanna give Wintel another try. last year I’ve bought a Tiger Lake NUC and expected the whole system to run smoothly under ‘modern’ 4K resolutions. My monitor was the mainstream DELL 2720Q, which connected to the NUC using an HDMI port. It’s really a powerful, quiet and energy-efficient unit for daily uses. But I still encountered some weird issues.</p>
+
+<p><strong>In summary, the symptoms are (all happen occasionally):</strong></p>
+
+<ol>
+  <li>Screen blacks out, but not completely powered off after I clicked ‘Power Off’ in the startup menu, have to do a forced shutdown.</li>
+  <li>If the system went into idle and sleep, it will reboot unexpectedly. I checked the ‘Windows Reliability Monitor’ but found no detailed information.</li>
+  <li>Boot into the login screen, leaving the screen to be timed out. The monitor will not wake up from the keyboard or mouse.</li>
+</ol>
+
+<p>The above issues both occur on Windows 10 and Windows 11. At first, I thought it might be an operating system compatibility issue, something related to Intel Management Engine, or else I’d bought a faulty unit. After searching the web, I finally found something useful. From the <a href="https://www.chiphell.com/thread-2406048-1-1.html">Chiphell</a> forum, many 11th NUC owners experiencing the same issues. All clues pointed to the latest driver for Xe dedicated graphics card. I tried downgrading the version, reverting to 27.20.100.9466, and now the system works fine (under ~30 hours of test).</p>
+
+<p>So here’s how to I solved it (software method):</p>
+
+<ol>
+  <li>Rolling back Intel Xe Graphic Card drivers to 27.20.100.9466.
+Download the version 27 drivers from <a href="https://www.intel.com/content/www/us/en/download/19344/30381/intel-graphics-windows-dch-drivers.html">here</a>.</li>
+  <li>Since the windows update might install a later version of graphic cards (30.0.100.9684 and newer), we should exclude driver receiving updates from Windows Update through ‘Group Policy Editor’
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*  Use the Windows key + R keyboard shortcut to open the Run command.
+*  Type gpedit.msc and click OK to open the Local Group Policy Editor.
+*  Browse the following path: Computer Configuration &gt; Administrative Templates &gt; Windows Components &gt; Windows Update
+*  On the right side, double-click the Do not include drivers with Windows Update policy.
+*  Select the Enabled option on the top-left.
+</code></pre></div>    </div>
+    <p>If you still want other components to receive the latest driver updates, you can try the <a href="https://www.intel.com/content/www/us/en/support/intel-driver-support-assistant.html">Intel® Driver &amp; Support Assistant</a> tool.</p>
+  </li>
+  <li>(Optional) in case of accidental driver update, I recommend blocking driver installations for Xe dedicated graphic cards:
+Steps on: <a href="https://www.ghacks.net/2017/06/03/stop-windows-from-installing-drivers-for-specific-devices/">https://www.ghacks.net/2017/06/03/stop-windows-from-installing-drivers-for-specific-devices/</a>. 
+Be sure not to check <code class="language-plaintext highlighter-rouge">Also apply to matching devices that are already installed</code>, otherwise you have to downgrade again.</li>
+</ol>
+
+<p><strong>The hardware method is pretty straight forward.</strong> The only step is to use DisplayPort instead of HDMI, If you have to connect your monitor using HDMI, try an adapter instead.</p>
+
+<p>I hope this article would help you.</p>]]></content><author><name></name></author><category term="NUC" /><category term="Tiger Lake" /><summary type="html"><![CDATA[For years, I’ve been a Mac user. macOS provides a perfect work environment for all programmers. But due to performance issues, I wanna give Wintel another try. last year I’ve bought a Tiger Lake NUC and expected the whole system to run smoothly under ‘modern’ 4K resolutions. My monitor was the mainstream DELL 2720Q, which connected to the NUC using an HDMI port. It’s really a powerful, quiet and energy-efficient unit for daily uses. But I still encountered some weird issues.]]></summary></entry><entry><title type="html">常见工业互联网平台的分类</title><link href="https://blog.evianzhow.com/common-industrial-internet-categories/" rel="alternate" type="text/html" title="常见工业互联网平台的分类" /><published>2020-09-01T12:00:00+00:00</published><updated>2020-09-01T12:00:00+00:00</updated><id>https://blog.evianzhow.com/common-industrial-internet-categories</id><content type="html" xml:base="https://blog.evianzhow.com/common-industrial-internet-categories/"><![CDATA[<p>无论是什么工业互联网平台，它们的最终目的只有：为企业实现降本增效、产业链上下游协同、辅助产业智能化转型。</p>
+
+<p>一旦目标确定，有差异的只是不同的完成路径，本文我们会对不同的完成路径进行分析，并且列举它们的代表。</p>
+
+<h3 id="传统意义上的工业互联网平台">传统意义上的工业互联网平台</h3>
+
+<p>国外以西门子的 MindSphere、GE 的 Predix 为代表，国内以三一重工的“树根互联”为代表的国内工业互联网平台。这些平台旨在通过设备上的传感器采集运行运营数据，通过构建设备运营的模型来做故障预测，避免非预期的停机，使得制造业工厂可以最大程度发挥机器效能；此类平台的通用性强，属于跨行业、跨领域的平台，有一定的普适性；</p>
+
+<h3 id="从产业上下游供应链协同切入的工业互联网平台">从产业上下游供应链协同切入的工业互联网平台</h3>
+
+<p>库存合理化一直是制造业企业的一大管理痛点，主要源于上下游产业的信息孤岛化问题突出。通过此类平台，企业可实现灵活订购采购模式，通过实时追踪物流进度，可科学、敏捷地调整生产计划。另外，部分平台也支持通过集采等手段，加强中小企业采购的竞争力。这是目前比较常见工业互联网平台的一种形式。早期最核心的功能就是线上的B2B采购，所以很多 B2B 平台也都说自己是工业互联网平台，但只是非常初级和早期的体现，此类平台价值在于和上下游企业ERP系统打通，实现BOM和采购智能关联，终极形态则是能够做到灵活排产、生产，同时保证供应链安全。此类平台，有针对细分行业领域的（例如：福建泉州鞋服产业链的“一品嘉”），也有通用的（例如：海尔卡奥斯 COSMOPlat）；由于涉及资金结算，此类平台与金融的结合比较密切，实际调研过程中，平台自己可能会输出供应链金融方案、引入银行当资方；</p>
+
+<h3 id="从数据视角商业智能切入的工业互联网平台">从数据视角、商业智能切入的工业互联网平台</h3>
+
+<p>此类平台常常是互联网企业将自己的科技力量对外输出的结果，其中以数据湖、数据仓库、商业智能、AI赋能为核心，而这些是互联网企业的核心优势。此类平台可帮助企业构建第二增长曲线，或者从现有业务中获得新的商业洞见。此类平台的科技属性更强，但由于对产业并不了解，可能会陷入拿着榔头找钉子的局面，需要企业共建，以支撑、赋能为主。此类平台有百度的“飞桨”、华为的“FusionPlant”、腾讯的“WeMake”等；</p>
+
+<h3 id="垂直领域专业型工业互联网平台">垂直领域专业型工业互联网平台</h3>
+
+<p>此类平台结合了上面三个平台的特点，聚焦于特定领域、行业内，为了解决行业内传统生产制造的痛点（例如人才缺失、制造水平差异化严重等）而开发的一系列功能。此类平台往往由在行业内摸爬滚打多年的资深专家创设，虽然科技实力不如从数据视角、商业智能切入的平台，但解决方案已经能够满足行业的需求，落地情况更好，未来规划更清晰。例如，以福建泉州地区专精于石材行业的某平台为例，一期实现向石材成品加工厂租/售智能桥切机，云端设计图驱动设备自动切割，使成品加工所见即所得，降低交易摩擦，通过智能制造来降本增效。二期将合同采购转换为线上化，实现在线支付与供应链金融。</p>]]></content><author><name></name></author><summary type="html"><![CDATA[无论是什么工业互联网平台，它们的最终目的只有：为企业实现降本增效、产业链上下游协同、辅助产业智能化转型。]]></summary></entry><entry><title type="html">我读「因计算机而强大」</title><link href="https://blog.evianzhow.com/i-read-mindstorms/" rel="alternate" type="text/html" title="我读「因计算机而强大」" /><published>2020-01-06T15:08:43+00:00</published><updated>2020-01-06T15:08:43+00:00</updated><id>https://blog.evianzhow.com/i-read-mindstorms</id><content type="html" xml:base="https://blog.evianzhow.com/i-read-mindstorms/"><![CDATA[<blockquote>
+  <p>本书第一版写于 1970 年左右，让我们随着作者的文笔，一同进入那个时代。</p>
+</blockquote>
+
+<p>现在学校里教学数学和物理的方式，所用的教学素材都还是古老的纸和笔的形式（也即粉笔和黑板）。这些教学素材往往拥有巨大的局限，而这一系列局限造成了目前教育体系下孩子们对“数学”和“物理”的恐惧症，具体来说：作者通过对自身行为的观察，发现了一个有趣的“齿轮现象”。作者生活的环境中出现了“齿轮”，大人们也经常与“齿轮”打交道，作者使用身体来思考“齿轮”的内在原理结构，最终“齿轮”变成了作者思考任何形式系统的一种思考工具。总结性地说，“齿轮”变成了一个带有情感的、链接具象世界与抽象世界的媒介——孩子可以和“齿轮”发生共鸣，“齿轮”又和重要的智识结构发生共鸣。“齿轮”是作者所处文化环境所提供的思考模型和譬喻，是孩子成长过程中，自发性培养学习方式的一种原材料。我们所处的社会没有提供这样的材料，学校里也没有，以数学为例，最终导致只有少数孩子喜欢数学、学好数学、知道为什么要学数学。</p>
+
+<p>计算机的出现，与此同时伴随着集成电路的成本呈指数型下降，作者提出了一种新的教育方式，即使用计算机来辅助教学，但这与传统的“让孩子学习编程”有着天壤之别。在作者提出的构思和方法论中，生活中随处可见的“计算机”，代替了上述中出现的“齿轮”，成为了孩子成长环境中的一种原材料。而计算机灵活的多态性，可以成为任何一个孩子的“齿轮”，最终帮助他们建立具象世界和形式世界之间沟通的桥梁。</p>
+
+<p>计算机不仅帮助了孩子学习具体的知识，还帮助了孩子学习怎样学习。通过对编写程序的人深入的观察，可以将计算机科学领域中几个具有代表性的思考方式，引入到对孩子的教育领域中，例如：描述性的思维过程、模块化编程、没有对错只有“除虫”的价值判断……通过设计一种新型的编程语言——“LOGO”、以及建立在其上的“小龟几何”和“牛顿小龟”，作者实践并证明了上面提出的这种观点的有效性：让孩子爱上数学和物理并非难事，我们现行的教育方法需要变革。通过对“抛杂耍”过程的描述性定义，外加一点点的训练，任何一个人都可以迅速掌握原来认为不易掌握的“抛杂耍”，从而支撑“计算机思维方法帮助我们学习怎么样学习”的论点。</p>
+
+<blockquote>
+  <p>人，就像迷宫里的老鼠，可以用试错法走出一条路。但这种方法很原始、很慢。我们可以学得更快、更多，只要能有意识地掌握学习的过程，学会分析和表达我们的行为。</p>
+</blockquote>
+
+<blockquote>
+  <p>首先，把新的、要学的和已经知道的知识联系起来；其次，把新的拿过来变成自己的：试试看，能不能用它造出一个什么东西来。</p>
+</blockquote>
+
+<p>与此同时，计算机还可以作为一个孵化器，让孩子跳过那些枯燥的“预备”课程，直接动手实践。在实践中发现规律，就像这些数学家、物理学家当时发现相应的理论一样，形成假设并能够验证这些假设。直觉性思维也是解决问题的一个好方法。以亚里士多德和伽利略关于“重物坠落所需的时间”的辩论为例，重要的思想往往不以在课堂中刻意学习的方式获得，而是一种直觉性思维。通过对计算机的使用，孩子可以习得“对直觉性思维进行除虫”的思维方法。</p>
+
+<p>作者大胆预言，新的学习方式的出现必将对教育的形式产生翻天覆地的变化。教师的责任不再是权威式的传授知识，而是与孩子一同探索，在这个过程中为孩子指引方向并答疑解惑。学校这个固定的场所也可能不复存在，而是类似于巴西的“桑巴学校”那样松散的组织，以目标和结果为导向。固定式的课程表将不复出现。以上这些并非由官僚机构策划的，而是由民众自发产生的社会形势。强有力的社会形式必须植根于文化，因此，整体的社会文化也应与之相匹配。</p>
+
+<p>以上的理论实践起来并非易事。作者提到，对计算机教育怀疑还是批评的声音不绝于耳，而且现实中新的技术手段往往被用来强化原有的认知。如果教育想要创新，则必须进行一场思维革命。“像计算机一样思考”并非让孩子完全替换为这样的思考方式，而是增加了一种思考方法，增加了一种处理问题的工具。我们不需要舍弃其他的东西。</p>
+
+<hr />
+
+<p>以上是严肃的读书笔记时间。</p>
+
+<p>秉持着“买书如山倒，读书如抽丝”的优秀传统，我最近买了这本书。看书的副标题《因计算机而强大》，还以为是一本讲述计算机科学的严肃书籍。因为这本书我看到我的一位老师推荐过，所以当王老师找我拼单的时候，我就不假思索地下单购买了。刚读了几页，这才发现“受骗上当”。这根本不是一本讲计算机科学的书籍，而是一本讲教育和思维方法的书籍。读完之后，回头再看本书的结构。里面不仅有作者提出的理论，还有实践的结果，脑哥最头疼的“形而上学”也占了不小的篇幅。</p>
+
+<p>看完本书，我的感触没有预期那么大。或多或少作者的某些想法，在这个时代已经得到了实现。但这本书让我开始思考一个问题：有没有影响过我思考方式的计算机科学元素？</p>
+
+<p>我想，是有的。我能不假思索地举出两个例子。</p>
+
+<p>第一个，是我高中时候学数学的例子。</p>
+
+<p>高二的时候，学校给我们班换来了一位年轻的男老师。高二数学的授课内容大部分是平面几何，就是如何用函数描述圆、抛物线等等。这位老师在课上使用了一个叫“几何画板”的软件。当时学校每周一下午还开设了一节让学生自选的选修课，就像大学里的一样，美其名曰“和大学接轨”。这位老师也开设了一门教学如何使用“几何画板”的课程。年轻老师果然上课有激情，这让我产生了平面几何的兴趣，因此也选修了这个课程。</p>
+
+<p>选修课很有趣，键入一个方程甚至是方程组，屏幕上就会产生相应的图形。方程组的求解，即找这两个图形之间的交点。函数的几何含义于是在我脑海中扎根，挥之不去。慢慢的，解题的时候都会寻求绘图软件的帮助，把函数绘制一下方便理解。再到后来，大学里学习微积分的时候，对一个函数求导和对一个函数积分，这在几何上的含义更是不言而喻了。可以说，借助计算机，纯函数的抽象问题得以转化为平面、立体几何的具象问题来进行求解。有点本书说的内味儿了。</p>
+
+<p>第二个，是在大学里学习编程时吸纳的一个思维方法——“不要跨层级思考”。</p>
+
+<p>人类的大脑往往不适合处理过于复杂的信息和流程，特别是当这些信息处于不同的结构之中的时候。如果这个解释过于抽象的话，那我就用一个例子来说明。世界上有一个经典的“把大象放进冰箱需要做几步”这个问题，也算是一个计算机科学中的梗。有哪几步呢？一、打开冰箱；二、把大象放进去；三、关闭冰箱。但这个过程中，倘若真正实现起来，我们会涉及很多的细节，比如如何打开冰箱、如何关闭冰箱、冰箱太小怎么把大象放进去……如果一开始就要思考这些细节时，那让我们列出一个完整的步骤清单简直难如登天。就算是开始动手写了，我们的心智却还在担心是不是有什么遗漏。这足以证明，我们的思维不善于这样的思考。那我们换一种方式如何？</p>
+
+<p>以伪代码为例，我们用代码来描述整个思考过程。首先，我们知道，“把大象放进冰箱”问题由三部分组成：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openRefrigerator()
+putElephantIn()
+closeRefrigerator()
+</code></pre></div></div>
+
+<p>然后，针对其中的每一步（每一个函数），我们去细化——我们先来细化如何打开冰箱的详细步骤吧：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openRefrigerator() {
+  findHandler()
+  getHandler()
+  pullWithStrength()
+}
+</code></pre></div></div>
+
+<p>然后是“把大象放进冰箱”环节：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>putElephantIn() {
+  findAvailableSpace()
+  grabElephant()
+  putElephantInSpace(available)
+}
+</code></pre></div></div>
+
+<p>最后是关闭冰箱的环节：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openRefrigerator() {
+  findHandler()
+  getHandler()
+  pushWithStrength()
+}
+</code></pre></div></div>
+
+<p>看到了吗？每一步，我们都只需要思考同一层级的过程，无需关心更多的细节，这也减轻了我们的心智负担。</p>
+
+<p>有人提议，这样的实现还不够！寻找冰箱把手的过程太不明了了！那我们可以再深入思考：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>findHandler() {
+  checkFront()
+  checkSide()
+  checkBack()
+}
+</code></pre></div></div>
+
+<p>依此类推，直到我们的“程序”细化到一种被称为原子的操作过程，即无法再细化的程度上。我们把以上的整个过程，按照书中提到的“直线型思维”进行排列，那么应该编写为：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>checkFront()
+checkSide()
+checkBack()
+getHandler()
+pullWithStrength()
+findAvailableSpace()
+grabElephant()
+putElephantInSpace()
+checkFront()
+checkSide()
+checkBack()
+getHandler()
+pushWithStrength()
+</code></pre></div></div>
+
+<p>到底哪种思维方式清晰明了？大家显然心里有数。软件的实现之中，也大量存在这样的思考过程。我们先编写一份完全不可运行的伪代码，凸显解决问题的大结构，然后通过一次次充实其中的实现细节，最终完成一个可运行的程序。</p>
+
+<hr />
+
+<p>抛开作者理想化的论调，我们要肯定的是，作者在 70 年代能够提出这样的理论，并加以实践，放在当时的环境之下是革命性的、极具创新价值的。70 年代早期，作为个人计算机划时代产物的 Apple I 还没有被发明出来，能够畅想一个未来人人拥有计算机的时代，本身就是一件需要极大勇气和魄力的事情。而书后面“形而上学”的部分，例如对孩童思考方式的程序化模拟，以期望实现人工智能，也能现代的算法实现中找到影子。</p>
+
+<p>书是好书，有空可以读读。</p>]]></content><author><name></name></author><category term="reading-notes" /><summary type="html"><![CDATA[本书第一版写于 1970 年左右，让我们随着作者的文笔，一同进入那个时代。]]></summary></entry><entry><title type="html">The expected (and the correct) way to use SSD cache on Synology</title><link href="https://blog.evianzhow.com/advices-of-ssd-cache-on-synology/" rel="alternate" type="text/html" title="The expected (and the correct) way to use SSD cache on Synology" /><published>2019-12-16T02:52:05+00:00</published><updated>2019-12-16T02:52:05+00:00</updated><id>https://blog.evianzhow.com/advices-of-ssd-cache-on-synology</id><content type="html" xml:base="https://blog.evianzhow.com/advices-of-ssd-cache-on-synology/"><![CDATA[<p>I bought Synology 918+ and two Corsair MP500 120GB NVMe SSD in 2017. For just home usage, I just use NAS as daily backup and bit-torrent upload. Very light usage.</p>
+
+<p>Recently, DSM said the SSD cache crashed. It happened a few times before. Each time it’s on the first day of some month. DSM will do a data scrubbing on that day by default. During that process, the system will raise an error about SSD cache. I thought it was a compatiblility issue because as soon as I reboot the system (sometimes it had to be forced) and repair the SSD cache, it went back to work flawlessly.</p>
+
+<blockquote>
+  <p>FYI, MP500 is not on the compatible list.</p>
+</blockquote>
+
+<p>This time, it’s different. I re-inserted that two SSD into M.2 slots and reboot, then start repairing. A few minutes after repairing finished, DSM said it got multiple I/O error on SSD cache. Then, every apps on Synology became unresponsive. I had to pull out the SSD and took them to a local dealer to find out whether it’s a compatible issue or hardware failure. I ran Corsair SSD Toolbox under Windows and it turns out each SSD already have 10TB read and 190TB write. After discussing this situation with someone on <a href="https://www.reddit.com/r/synology/comments/e8m7yr/buggy_ssd_wr_cache_in_918_corsair_mp500_120gb/">Reddit</a>, it turns out that problem <strong>does not lies in the SSD cache implementation</strong> but lies in <strong>the way I uses those SSDs</strong>. The system doesn’t actually write 190TB to the SSD but the <a href="https://en.wikipedia.org/wiki/Write_amplification">write amplification</a> does.</p>
+
+<p><strong>So here’s my advice.</strong></p>
+
+<ul>
+  <li>Try upgrading the RAM first before you consider using a SSD cache to speed up the whole system.</li>
+  <li>Always consider using a compatible SSD from the <a href="https://www.synology.com/en-us/compatibility">official list</a>. Enterprise-level SSD recommended, SLC is the best but it’s the most expensive.</li>
+  <li>Read-only cache preferred. Since it will not increase any data loss risks and significantly more bang for buck.</li>
+  <li>In order to eliminated write amplification effect, Do not allocate entire size of the SSD for cache volume, leave at least 20% unused.</li>
+</ul>
+
+<p>And that’s what you should be aware of:</p>
+
+<ul>
+  <li>SSD cache will not take participant in the sequential writes and reads. Most of activities are sequential workloads.</li>
+  <li>You should determine the bottleneck in your scenario before considering a SSD cache. The purpose of SSD cache is to offload some of the random access activities, so SSD cache should be effective if you’re a heavy VM user.</li>
+  <li>Pay attention to SMART data periodically. Life span ratio not accurate all the time.</li>
+</ul>
+
+<p>Some advices credited to <a href="https://www.reddit.com/user/ssps/">ssps</a>.</p>]]></content><author><name></name></author><category term="synology" /><category term="nas" /><category term="ssd-cache" /><summary type="html"><![CDATA[I bought Synology 918+ and two Corsair MP500 120GB NVMe SSD in 2017. For just home usage, I just use NAS as daily backup and bit-torrent upload. Very light usage.]]></summary></entry><entry><title type="html">使用 sniproxy 隐藏 SSL 握手时的域名以躲过 ISP 嗅探</title><link href="https://blog.evianzhow.com/hide-your-domain-using-sniproxy/" rel="alternate" type="text/html" title="使用 sniproxy 隐藏 SSL 握手时的域名以躲过 ISP 嗅探" /><published>2019-11-27T06:16:44+00:00</published><updated>2019-11-27T06:16:44+00:00</updated><id>https://blog.evianzhow.com/hide-your-domain-using-sniproxy</id><content type="html" xml:base="https://blog.evianzhow.com/hide-your-domain-using-sniproxy/"><![CDATA[<p>最近在论坛上有不少同学反馈，由于将家中 NAS 的服务暴露到了公网，其中包含了管理页面的 HTTP 或者 WebDAV，导致 ISP 发现并断网发文通知整改。其中有部分回帖称其没有使用 HTTPS 而导致流量被运营商嗅探到。但使用了 HTTPS 服务就万无一失吗？不是的。就算使用了 HTTPS ，也有可能在 SSL 握手时域名遭到泄漏，导致运营商可以通过域名形式访问到用户开启的网页服务。</p>
+
+<p><strong>当然，运营商如何操作的，对于我们来说是一个黑盒，运营商可能通过抓包等方式获取请求中的明文的 SNI 信息。要确保万无一失，您还需要使用加密的 SNI。</strong></p>
+
+<blockquote>
+  <p>需要注意的是，如果您的 ISP 未分配给您互联网上的地址，此篇教程不适用您的情况。请移步 frp 进行端口映射。</p>
+</blockquote>
+
+<hr />
+
+<p>我们假设以下的这种情况：</p>
+
+<blockquote>
+  <p>某用户使用了群晖的 NAS，默认 5001 为 DSM 的 HTTPS 连接方式，默认的 5006 为 WebDAV 的 HTTPS 连接方式。而且某用户使用了群晖自带的 DDNS 服务，注册的域名为：customname.synology.me。</p>
+</blockquote>
+
+<blockquote>
+  <p>用户在路由器上做好了端口映射的设置（5001:5001，5006:5006），暴露给公网的端口，已经不包含 HTTP 明文传输的网页服务了。</p>
+</blockquote>
+
+<p>某段时间，该个用户因为使用了 BT 等软件造成短时间的流量过大，导致进入运营商的关注列表。运营商使用了端口扫描的方式嗅探该用户的端口。</p>
+
+<p>扫描下来，发现用户的路由器上开放了两个端口，5001 和 5006，且嗅探时返回可能为 HTTPS 协议。</p>
+
+<p>运营商使用：openssl s_client -connect x.x.x.x:5001 嗅探 HTTPS 的握手信息：</p>
+
+<!--kg-card-begin: markdown-->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>…
+CONNECTED(00000003)
+depth=2 O = Digital Signature Trust Co., CN = DST Root CA X3
+verify return:1
+depth=1 C = US, O = Let's Encrypt, CN = Let's Encrypt Authority X3
+verify return:1
+depth=0 CN = customname.synology.me
+…
+</code></pre></div></div>
+
+<!--kg-card-end: markdown-->
+
+<p>运营商使用 https://customname.synology.me:5001 顺利打开 NAS 的管理页面，判定用户违规架设了 HTTP 类服务。一键三连。</p>
+
+<hr />
+
+<p>在这个过程中，关键之处在于： <strong>运营商一定要掌握到你的域名地址信息，且能通过 IP + 端口或者域名 + 端口的组合形式访问到</strong> 。例如 DSM 使用的 Web 服务器，默认只绑定了一个域名和一个证书，在 SSL 握手时服务器会主动发送该证书，导致域名的泄漏。所以我们要做的，就是 <strong>始终不让运营商掌握到我们使用的域名（通过 HTTPS），而且要保证，当运营商起疑心，通过技术手段扫描我们的端口时，不能使其访问成功（通过 sniproxy）</strong> 。</p>
+
+<p>通过 <a href="https://github.com/dlundquist/sniproxy">sniproxy</a> ，我们可以做到：</p>
+
+<ul>
+  <li>不暴露自己的域名信息</li>
+  <li>阻断 IP + 端口的 HTTPS 访问（不出现证书错误页）</li>
+  <li>只有匹配到正确的域名时才允许访问</li>
+</ul>
+
+<hr />
+
+<p>下面直接给出设置的过程，以我自己的 DS918+ 为例，DS918+ 支持 Docker，我将使用 Docker 方式运行 sniproxy。如果您的 NAS 并未提供 Docker 支持，您也可以通过其他方式运行 sniproxy，例如树莓派等等。</p>
+
+<ol>
+  <li>在 DSM 的 Docker 中，搜索 Image：<em><a href="https://hub.docker.com/r/austinchou0126/sniproxy/">austinchou0126/sniproxy</a></em></li>
+  <li>下载 Image，创建一个 Container，创建时设置如下：Port Settings 中，删去容器端口为 80 的条目，手动设置一个未占用的端口，例如将 15001 映射至容器的 443 端口（请不要选择默认的 Auto，否则会由 Docker 自动分配一个端口）</li>
+  <li>Environment 中，添加环境变量：<em>SNIPROXY_LISTEN0_PROTO=tls</em>、<em>SNIPROXY_LISTEN0_PORT=443</em>、<em>SNIPROXY_LISTEN0_FALLBACK=127.0.0.1:4443</em>（这里选择任一一个无法访问的端口，以阻断不带域名的 HTTPS 请求）、<em>SNIPROXY_TABLE0_SRC0=customname.synology.me</em>（这里填入您的 DDNS 域名）、<em>SNIPROXY_TABLE0_DEST0=x.x.x.x:5001</em>（这里填入您的 NAS IP 和 DSM 的端口），更多的环境变量请参考 README</li>
+  <li>创建并运行这个 Container，此时，您就拥有了一个端口为 15001 的 sniproxy 实例，将会把带有 customname.synology.me 域名访问的 HTTPS 请求转发给 x.x.x.x:5001</li>
+  <li>使用 openssl s_client 进行验证和测试：如果通过 IP + 端口访问，将不返回任何一个证书；如果通过域名 + 端口访问，将返回一个正确的证书信息。测试方式：（openssl s_client -connect x.x.x.x:5001 与 openssl s_client -connect x.x.x.x:5001 -servername customname.synology.me）</li>
+  <li>配置您的路由器的端口映射，将原本直接映射至 NAS 的端口经由 sniproxy 进行转发</li>
+  <li>对于其他的 HTTPS 服务（例如 WebDAV），执行同样的步骤</li>
+</ol>
+
+<blockquote>
+  <p>配置后流量：Router[:5001] &lt;-—&gt; Docker on NAS[:15001] &lt;-—&gt; NAS[:5001]</p>
+</blockquote>
+
+<p>相比于使用 VPN 或者内网穿透这两种方式，使用 sniproxy 有以下的优点：</p>
+
+<ul>
+  <li>延续原来的操作方式，而不必改动其他设置，几乎兼容所有的应用</li>
+  <li>公网可访问</li>
+  <li>不需要经过中间服务器中转，速度即宽带的最大上行速度</li>
+</ul>
+
+<hr />
+
+<p>最后，我建议大家，如果您继续选择将服务暴露给在互联网上，请做好以下的防范措施：</p>
+
+<ul>
+  <li>尽量开启 NAS 管理的二步验证</li>
+  <li>在出口路由器上关闭 ICMP 响应</li>
+  <li>任何暴露的网页类型服务，请务必使用 HTTPS</li>
+  <li>使用 sniproxy 来隐藏 SSL 握手时的域名信息</li>
+</ul>
+
+<p>这里补充说明一下，使用默认端口的好处是：在群晖的 App 中，无需再次输入自定义的端口号，只需要输入域名即可。您也可以不适用默认端口，这都取决于您。</p>
+
+<p>如果您觉得这篇文章对您有帮助，欢迎在 <a href="https://www.github.com/EvianZhow/docker-sniproxy">GitHub</a> 上给我的这个项目点个 Star，并且分享给有需要的人。</p>
+
+<h2 id="拓展阅读">拓展阅读</h2>
+
+<ul>
+  <li><a href="https://www.v2ex.com/t/622336">V2EX - 论如何伪装家庭宽带 HTTP 服务</a></li>
+  <li><a href="https://www.v2ex.com/t/608821#reply407">V2EX - 家庭宽带 私设 web 被检测 魔都电信被停宽带</a></li>
+  <li><a href="https://www.v2ex.com/t/622013#reply30">V2EX - 调查一下，上海电信私设 web 服务被封的，有没有用 https 的</a></li>
+</ul>]]></content><author><name></name></author><category term="https" /><category term="isp" /><category term="shang-hai-dian-xin" /><summary type="html"><![CDATA[最近在论坛上有不少同学反馈，由于将家中 NAS 的服务暴露到了公网，其中包含了管理页面的 HTTP 或者 WebDAV，导致 ISP 发现并断网发文通知整改。其中有部分回帖称其没有使用 HTTPS 而导致流量被运营商嗅探到。但使用了 HTTPS 服务就万无一失吗？不是的。就算使用了 HTTPS ，也有可能在 SSL 握手时域名遭到泄漏，导致运营商可以通过域名形式访问到用户开启的网页服务。]]></summary></entry><entry><title type="html">我和墙斗争的那些年</title><link href="https://blog.evianzhow.com/days-with-gfw/" rel="alternate" type="text/html" title="我和墙斗争的那些年" /><published>2019-11-26T05:46:51+00:00</published><updated>2019-11-26T05:46:51+00:00</updated><id>https://blog.evianzhow.com/days-with-gfw</id><content type="html" xml:base="https://blog.evianzhow.com/days-with-gfw/"><![CDATA[<p>记得刚上网的那时候，还没有墙，Google 还没有退出中国，谷歌在中国的域名是：<a href="http://g.cn">g.cn</a>。如此简短又优雅的域名，放眼当今互联网，我想，也只有相声界大师罗老师的 <a href="http://t.tt/">t.tt</a> 能与之一战了。</p>
+
+<p>后来，也记不清什么时候，谷歌就退出中国了，所有 <a href="http://g.cn">g.cn</a> 的请求都会被重定向到 <a href="https://www.google.com.hk/">google.com.hk</a>，但也只是重定向，没有不可以访问。</p>
+
+<p>再到后面一些时候，访问 Google 时会偶尔提示无法访问，慢慢地情况愈演愈烈，到最后就完全无法访问了。那应该我在读高中，也掌握了一点点计算机的知识，大概知道网络封锁是怎么一回事了。被封锁的网站通常的表现是，页面一闪而过，然后浏览器提示连接中断。</p>
+
+<p><img src="/assets/img/archived/---.PNG_o-2.png" alt="" /></p>
+
+<p>「自由门」软件截图（图片来源于网络）</p>
+
+<p>亏得我高中语文老师是个激进派，让我接触到了很多当时反封锁的手段。当时用的最多的是“自由门”、“无界”这种程序，如果早期翻墙的用户，应该都对这两款的软件很熟悉吧。这两款软件虽然免费，后台服务器也众多，但在学校网络下经常无法连接上，就算连上去速度也不快。而且仅仅只能通过电脑的浏览器使用，非常不便。后来不知道怎么的在网上瞎逛的时候，了解到了一款商用的 VPN 服务，可以使用各个平台都支持的 PPTP 的协议连入，这是我第一次接触到这样的商用服务。当时我把这个方案推荐给了那个语文老师，最终她掏的钱买了服务，我偶尔借着用一用，就像现在蹭 Wi-Fi 似的。后来用着用着，不知道怎么的服务器也连不上了，现在想想，估计也是跑路了吧。</p>
+
+<p>到了高三，没有那么多时间用来上网，就没有在这方面继续了解。上了大学，开始使用起当时火热的 <a href="https://github.com/madeye/gaeproxy">GAEProxy</a>。各家都在做 PaaS 平台，新浪有 SAE，谷歌有它的 GAE。Google 也给开发者免费提供了 5 个 GAE 实例的配额，每天每个实例可以有 1 GB 的免费流量。而这一些只需要注册一个 Google 账户即可享用。下载 GAEProxy 并按照它的操作，一步步部署到 Google App Engine 后即可开始翻墙，整个过程花不了半小时。不过，GAEProxy 最大的问题便是需要在电脑上安装自签名的证书，这带来了一些潜在的安全性问题。不过，能够提供免费的翻墙的服务可不多，GAEProxy 既不花钱且速度又能保证，不算复杂的部署脚本成为了当时翻墙的首选。</p>
+
+<p>智能手机的时代来临，自己拥有了第一台 iPhone，便开始研究如何在 iPhone 上翻墙。为此，尝试过自建 PPTP、L2TP/IPSec、OpenVPN 等等。也就是在那个时候，开始使用了 DigitalOcean、Vultr 等等虚拟主机供应商的服务。当时还没有现在网上流行的一键安装的脚本，所有的命令都需要自己手动来敲。这个过程中也算学到了不少关于 Linux 的知识。使用的过程还算方便，但唯一的缺陷就是，一旦连到 VPN 之后，就算是国内的请求，也要跑到国外绕一圈回来，所以使用不同应用时，需要频繁开关 VPN。为了解决这个问题，又开始着手研究 Cisco AnyConnect VPN，因为它是当时为数不多的支持按需连接和路由分流的 VPN 服务。</p>
+
+<p>又是在一个偶然机遇下，了解到曲径这款商用服务，当时它最吸引我的一点是，通过安装一个描述文件，可以让 iPhone 在移动网络环境下直接达到翻墙的效果。当时也购买试用了一段时间，曲径的连接方式有别于当时的 VPN 服务，用起来有一些特殊，也诞生了一个新词叫 APNP，具体的大家可以看他们自己在 Tumblr 上写的<a href="https://getqujing.tumblr.com/post/82246191116/闲谈vpnapn和曲径">介绍文章</a>。</p>
+
+<p><img src="/assets/img/archived/Shadowsocks_logo_o.png" alt="shadowsocks" /></p>
+
+<p>后来，开源界出现了一个神器——<a href="https://github.com/shadowsocks/shadowsocks">shadowsocks</a>。不再需要 VPN 那样的复杂设置过程，也不需要像 GAEProxy 那样使用自签的证书，只需要花几分钟在本地和服务器上简单配置部署，就可以访问和使用，多平台支持。不管你是 Windows 还是 Linux 亦或是 OS X，都有客户端的支持。当时 OS X 上有一个知名的 GAEProxy GUI 客户端叫做 <a href="https://github.com/OldFrank/GoAgentX">GoAgentX</a>。GoAgentX 对 shadowsocks 协议做了支持，导致可以无缝从 GAEProxy 切换到 shadowsocks。所以在很短的时间内，我就切换到了 shadowsocks。</p>
+
+<p><img src="/assets/img/archived/goagentx_o.jpg" alt="GoAgentX" /></p>
+
+<blockquote>
+  <p>这里，请大家记住 shadowsocks，因为现在无论是自用还是商用的翻墙服务，可以说在背后做技术支撑的软件， 90% 以上就是 shadowsocks 或其变种。shadowsocks 俨然已经成为翻墙界 de facto 的标准。shadowsocks 的创始人 clowwindy，可以说为整个世界的自由互联网做出了极大的贡献，值得被大家永远记住。</p>
+</blockquote>
+
+<p>回到正题。大二的时候，我进了大学里的一个计算机俱乐部。俱乐部里原来有一台服务器，大家给了它一个昵称——“46”。“46” 是一台运行 Debian 发行版的 Linux Server，上面跑了很多的服务，例如 FTP、SAMBA 等等，同时兼具网关的作用。当时学校正好里给俱乐部批下来一台刀片服务器，用于支持学院的一些工作，俱乐部的老师希望可以把这台服务器做虚拟化，这样不同的工作可以独立运行在不同的虚拟机中，互不干扰，资源也可控。借此契机，我开始着手研究 ESXi 和相关的集群。</p>
+
+<p><img src="/assets/img/archived/1280px-Openwrt_Logo.svg.png" alt="OpenWRT" /></p>
+
+<p>由于对网络方向比较感兴趣，外加大一的时候因为学院的科技创新项目，对 <a href="https://openwrt.org">OpenWRT</a> 有所耳闻，所以开始翻阅一些 OpenWRT 的相关知识。OpenWRT 作为路由器开源操作系统方面的开山鼻祖，强大的生态和插件的支持让我十分心动。所以在家里房子重新装修的时候，买了好几台 NETGEAR 的 WNDR3800。当时吸引我购买此款的一点就是，它有着 OpenWRT 的官方支持，而且刷机特别方便，可玩性特别高。</p>
+
+<p>有了 ESXi，有了虚拟服务器，玩过了 OpenWRT，我开始在想，能否把网关从 Linux 服务器中分离出来，并使用 OpenWRT 重新构建。这个举动在当时非常新潮，互联网上能够找到的资料也不多，不过好在 OpenWRT 官方就已经提供了固件的 vmdk 版本，这个过程中没有遇到什么问题，没有花费太多的时间就顺利完成了迁移。虚拟化的网关，现在很多人都家用网络中采用这种方式，大家给它起了一个好听的名称——“软路由”。</p>
+
+<p><img src="/assets/img/archived/210247w49lf9suj2z8uj9s_o.png" alt="LEDE" /></p>
+
+<p>现在大家主要使用的是 KoolShare 论坛发布的 LEDE 软路由</p>
+
+<p>随着 <a href="https://github.com/shadowsocks/shadowsocks-libev">shadowsocks-libev</a> 的出现，可以让 shadowsocks 跑在嵌入式的平台上了，同时 shadowsocks-libev 的 README 中也提到了，这个嵌入式的版本可以做成透明代理。这样的话，这个路由下的任何一个客户端，都不需要配置任何的代理程序，直接可以达到翻墙的效果。“<em>在终端上安装代理软件的时代要结束了！</em>”这是一个多么令人激动的想法。但当时 shadowsocks-libev 的 README 只给出了一个全局翻墙的示例，没有提供分地区、国家进行代理的示例。当时根据路由表进行 VPN 分流的方案已经很成熟了，我根据 GitHub 上的 <a href="https://github.com/ashi009/bestroutetb">ashi009/bestroutetb</a>，自己写了一个 iptables 的生成脚本，成为了最早在路由器上用 shadowsocks 做透明代理的那批玩家。这个方案最终在上面提到的那台俱乐部的 OpenWRT 网关上得到了最先应用。x86 的处理器处理速度够快，庞大的 iptables 也可以应对自如，相比之下家中的 WNDR3800 的 MIPS CPU 就略显吃力了。</p>
+
+<p>“无缝翻墙”成了俱乐部的一大特色，给无数的师兄和师弟提供了便利。当时学校的教育网可以拿到原生的 IPv6 地址，且不限速，我使用的 Linode 也支持了 IPv6 网络，所以强制要求 shadowsocks 以 IPv6 协议连到我在美国的服务器。学校对 IPv4 连接做了 2 Mbps 的限速，所以当时居然出现了访问国外居然还要比访问国内还要的快的现象，那是一段快乐的时光。</p>
+
+<p>再到后来，<a href="https://github.com/shadowsocks/luci-app-shadowsocks">luci-app-shadowsocks</a> 出现了，我的自制脚本也顺利退出了历史舞台，改用 luci-app-shadowsocks 了。 <strong>我也算经历了 OpenWRT 上的 shadowsocks 生态一步一步发展到现在的整个过程吧。</strong></p>
+
+<p>大四的时候，帮一个创业公司搭建网络的机缘，接触到了 UBNT 的相关网络设备，这是我第一次接触到了商用级的网络设备。当时的路由器选用的是 UBNT 的 EdgeRouter，但 EdgeRouter 上还没有直接可用的 shadowsocks-libev 二进制文件，尝试在路由器上安装所需的 toolchain 和 lib 进行编译，但未成功。这条路不通，只能<a href="https://blog.evianzhow.com/compile-shadowsocks-libev-and-chinadns-for-edgerouter-poe/">研究如何在电脑上进行跨平台编译</a>。最终，使用 luci-app-shadowsocks 中 ss-rules 脚本，外加使用 QEMU 虚拟机编译下的 ss-redir，在 EdgeRouter 上顺利用上了透明代理方案。应该也属于全网研究这种方案的第一人吧。</p>
+
+<p><img src="/assets/img/archived/9ccd186a7471f7a363da03cacb88efeeb48259a7_o.png" alt="Surge" /></p>
+
+<p>这一切都没有解决在 iOS 上使用 shadowsocks 协议的痛苦，Android 上有 <a href="https://github.com/shadowsocks/shadowsocks-android">shadowsocks-android</a>，iOS 却因为系统限制，一直没有一个好的 App，直到 Surge 这个软件的出现。Surge 的出现使得大家可以轻松通过规则配置自己想要的代理方案，甚至可以做出负载均衡、高可用等等一系列原本是高难度的操作。Surge 后来高昂的售价被人所诟病，但目前，还没有见到任何一个对标的软件有着 Surge 这样的功能和软件质量。</p>
+
+<p>再到后来，墙的封锁越来越厉害，开始使用 DPI、主动探测机制封锁 IP 或端口之后，我便不再这个方向上继续折腾，开始改用了一些商用服务，因为折腾花费的时间成本和得到的收益并不成正比。如果要顺畅地翻墙，至少要开好几台不同地域的 VPS 主机，做高可用和负载均衡。 <strong>Internet is hard, trust me.</strong></p>
+
+<p>目前也出现了不少其他的翻墙方案，例如 V2Ray 等等，有短暂的了解但始终没有尝试过。纵观我和墙斗争的那些历史，我想，只要有墙存在的一天，就有拥有大量创造力的程序员与与之搏斗的一天，这场持久的拉锯战中，没有一方有绝对的优势，也没有一方曾经打败过任何一方，这场没有硝烟的战争，还将继续进行。</p>]]></content><author><name></name></author><category term="firewall" /><category term="free-internet" /><category term="openwrt" /><category term="gfw" /><summary type="html"><![CDATA[记得刚上网的那时候，还没有墙，Google 还没有退出中国，谷歌在中国的域名是：g.cn。如此简短又优雅的域名，放眼当今互联网，我想，也只有相声界大师罗老师的 t.tt 能与之一战了。]]></summary></entry><entry><title type="html">实时音视频：声网 v.s. 网易云信——调研报告</title><link href="https://blog.evianzhow.com/real-time-communication-agora-vs-netease-im-report/" rel="alternate" type="text/html" title="实时音视频：声网 v.s. 网易云信——调研报告" /><published>2019-07-18T08:36:04+00:00</published><updated>2019-07-18T08:36:04+00:00</updated><id>https://blog.evianzhow.com/real-time-communication-agora-vs-netease-im-report</id><content type="html" xml:base="https://blog.evianzhow.com/real-time-communication-agora-vs-netease-im-report/"><![CDATA[<blockquote>
+  <p>本文编写于 2019 年 7 月 17 日，请注意时效性！</p>
+</blockquote>
+
+<h2 id="前言">前言</h2>
+
+<p>网易云信和声网（agora）两家都提供了实时音视频的 SDK，提供给各类开发者使用。网易云信提供了一整套的解决方案，从 IM 到音视频都有覆盖。相对的，声网主要聚焦在音视频部分，但目前也在逐步提供 IM 的部分功能，例如：实时的文本消息推送，但仍处于 Beta 的阶段（实时消息 SDK）。</p>
+
+<p>我们的业务功能之一是医生和用户之间的远程咨询和诊疗，所以需要用到 IM 和实时音视频两个部分。IM 用于图文的咨询，实时音视频用于更为实时的远程咨询，例如心理咨询等。</p>
+
+<p>我们的技术选型是：移动端 react-native 框架，前端 React 框架。最开始，我们基于以往的经验和在部分朋友的推荐下，选择了网易云信作为平台的一整套 IM + 实时音视频的解决方案提供商，但在使用的过程中却遇到了不少的问题，对于这些问题，网易云信的技术支持水平较差，导致部分 Bug 没有办法解决。幸好的是，这部分 Bug 这并不影响关键业务。</p>
+
+<p>对于一个创业公司的小团队，我们有大量的业务需求需要处理，没有大量的人手用于开发、优化音视频部分，所以我们急切希望找到一个支持跨平台的、开箱即用的解决方式，让我们可以不花太大的力气对界面进行一些定制，达到一个总体较好的效果。但从实践中看下来，网易云信目前不是很能满足这一点，具体原因后面会解释到。</p>
+
+<p>考虑再三，我们评估下来，网易云信实时音视频的性价比较低。所以目前有意向将实时音视频部分功能单独切换至声网，保留网易云信的 IM 部分，故进行了本次调研。 <strong>所以本报告仅代表以我们的技术选型之下的评估，对于其他的技术选型，还请自行判断。</strong></p>
+
+<h2 id="现况">现况</h2>
+
+<p>这里，先简单介绍一下网易云信的生态：</p>
+
+<p>以下先对各个概念进行一个简单的解释：</p>
+
+<blockquote>
+  <p>Demo：UI 和 SDK 的组合，是一个对于终端用户开箱即用（out-of-box）的程序，包含了即时通信的功能</p>
+</blockquote>
+
+<blockquote>
+  <p>SDK：不包含终端用户交互操作界面（UI）的业务逻辑核心库，功能为实现业务、提供调用接口的类库。我们这里定义，一个完整的 SDK 由三部分 SDK 组成，即时消息 SDK（IM SDK）、实时音视频 SDK（RTC SDK）、推送 SDK（Push SDK）</p>
+</blockquote>
+
+<p><img src="/assets/img/archived/NIM.png" alt="" /></p>
+
+<p><strong>对于 Web 前端</strong> ，IM 部分官方提供了 Web SDK，实时音视频部分官方提供了 Web API（有 WebRTC 版本，也有 NRTC）。官方有提供了一个 Demo，其 UI 非常简单，定制难度较大，无法适用于具体业务场景。所以，UI 需要由我们自行实现。</p>
+
+<p><strong>对于移动端部分</strong> ，IM 部分官方目前提供了 Native 和 react-native 两种 SDK。react-native SDK 从 18 年 7 月开始第一次提供，是将 Web SDK 基于 react-native 的 JavaScript 执行环境进行了适配。在此之前，仅提供了 Native SDK，需要由用户自己做 react-native 的 binding。GitHub 上目前比较常用的一个 binding 是 <a href="https://github.com/reactnativecomponent/react-native-netease-im">react-native-netease-im</a>。</p>
+
+<p>实时音视频方面，目前只有官方提供 Native SDK 部分，且只有在官方 <a href="https://netease.im/im-demo">Native Demo</a>中有完整功能实现和演示，故 UI 部分需要开发者自行开发或从官方 Native Demo 中抽离。对于安卓项目，官方已经拆分为了子项目 avchatkit，包含了 UI。但 iOS 没有另外拆分，需要自行拆分，不仅要拆分业务代码，还需要拆分 UI 部分。需要注意的是，实时音视频 SDK 依赖于 IM 的 Native SDK。</p>
+
+<p>官方提供了一个 Demo：<a href="https://github.com/netease-im/NIM_ReactNative_Demo">NIM_ReactNative_Demo</a>，第三方也提供了一个比较完整的 Demo：<a href="https://github.com/reactnativecomponent/react-native-chat-demo">react-native-chat-demo</a>，从 Demo 中可以抽离 UI 部分。第三方 Demo 出现时间较早，早于官方。对比官方和第三方的 Demo，官方 Demo 仅简单实现了发送、接收消息的功能，例如：最初版本连发送语音消息的功能都未实现。后续在缓慢迭代中终于支持，目前迭代的频率为几个月一次，未来会不会持续更新还是一个未知数，官方仓库中 Issue 也无人处理。不过好在此 Demo 的 UI 部分使用 JavaScript 编写，没有用到 Native 部分，后期定制可能性尚可。第三方 Demo 使用了基于大量 Native 组件的仿微信 UI 界面 <a href="https://github.com/reactnativecomponent/react-native-imui">react-native-imui</a>第三方库，可以基本做到开箱即用。虽然目前 UI 层面的完成度和还原度比较高，但实现原理是在极光开源的 <a href="https://github.com/jpush/aurora-imui">AuroraIMUI</a>的基础上进行大量修改，开发者支持偏弱，后期定制可能性几乎没有，维护成为了一个比较大的问题。</p>
+
+<hr />
+
+<p>综上所述，以下是目前几种可能的实现方案组合：</p>
+
+<!--kg-card-begin: markdown-->
+
+<table>
+  <thead>
+    <tr>
+      <th>IM SDK</th>
+      <th>实时音视频 SDK</th>
+      <th>IM UI</th>
+      <th>实时音视频 UI</th>
+      <th>Pros</th>
+      <th>Cons</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/reactnativecomponent/react-native-netease-im">react-native-netease-im</a></td>
+      <td>提取自官方 <a href="https://netease.im/im-demo">Demo</a>，并自己做 binding</td>
+      <td><a href="https://github.com/reactnativecomponent/react-native-imui">react-native-imui</a></td>
+      <td>提取自官方 <a href="https://netease.im/im-demo">Demo</a></td>
+      <td>* 比较完整的解决方案，目前也是最稳定的解决方案</td>
+      <td>* 音视频版本受制于 <a href="https://github.com/reactnativecomponent/react-native-netease-im">react-native-netease-im</a> 中包含的 SDK 版本 * 实时音视频话单反馈在安卓平台上有问题 * 调用 Native 的组件和 UI，跨平台开发调试非常麻烦和不便 * 软件包体积过大不便于升级 react-native 版本</td>
+    </tr>
+    <tr>
+      <td>Web SDK</td>
+      <td>提取自官方 <a href="https://netease.im/im-demo">Demo</a>，并自己做 binding</td>
+      <td>提取自 <a href="https://github.com/netease-im/NIM_ReactNative_Demo">NIM_ReactNative_Demo</a></td>
+      <td>提取自官方 <a href="https://netease.im/im-demo">Demo</a></td>
+      <td>* IM 和 UI 部分都是 JavaScript 原生，跨平台，方便维护 * UI 部分可以方便替换为 <a href="https://github.com/FaridSafi/react-native-gifted-chat">react-native-gifted-chat</a> 或者 <a href="https://github.com/jpush/aurora-imui">aurora-imui</a> 的版本</td>
+      <td>* 官方未提供音视频的解决方法，导致依旧需要使用到原生 IM SDK * 音视频占用另外一个登陆终端数 * 软件包体积过大 * 通话话单无法同步到 IM 的聊天界面中 * IM 和实时音视频部分交互困难</td>
+    </tr>
+  </tbody>
+</table>
+
+<!--kg-card-end: markdown-->
+
+<p>如果选用网易的一体化解决方案，有以下几个问题：</p>
+
+<ol>
+  <li>因为账号体系的问题，实时音视频无论如何都避免不了引用 Native 的 IM SDK 情况，应用包体积难以控制；</li>
+  <li>官方对 react-native 的支持偏弱，<a href="https://github.com/netease-im/NIM_ReactNative_Demo">NIM_ReactNative_Demo</a>中也没有看到未来支持实时音视频的计划；</li>
+  <li>如果选择 <a href="https://github.com/reactnativecomponent/react-native-netease-im">react-native-netease-im</a>，则需要保证实时音视频库的版本号与其内部 NIM SDK 版本号保持一致，尽可能减少问题的发生，否则可能会出现意料之外的问题；</li>
+  <li>UI 层面，如果提取自 <a href="https://github.com/netease-im/NIM_ReactNative_Demo">NIM_ReactNative_Demo</a>，需要进一步定制开发，如果直接引用 react-native-imui，则自身改动的可能性不大，依赖于第三方的开发者来更新。无论是采用官方 Demo 还是第三方库，其支持都比较弱；</li>
+  <li>对于没有独立的安卓和 iOS 研发工程师的团队，对实时音视频界面定制化可能性不高，唯一选择就是从官方 Native <a href="https://netease.im/im-demo">Demo</a>中提取；</li>
+</ol>
+
+<p>而且，在使用过程中，我们还发现了一些小问题，例如：Web 端的信令解释与 Native SDK 对信令的解释不同。因为信令枚举值采用的是数字表示，Native SDK 发送某个信令在 Web SDK 中解释成了不同的信令。这可能是因为版本不同造成，但 SDK 本身开发的过程中应该注意到一致性和向前兼容性，且咨询工程师后无果。此问题一直没有处理。</p>
+
+<h2 id="概览">概览</h2>
+
+<p>可以通过现况了解到，网易的实时音视频的业务逻辑是附加在其 IM 之上的，这个和声网形成了差异。声网作为一家专业的音视频解决方案提供商，实时音视频作为其主要的业务提供，且独立提供，没有提供 IM 的完整功能，只提供了部分功能：例如实时发送文本消息等。附加功能是为了信令而服务。</p>
+
+<p>声网提供了音视频通话 SDK 和实时消息 SDK 两种 SDK，虽然均只提供了 Native 版本，但在开源社区的维护之下，react-native 的版本与官方几乎可以做到同步更新。同样的，社区中的 Demo 数量众多，文档较网易更为清晰。因为暂未付费，所以仅站在免费用户角度上来评估，官方的支持论坛响应时间短，且有工程师直接进行对接支持，已经可以达到了网易云信付费的水平。有一个完整的社区，比通过 QQ 群进行咨询，效率高出了不少，也便于查找和留存。</p>
+
+<h2 id="主要差异">主要差异</h2>
+
+<p>在进行调研之后，我们发现，如果要把实时音视频从网易云信切换到声网，会遇到以下几个问题：</p>
+
+<ol>
+  <li>用户体系区别：网易云信音视频，沿用的是网易云信 IM 的那套账户体系；声网在实时音视频中，没有用户体系的概念，只有在信令系统中才有账户体系的概念；</li>
+  <li>概念区别：就像上面说的，网易云信的音视频业务逻辑是附加在其 IM 之上的，所以与单个用户建立“点对点”音视频通话，就类似手机直接拨打该用户的电话（ID）一样直接，由网易云信的服务器负责呼叫对方。但声网逻辑不同，声网是以“多人会议”的思路来处理点对点的音视频通话的，点对点的音视频通话只是多人音视频会议的一个特例。首先需要创建一个频道（为了辅助理解，我们称之为会议室），然后各方 <strong>主动</strong> 加入这个会议室中，加入时仅需要提供一个自身的 UID 即可，这个 UID 的要求是——只要保证会议室内的用户间不重复即可。主动加入，那也是主动离开。如果任何一方挂断本次通话，不会影响另外一方。可以类比为，会议室是一个房间，大家可以进入这个房间，也可以离开这个房间，但会议室本身不会消失，如果会议室里面没有人，就代表没有进行中的音视频通话。这是概念的区别；</li>
+  <li>信令的区别：在 2 的认知基础上，网易云信实时音视频 SDK 部分包含了针对信令的部分处理，例如被叫用户响铃、被叫用户是否接受通话、主叫被叫用户是否挂断等信号传输，且如果从官方 <a href="https://netease.im/im-demo">Demo</a> 提取了实时音视频的 UI 部分的话，同时会将信令接收后的处理逻辑一并提取，做到开箱即用。但声网则需要运用到他家的另外一项服务：信令或者实时消息（Beta）来传输这些内容，传输数据格式没有定义，需要开发者自行定义。用户需要先登录信令服务器，然后才能接受信令消息，最后对接收到的信令进行处理。这就对开发者提出了设计的要求；</li>
+  <li>离线推送：在 2 和 3 的认知基础上，如果用户不在线，例如 App 的使用者，在没有打开 App 的情况下，网易云信 IM SDK 配置了推送功能，并支持小米、华为、vivo 等推送渠道，可以快速将被叫的推送信息推送到用户手机中。但声网并没有提供这个功能，也就是说，需要实现这个功能，需要由开发者自身建立一个推送渠道，并且在服务器上实现推送逻辑。例如：需要另外搭配极光推送使用；</li>
+</ol>
+
+<p>以下用一个表格进行网易云信和声网实时音视频业务方面的对比：</p>
+
+<!--kg-card-begin: markdown-->
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>网易云信</th>
+      <th>声网</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>用户账户</td>
+      <td>与 IM 挂钩，用户信息在 IM 中存储</td>
+      <td>加入音视频通话时只需提供 UID，也可以不提供，由服务器自动生成；信令系统有账户的概念</td>
+    </tr>
+    <tr>
+      <td>支持类型</td>
+      <td>点对点、多人会议</td>
+      <td>多人会议</td>
+    </tr>
+    <tr>
+      <td>加入方式</td>
+      <td>主动邀请 / 被动接受</td>
+      <td>主动加入</td>
+    </tr>
+    <tr>
+      <td>信令系统</td>
+      <td>内置</td>
+      <td>外置 / 亦可开发者自行实现</td>
+    </tr>
+    <tr>
+      <td>推送通知</td>
+      <td>内置</td>
+      <td>无，需开发者自行实现</td>
+    </tr>
+    <tr>
+      <td>音视频之间切换</td>
+      <td>需重新加入，不可无缝切换</td>
+      <td>无需重新加入，关闭摄像头即可，可单方面开启摄像头</td>
+    </tr>
+  </tbody>
+</table>
+
+<!--kg-card-end: markdown-->
+
+<p><img src="/assets/img/archived/---------_o.png" alt="" />
+图片引用自网易云信多人通话的文档，我们可以看到可以看到声网的逻辑，和网易云信的多人通话是一致的。但网易多人通话集成了声网的信令传送部分，更为简单。</p>
+
+<h2 id="流程介绍">流程介绍</h2>
+
+<p>下面介绍一个完整声网音视频通话流程次序，流程参考了 GitHub 上 <a href="https://github.com/AgoraIO/Advanced-Video">AgoraIO/Advanced-Video</a>仓库中 OpenDuo 实现：</p>
+
+<ol>
+  <li>系统中的用户 A 准备呼叫另外一个用户 B，用户 A 端称之为主叫端，用户 B 端称之为被叫端</li>
+  <li>主叫端使用 App ID 初始化 Agora SDK</li>
+  <li>主叫端请求应用服务器，获取用于登陆信令服务器的 <em>Token A</em></li>
+  <li>主叫端使用 _Token A_登陆信令服务器</li>
+  <li>主叫端在 UI 界面中选择用户，并点击呼叫按钮</li>
+  <li>主叫端向应用服务器发送一个请求，表明要呼叫另外一个用户（被叫者），由服务器端返回加入频道的 <em>Token B_和频道名 _Channel Name</em></li>
+  <li>主叫端使用 &lt;<em>Token B</em>,  <em>Channel Name</em>&gt; 加入（创建）音视频频道</li>
+  <li>主叫端使用 &lt;<em>Token A</em>, <em>Channel Name</em>&gt; 加入信令频道，并开始监听频道事件</li>
+  <li>主叫端的 UI 显示呼叫中，同时通过信令服务器向被叫端发起远程通话邀请</li>
+  <li>这里我们假设被叫端在线，且已登陆信令系统。被叫端收到 <em>RemoteInvitation_消息，_RemoteInvitation_消息中包含了音视频频道名 _Channel Name</em>，被叫端的 UI 界面上显示请求通话的相关内容，被叫端可以选择接受，也可以选择拒绝</li>
+  <li>被叫端选择接受主叫者的音视频通话邀请，并加入音视频 <em>Channel Name_和信令频道 _Channel Name</em></li>
+  <li>被叫端加入房间后，监听信令频道的事件</li>
+  <li>主叫端接收到由信令系统传输的“接受邀请”信息，界面从呼叫中转换为视频中</li>
+  <li>主叫和被叫进行视频通话</li>
+  <li>通话结束，任意一方点击挂断，离开音视频频道，同时也离开了信令频道</li>
+  <li>另外一方从信令频道监听到离开频道事件，如业务上需要自动挂断，则响应该消息：离开音视频频道，同时也离开了信令频道</li>
+</ol>
+
+<p>当然，更多的情况例如：被叫端不在线、通话过程中断线等等异常情况，则需要更详细的处理，此处只是列举了音视频通话的一种常见的情况。我们可以看到，如果基于声网要进行一个带有主叫和被叫的音视频通话，在建立一个音视频频道的基础之上，还需要同步建立一个信令频道，这两个频道互不干扰，名称可以保持一致，也可以不一致。主要思想即是，由信令来控制音视频频道的相关操作。同时对于接收到的信令，需要自行处理。</p>
+
+<p>以网易的文档进行对比：</p>
+
+<p><strong>呼叫 / 接听流程</strong> ：</p>
+
+<!--kg-card-begin: markdown-->
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>网易云信</th>
+      <th>声网</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>主叫发起通话请求</td>
+      <td>主动调用 SDK</td>
+      <td>信令系统提供 API</td>
+    </tr>
+    <tr>
+      <td>被叫收到通话请求回调</td>
+      <td>SDK 回调</td>
+      <td>信令系统提供 API</td>
+    </tr>
+    <tr>
+      <td>被叫响应通话请求</td>
+      <td>主动调用 SDK</td>
+      <td>信令系统提供 API</td>
+    </tr>
+    <tr>
+      <td>主叫收到被叫响应回调</td>
+      <td>SDK 回调</td>
+      <td>信令系统提供 API</td>
+    </tr>
+    <tr>
+      <td>呼入的通话已经被该帐号其他端处理回调</td>
+      <td>SDK 回调</td>
+      <td>无</td>
+    </tr>
+    <tr>
+      <td>通话建立结果回调</td>
+      <td>SDK 回调</td>
+      <td>无</td>
+    </tr>
+  </tbody>
+</table>
+
+<!--kg-card-end: markdown-->
+
+<p><strong>挂断流程</strong> ：</p>
+
+<!--kg-card-begin: markdown-->
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>网易云信</th>
+      <th>声网</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>结束通话</td>
+      <td>主动调用 SDK</td>
+      <td>主动离开房间</td>
+    </tr>
+    <tr>
+      <td>收到对方结束通话回调</td>
+      <td>SDK 回调</td>
+      <td>需要自行实现</td>
+    </tr>
+    <tr>
+      <td>通话异常断开</td>
+      <td>SDK 回调</td>
+      <td>无法实现</td>
+    </tr>
+    <tr>
+      <td>话单通知</td>
+      <td>SDK 回调</td>
+      <td>需要自行实现</td>
+    </tr>
+  </tbody>
+</table>
+
+<!--kg-card-end: markdown-->
+<h2 id="解决方式">解决方式</h2>
+
+<p>从网易云信迁移到声网的最主要的差异，一是用户账户系统，二是信令设计、处理的部分。</p>
+
+<p>对于用户账户系统，可以沿用业务系统中的 User ID，但需要根据业务的不同考虑后续的扩展：例如会不会有一个用户的多台设备同时加入音视频会议？对于信令部分，呼叫、接听流程没有太多需要开发的工作，但挂断流程，声网没有像网易云信提供一些封装好的接口，这个会导致开发者需要做一些额外的工作量。同时如何安全处理断网掉线的情况，也是在设计之初就需要考虑的。我们在上面的讨论中都没有提及离线推送的内容，如果加上离线推送，开发的复杂性会更上一层楼。考虑到离线推送，也可以抛弃声网提供的信令 SDK，由开发者自身完全搭建一套包含离线推送的信令系统也是一个选择。具体选择哪种，还视情况而定。可以参考上面提到的 <a href="https://github.com/AgoraIO/Advanced-Video/tree/master/Video-Call-with-Chat/OpenDuo-Web">Demo</a> 中代码实现。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>从价格方面考虑，网易云信如果开通实时音视频，要求每个月最低消费 1000 元，其中包含音视频各 1000 分钟，超过部分按照使用量收费；而声网每个月赠送 10000 分钟的实时音视频通话，后续再按照使用量收费。两者计算价格方式不同，但对于音视频通话量级较少的企业，如果要快速集成音视频功能，同时也没有什么历史包袱的话，采用声网是一个不错的选择。</p>
+
+<p>站在开发者的角度，如果企业拥有独立的前端工程师和移动端工程师，网易云信实时音视频未尝不是一个好的解决方案。但是对于人员编制相对紧凑的团队来说，如果一个类库或者组件，官方的支持不够强大，而且也没有开源社区支持的情况下，就应该考虑是否可以切换到其他更“对开发者友好”的替代产品。无论是从 Demo 数量还是 GitHub 社区的支持程度上说，声网都要比网易云信好不少。</p>
+
+<p>参考目前用户的口碑，声网在实时音视频上的技术实力应该是强于网易云信的，国内大量的创业企业也都采用了他们的产品。虽然在迁移的过程中会带来痛苦，但后续的扩展性应该会更好。</p>
+
+<p><strong>无论如何，进行这种迁移都会带来风险，需要和团队之间进行深度的讨论再做决定</strong> 。</p>
+
+<h2 id="参考">参考</h2>
+
+<p>声网实时音视频 SDK：</p>
+
+<ul>
+  <li><a href="https://docs.agora.io/cn/Agora%20Platform/downloads">https://docs.agora.io/cn/Agora%20Platform/downloads</a></li>
+  <li><a href="https://github.com/syanbo/react-native-agora">https://github.com/syanbo/react-native-agora</a></li>
+</ul>
+
+<p>声网 Demo：</p>
+
+<ul>
+  <li><a href="https://github.com/AgoraIO-Community/Agora-RN-Quickstart">https://github.com/AgoraIO-Community/Agora-RN-Quickstart</a></li>
+  <li><a href="https://github.com/AgoraIO-Community/OpenAgoraWeb-React">https://github.com/AgoraIO-Community/OpenAgoraWeb-React</a></li>
+</ul>
+
+<p>声网技术资料：</p>
+
+<ul>
+  <li><a href="https://rtcdeveloper.com/t/topic/15255/3">https://rtcdeveloper.com/t/topic/15255/3</a></li>
+  <li><a href="https://github.com/AgoraIO/Advanced-Video/tree/master/Video-Call-with-Chat">https://github.com/AgoraIO/Advanced-Video/tree/master/Video-Call-with-Chat</a></li>
+  <li><a href="https://rtcdeveloper.com/t/topic/571">https://rtcdeveloper.com/t/topic/571</a></li>
+</ul>]]></content><author><name></name></author><category term="report" /><category term="agora-io" /><category term="frontend" /><category term="rtc" /><category term="wang-yi-yun-xin" /><summary type="html"><![CDATA[本文编写于 2019 年 7 月 17 日，请注意时效性！]]></summary></entry><entry><title type="html">一千种方法失败，一种方法成功</title><link href="https://blog.evianzhow.com/1000-ways-to-failure-but-1-way-to-success/" rel="alternate" type="text/html" title="一千种方法失败，一种方法成功" /><published>2019-04-16T14:30:32+00:00</published><updated>2019-04-16T14:30:32+00:00</updated><id>https://blog.evianzhow.com/1000-ways-to-failure-but-1-way-to-success</id><content type="html" xml:base="https://blog.evianzhow.com/1000-ways-to-failure-but-1-way-to-success/"><![CDATA[<p>昨天晚上听说了一些事情，便在推特上写的下面这段推文。</p>
+
+<blockquote>
+  <p>创业失败的理由可能有一万个，每个环节的出错都可能导致前功尽弃失败。但成功的理由只有一个，就是整个公司在所有该做对的事情上都做对了。当然，是在目前的语境下这么认为的。</p>
+</blockquote>
+
+<p>今天早晨起来，看到巴黎圣母院大火的事情，感慨万分。貌似这个道理，同样适用于这次的大火事件。 <strong>对于任何需要大量人员参与、配合的团体活动来说，失败的理由有一千种，但成功的理由只有一种。</strong> 拿修复巴黎圣母院这件事情来说，失败的理由可能是经费不够，可能是时间拖得太长烂尾，可能是一场大火，可能是一次意料之外的革命。有些失败理由可以被预料到，有些理由预料不到于是变成了黑天鹅。所以，失败的理由有一千种。但修复成功的方式只有一种——在合适的时间，利用合适的金钱，聘请了有经验的、符合质量管理体系的团队，在一切尽善尽美之下完成了本次修复工作。</p>
+
+<p>所以，有的时候会觉得，我们这个世界已经达到了“最优化”的状态。那种以“假如”开头的论断，总是在挑逗我们的想象力：是否做出另外一个选择，我们的世界，可以变得更好。</p>
+
+<p><em>不成立__。</em></p>
+
+<p>时间无法倒退，燃烧的火苗无法自行熄灭，同样，我们的世界也不会变得更好。</p>]]></content><author><name></name></author><category term="daily" /><summary type="html"><![CDATA[昨天晚上听说了一些事情，便在推特上写的下面这段推文。]]></summary></entry><entry><title type="html">2018 投资总结</title><link href="https://blog.evianzhow.com/2018-investment-summary/" rel="alternate" type="text/html" title="2018 投资总结" /><published>2019-01-14T08:07:14+00:00</published><updated>2019-01-14T08:07:14+00:00</updated><id>https://blog.evianzhow.com/2018-investment-summary</id><content type="html" xml:base="https://blog.evianzhow.com/2018-investment-summary/"><![CDATA[<p>还记得 17 年结尾时候吹爆股市的 <a href="https://blog.evianzhow.com/2017-investment-notes/">这篇</a> 总结，现在回头看看 18 年经过的大风大浪，感叹自己还是对于投资领域的不成熟。</p>
+
+<p>不成熟在于，选择用全部的资金押注了股票市场；
+不成熟在于，对于 A 股甚至是中国国情的过度自信；
+不成熟在于，当身边急需用钱的时候选择了割肉套现；
+还有许多的不成熟；</p>
+
+<p>本来就想这么偷懒过去，但不做总结是不对的，回顾 2018 年的证券账户操作和流水，总体的风格依旧没有变。无非是聚焦在白马的领域，操作的股票也就那几只。当然对于不熟悉的医药领域也有部分的涉猎，但真的是皮毛中的皮毛，和在人民广场讨论股票的老年股民朋友们实无差异。虽然买卖的股票很少有中小创的品种，但投资白马并不意味着没有风险，也并不意味着风险就比中小创企业就少，这只是投资风格的一种，没有好坏之分。</p>
+
+<blockquote>
+  <p>不要过分迷信白马神话，因为接下来我要跟你讲一个真实的故事。</p>
+</blockquote>
+
+<p>曾经因股息率而极度看好的中国石化，作为它的忠实用户（是的，我的车只加中国石化，除非高速上没有选择了），谁能想到因为 <a href="http://stock.jrj.com.cn/2018/12/27130926811422.shtml">高管的操作失误导致巨额亏损</a>，进而影响到了股价？在我看来，这个黑天鹅充分暴露出了国内企业管理制度、风险制度缺失的现象。就连如此庞大的一个企业管理能力都无法让人信服，更何况中小创呢？</p>
+
+<p>18 年初，另外做的一个错误的决定就是退出美股，将资金回归 A 股。全球资产的布局，是任何一个拥有风险管理思维的人都会做出的一个决定，但我因为惰于思考，觉得晚上还要关注太累了，就没有继续。资金的一出一入，去掉汇率和汇款的影响，等于没有挣钱。后来谁也没有想到人民币的汇率逼近 7 关口，外汇管制继续加强，苹果从巅峰的股价拦腰折断一半。</p>
+
+<p>其他的投资方向？没有，说不定比 A 股还要惨。加密货币崩盘了，P2P 公司跑路了，房产交易量萎缩一路阴跌。很庆幸自己没碰，否则就不是 -20% 的收益率了，而是血本无归了。大家都患上了中产阶级投资焦虑症——因为钱无处可投。外面的媒体继续在吹中国的 Debt Bomb，国内依旧在大喊“经济稳中向好”，人就像快得了精神分裂症。未来的经济形势会不会比 18 年更差，我不知道。但如果你在 17 年年底问我，我肯定会告诉你我对未来大有信心。但现在，却是实实在在打了我的脸。关注的几个博主都是多头力量，天天喊话打鸡血，我相信是现在历史估值低位，但一旦现在投入资金还要亏损多久仍是个未知数。</p>
+
+<p>另外，18 年的最后两个月，因为个人开支大量超支，所以迫不得已从股市中取出了 20% - 30% 的资金用于还消费款，导致大量的股票割肉。我也无法称这种行为是好是坏。说好，可以说是及时止损，说坏，是因为永远丢掉了仓位。</p>
+
+<p>确实，说到这里，18 年是糟糕的。所以在 18 年的最后一天，我做了一个决定，而且以后每年都会这样做——<strong>用财务报表（三表，资产负债表、利润表、现金流量表）的模式记录每个周期的收入和支出</strong>，得到个人资产的变化情况。我先做了一个当前资产的快照，了解自己的存款、股票投资净值、负债（白条、花呗、信用卡分期付款）等等数值。在等到下一个周期开始的时候，再做一次快照，以两次数据中间的差额分析周期内的收入和支出，进而分析自己的挣钱能力、消费水平，不至于盲目投资、盲目消费。我希望这种想法可以给你带来一些参考的价值。</p>
+
+<p>另外，19 年也会考虑一些公司债，将自己的投资品种分布更加广泛一些，希望能够在这个越来越难挣钱的时代，可以跑赢平均收益，可以挣钱。</p>
+
+<p>祝大家 19 年过得开心。</p>]]></content><author><name></name></author><category term="financial" /><category term="investment" /><summary type="html"><![CDATA[还记得 17 年结尾时候吹爆股市的 这篇 总结，现在回头看看 18 年经过的大风大浪，感叹自己还是对于投资领域的不成熟。]]></summary></entry><entry><title type="html">【译】关于个人财务管理的 833 字箴言</title><link href="https://blog.evianzhow.com/everything-you-need-to-know-about-personal-finance-in-833-words/" rel="alternate" type="text/html" title="【译】关于个人财务管理的 833 字箴言" /><published>2019-01-06T14:08:05+00:00</published><updated>2019-01-06T14:08:05+00:00</updated><id>https://blog.evianzhow.com/everything-you-need-to-know-about-personal-finance-in-833-words</id><content type="html" xml:base="https://blog.evianzhow.com/everything-you-need-to-know-about-personal-finance-in-833-words/"><![CDATA[<blockquote>
+  <p>原文来源 <a href="https://www.wsj.com/articles/simple-bedrock-rules-on-personal-finance-1423358434">https://www.wsj.com/articles/simple-bedrock-rules-on-personal-finance-1423358434</a></p>
+</blockquote>
+
+<p><img src="/assets/img/archived/everything-about-personal-finance-in-833-words.png" alt="everything-about-personal-finance-in-833-words" /></p>
+
+<p>好久不写日志了，水一篇。</p>
+
+<p><em>黑色字体：翻译</em>
+<em><span style="color:red">红色</span>：译者备注，便于理解</em></p>
+
+<ul>
+  <li>不要相信（那些专业机构）预测的经济和金融数据</li>
+  <li>不要相信所谓专家推荐的股票</li>
+  <li>让你的资产配置的复杂度尽可能低</li>
+  <li>如果你想赌博，那请只买一只股票吧，我不拦你</li>
+  <li>尽可能让你的长期（长线）投资变成股权投资</li>
+  <li>全球化配置你的资产，不要仅限于美国（<span style="color:red">中国</span>）</li>
+  <li>可以持有一些债券，例如长期国债、通胀挂钩债券等（<span style="color:red">公司债也可以，但要考虑信用评级</span>）</li>
+  <li>千万不要买彩票，那是交智商税！</li>
+  <li>知道自己适合什么样的投资策略（<span style="color:red">遵循《投资者风险承受能力评估》的结果去配置资产，千万别买超过你风险承受能力的资产</span>）</li>
+  <li>保险有必要买，但尽可能买一些免赔额高的保险，因为性价比高（<span style="color:red">免赔额, 免赔的额度。 指由保险人和被保险人事先约定，损失额在规定数额之内，被保险人自行承担损失，保险人不负责赔偿的额度</span>）</li>
+  <li>买意外伤害保险，以防大难大病的降临</li>
+  <li>尽可能早的开始攒钱，尽可能多的攒钱（<span style="color:red">课外阅读：FIRE 运动</span>）</li>
+  <li>尽可能利用免税的一些政策来攒钱（例如美国的 401k 养老金计划）</li>
+  <li>你现在拥有的已经够你生活了，拥有越多的物质，一是没有必要，二是这会给你带来越多的物质欲望，无穷无尽</li>
+  <li>计划你退休后的收入来源方式</li>
+  <li>千万不要因为“以后会去度假”的这种理由去购置你不常住的不动产！</li>
+  <li>当月还清你的信用卡账单，不要分期（<span style="color:red">信用卡公司给你的利息快接近高利贷了！</span>）</li>
+  <li>会赚不如会“积”</li>
+  <li>谨慎购置你所在公司的股权</li>
+  <li>屏蔽（<span style="color:red">一切的</span>）广告</li>
+  <li>别因为要满足自己的炫耀心而去买东西</li>
+  <li>就算你要做一件惊天动地的大事很费钱，也别把你的养老的老本全掏空了，风险太大！</li>
+  <li>教会你的下一代如何理财</li>
+  <li>审视自己拥有的财富（<span style="color:red">当你对你的现金、存款、外债有一个清晰数字的时候，你买东西也会更理性</span>）</li>
+  <li>学会分享，适度做一些慈善</li>
+</ul>]]></content><author><name></name></author><summary type="html"><![CDATA[原文来源 https://www.wsj.com/articles/simple-bedrock-rules-on-personal-finance-1423358434]]></summary></entry></feed>

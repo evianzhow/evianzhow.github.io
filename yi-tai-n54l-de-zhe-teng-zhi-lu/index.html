@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>一台 N54L 的折腾之旅 | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="一台 N54L 的折腾之旅" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="很早之前入了一台 HP 的 N54L，主要由于它强大的性价比，使得市面上所有的 4-Bay 的存储系列产品都比不上这款 HP 出品的微型服务器。" />
+<meta property="og:description" content="很早之前入了一台 HP 的 N54L，主要由于它强大的性价比，使得市面上所有的 4-Bay 的存储系列产品都比不上这款 HP 出品的微型服务器。" />
+<link rel="canonical" href="https://blog.evianzhow.com/yi-tai-n54l-de-zhe-teng-zhi-lu/" />
+<meta property="og:url" content="https://blog.evianzhow.com/yi-tai-n54l-de-zhe-teng-zhi-lu/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-06-10T16:49:45+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="一台 N54L 的折腾之旅" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2016-06-10T16:49:45+00:00","datePublished":"2016-06-10T16:49:45+00:00","description":"很早之前入了一台 HP 的 N54L，主要由于它强大的性价比，使得市面上所有的 4-Bay 的存储系列产品都比不上这款 HP 出品的微型服务器。","headline":"一台 N54L 的折腾之旅","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/yi-tai-n54l-de-zhe-teng-zhi-lu/"},"url":"https://blog.evianzhow.com/yi-tai-n54l-de-zhe-teng-zhi-lu/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">一台 N54L 的折腾之旅</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2016-06-10T16:49:45+00:00" itemprop="datePublished">Jun 10, 2016
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>很早之前入了一台 HP 的 N54L，主要由于它强大的性价比，使得市面上所有的 4-Bay 的存储系列产品都比不上这款 HP 出品的微型服务器。</p>
+
+<p>按照我这个折腾的性格，不对 N54L 进行什么改造是不太可能的，查阅了网上的一些资料之后，采购物料，也算终于搞定了 ESXi + Synology DSM 的方案，这篇文章算是对 N54L 的折腾之旅进行一个总结。</p>
+
+<h3 id="hardware-upgrade">Hardware Upgrade</h3>
+
+<ul>
+  <li>我这台 N54L 原装了 4G 的内存，但由于共享显存，划分走了一小段内存，导致在 ESXi 5.0 后续版本安装中没有满足最小需求 4GB 的条件，我加了一条 <a href="http://item.jd.com/783267.html">KVR16E11S8/4</a>。价格 CNY 256。</li>
+  <li>ESXi 不支持板载的软 Raid，需要自己安装硬件 RAID 卡，比较之下，选择了 HP P410 Smart Array + 512M Cache + Battery 模组。选择理由比较简单，一个是原厂出品的 RAID 控制卡，兼容性肯定能够保证，第二是目前淘宝拆机的这种卡比较多，看上去应该像洋垃圾，但相比于从美国邮一个新的控制卡相比，个人觉得能正常工作就可以。价格约为 CNY 160。</li>
+  <li>第二块网络卡，随便找了一个<a href="https://www.amazon.cn/gp/product/B00H8H1HJG/ref=oh_aui_detailpage_o01_s00?ie=UTF8&amp;psc=1">半高挡板的卡</a>，Realtek 芯的。价格 CNY 76。</li>
+  <li>ESXi 启动 U 盘，以小为主，容量够用就可以。我选择了<a href="http://item.jd.com/1194107.html">SanDisk CZ43 USB3.0 16GB</a>。价格 CNY 35。</li>
+</ul>
+
+<p><strong>改造成本 &lt; CNY 550</strong></p>
+
+<p>准备齐全后，进行软件方面的改造，基本思路就是 ESXi 做虚拟化。之前惊奇的发现了 VMWare Fusion Pro 7 提供了对 ESXi 主机访问的支持，让我对这个解决方案的好感度又上升了一个层次，再也不用开一台 Windows 机器跑 vSphere Client 了。</p>
+
+<h3 id="software-upgrade">Software Upgrade</h3>
+
+<p>由于安装的 ESXi 5.5 系统停止了对 Realtek 消费级的网卡驱动支持，所以需要使用 <a href="http://www.v-front.de/p/esxi-customizer-ps.html">ESXi-Customizer-PS</a> 脚本创建 net-r8168 和 net-r8169 的支持。但是需要注意的是不适用于 ESXi 6.0 的方式，具体的支持方式在脚本的 Tutorial 中有。</p>
+
+<p>使用定制的 ESXi 启动安装没有遇到任何的问题，RAID 也可以顺利识别，创建完毕后可能会遇到这个问题：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Configuration Issue: XXX esx.problem.syslog.nonpersistent.formatOnHost not found XXX
+</code></pre></div></div>
+<p>VMWare 的<a href="https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2050689">这个 KB</a> 里也很好解释了。</p>
+
+<p>DSM 按照这个<a href="http://xpenology.me/installing-dsm-5-1-vmware-esxi5-5u1/">教程</a>安装就可以，可以直接使用网站上提供的最新 PAT、ISO 和 VMDK 文件。过程中需要注意手动指定安装的 DSM 文件，而不是通过网络方式下载安装，否则 DSM 6.0 不兼容 Xpenology 的引导。</p>
+
+<h3 id="summary">Summary</h3>
+
+<p>总体上来说，安装完虚拟化之后，对服务器的整体可玩性增强了，各个虚拟机的职能划分也更加清晰。这篇文章主要提供给大家一个改造的思路，至少我使用这些硬件都是兼容 N54L。</p>
+
+<p>另外根据改造的成本核算下来，也比买群晖官方的 4-Bay 系列来的便宜得多，唯一的缺点就是没有办法始终升级到最新的 DSM 系统了。</p>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/yi-tai-n54l-de-zhe-teng-zhi-lu/';
+      this.page.identifier = 'https://blog.evianzhow.com/yi-tai-n54l-de-zhe-teng-zhi-lu/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/yi-tai-n54l-de-zhe-teng-zhi-lu/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

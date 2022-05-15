@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>在 OpenWRT 上编译 ss-server | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="在 OpenWRT 上编译 ss-server" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="目前在 OpenWRT 上比较常用的 ShadowSocks 预编译的安装包都没有提供对 ss-server 的支持，而且根据 shadowsocks-libev 版的作者的话，不建议在嵌入式设备上运行 ss-server。但是，如果你对自己的 Router 性能比较有信心的话，而且你有在 Router 上运行 ShadowSocks 服务端的需求的话，你需要手动编译 ipk 安装包了。" />
+<meta property="og:description" content="目前在 OpenWRT 上比较常用的 ShadowSocks 预编译的安装包都没有提供对 ss-server 的支持，而且根据 shadowsocks-libev 版的作者的话，不建议在嵌入式设备上运行 ss-server。但是，如果你对自己的 Router 性能比较有信心的话，而且你有在 Router 上运行 ShadowSocks 服务端的需求的话，你需要手动编译 ipk 安装包了。" />
+<link rel="canonical" href="https://blog.evianzhow.com/zai-openwrt-shang-bian-yi-ss-server/" />
+<meta property="og:url" content="https://blog.evianzhow.com/zai-openwrt-shang-bian-yi-ss-server/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-06-16T04:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="在 OpenWRT 上编译 ss-server" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2014-06-16T04:00:00+00:00","datePublished":"2014-06-16T04:00:00+00:00","description":"目前在 OpenWRT 上比较常用的 ShadowSocks 预编译的安装包都没有提供对 ss-server 的支持，而且根据 shadowsocks-libev 版的作者的话，不建议在嵌入式设备上运行 ss-server。但是，如果你对自己的 Router 性能比较有信心的话，而且你有在 Router 上运行 ShadowSocks 服务端的需求的话，你需要手动编译 ipk 安装包了。","headline":"在 OpenWRT 上编译 ss-server","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/zai-openwrt-shang-bian-yi-ss-server/"},"url":"https://blog.evianzhow.com/zai-openwrt-shang-bian-yi-ss-server/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">在 OpenWRT 上编译 ss-server</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2014-06-16T04:00:00+00:00" itemprop="datePublished">Jun 16, 2014
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>目前在 OpenWRT 上比较<a href="http://openwrt-dist.sourceforge.net">常用</a>的 ShadowSocks 预编译的安装包都没有提供对 ss-server 的支持，而且根据 shadowsocks-libev 版的作者的话，不建议在嵌入式设备上运行 ss-server。但是，如果你对自己的 Router 性能比较有信心的话，而且你有在 Router 上运行 ShadowSocks 服务端的需求的话，你需要手动编译 ipk 安装包了。</p>
+
+<p>此处假设你已经拥有了一个完整 build OpenWRT的环境，然后按照 <a href="https://github.com/madeye/shadowsocks-libev">shadowsocks-libev</a> 上的 README，修改 package/shadowsocks-libev/openwrt/ 下的Makefile文件。 大约在 60 行左右的位置有这一行：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-{local,redir,tunnel} $(1)/usr/bin
+</code></pre></div></div>
+
+<p>将 server 加入花括号内。由于 ss-server 需要 libpthread 库，所以需要在 DEPENDS 后加上 +libpthread，重新 make 就能生成带 ss-server 的 ipk 了。 安装的时候需要注意先安装 libpthread 库，再安装 shadowsocks-libev，libpthread 库在 build 的过程中会自动生成，故直接 scp 到 Router 上安装即可。</p>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/zai-openwrt-shang-bian-yi-ss-server/';
+      this.page.identifier = 'https://blog.evianzhow.com/zai-openwrt-shang-bian-yi-ss-server/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/zai-openwrt-shang-bian-yi-ss-server/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Compile shadowsocks-libev and ChinaDNS for EdgeRouter PoE | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Compile shadowsocks-libev and ChinaDNS for EdgeRouter PoE" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Intro EdgeRouter PoE is an enterprise-level router based on Vyatta operating system, which contains a dual-core MIPS CPU called Cavium CN5020 according to the wiki." />
+<meta property="og:description" content="Intro EdgeRouter PoE is an enterprise-level router based on Vyatta operating system, which contains a dual-core MIPS CPU called Cavium CN5020 according to the wiki." />
+<link rel="canonical" href="https://blog.evianzhow.com/compile-shadowsocks-libev-and-chinadns-for-edgerouter-poe/" />
+<meta property="og:url" content="https://blog.evianzhow.com/compile-shadowsocks-libev-and-chinadns-for-edgerouter-poe/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-05-04T15:09:29+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Compile shadowsocks-libev and ChinaDNS for EdgeRouter PoE" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2016-05-04T15:09:29+00:00","datePublished":"2016-05-04T15:09:29+00:00","description":"Intro EdgeRouter PoE is an enterprise-level router based on Vyatta operating system, which contains a dual-core MIPS CPU called Cavium CN5020 according to the wiki.","headline":"Compile shadowsocks-libev and ChinaDNS for EdgeRouter PoE","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/compile-shadowsocks-libev-and-chinadns-for-edgerouter-poe/"},"url":"https://blog.evianzhow.com/compile-shadowsocks-libev-and-chinadns-for-edgerouter-poe/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Compile shadowsocks-libev and ChinaDNS for EdgeRouter PoE</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2016-05-04T15:09:29+00:00" itemprop="datePublished">May 4, 2016
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h4 id="intro">Intro</h4>
+<p>EdgeRouter PoE is an enterprise-level router based on <a href="http://vyos.net/wiki/Vyatta">Vyatta</a> operating system, which contains a dual-core MIPS CPU called Cavium CN5020 according to the <a href="https://wikidevi.com/wiki/Ubiquiti_Networks_EdgeRouter_POE">wiki</a>.</p>
+
+<p>Official shadowsocks-libev package source doesn’t contain MIPS pre-compiled version, also EdgeOS has some compatibility issues prohibiting us from compiling packages on that system, so we have to compile by ourselves, in <strong>an more-completed</strong> system.</p>
+
+<p>Several people tried before, and from their research, we known that we have to use <a href="http://www.qemu.org">QEMU</a> to emulate the same MIPS architecture and directly compile shadowsocks-libev and ChinaDNS on that system.</p>
+
+<h3 id="0x7c00">0x7c00</h3>
+
+<p>At first, we should prepare an machine installed Linux and QEMU on it. 1GB memory and 15GB disk space is a lot enough.</p>
+
+<p>Then, download pre-installed Debian system disk image from <a href="https://people.debian.org/~aurel32/qemu/">https://people.debian.org/~aurel32/qemu/</a> so you don’t need to install system additionally, which will cost much time due to low efficiency under QEMU. Be careful to choose the right version.</p>
+
+<p>After running the image from instructed command, follow below ones. Explanation were made to help you understand better.</p>
+
+<p>You might be ask to do a little interaction during the installation process. The whole compiling process might take up to an hour to finish, drink a beer and relax.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Clear out "no public key available" error
+apt-get install -y --force-yes debian-keyring debian-archive-keyring
+# Re-update
+apt-get update
+# Added backports to sources.list
+echo "\ndeb http://ftp.debian.org/debian wheezy-backports main" &gt;&gt; /etc/apt/sources.list
+# Install git in order to clone shadowsocks-libev and chinadns
+apt-get install -y git
+# Install shadowsocks-libev build dependencies
+apt-get install -y build-essential autoconf libtool libssl-dev gawk debhelper dh-systemd init-system-helpers pkg-config
+git clone https://github.com/shadowsocks/shadowsocks-libev.git
+cd shadowsocks-libev
+git checkout v2.4.6
+dpkg-buildpackage -us -uc -i
+cd ..
+# Install chinadns build dependencies (optional)
+apt-get install -y automake
+git clone https://github.com/shadowsocks/ChinaDNS.git
+cd ChinaDNS
+git checkout v1.3.2
+./autogen.sh
+./configure &amp;&amp; make
+tar czf ../chinadns.tar.gz src/
+cd ..
+</code></pre></div></div>
+
+<p>Also, if you prefer not to compile by yourself, tried these debs <a href="https://www.dropbox.com/sh/adptfr0lufffw1c/AACFgDfEPsHM4HMozYwyPaFqa?dl=0">https://www.dropbox.com/sh/adptfr0lufffw1c/AACFgDfEPsHM4HMozYwyPaFqa?dl=0</a></p>
+
+<p>Remember to add <code class="language-plaintext highlighter-rouge">local_address":"0.0.0.0"</code> to your shadowsocks configuration to let client bind as 0.0.0.0 instead of 127.0.0.1, or iptables rules might not connect any more!</p>
+
+<p>Finally, use <a href="https://github.com/shadowsocks/luci-app-shadowsocks/blob/master/files/root/usr/bin/ss-rules">this small tool</a> to help you create custom iptables rules to redirect proper packages.</p>
+
+<h4 id="updates">Updates</h4>
+
+<ul>
+  <li>More detailed information can be obtained from <a href="https://www.lifetyper.com/2016/12/bypass-gfw-with-shadowsocks-and-dnsmasq-on-edgerouter-x.html">https://www.lifetyper.com/2016/12/bypass-gfw-with-shadowsocks-and-dnsmasq-on-edgerouter-x.html</a></li>
+</ul>
+
+<h4 id="ref">Ref</h4>
+
+<ul>
+  <li>http://www.bdwm.net/bbs/bbstcon.php?board=Networking&amp;threadid=15744113</li>
+  <li>https://www.onlyos.com</li>
+  <li>http://www.cnblogs.com/zerosoul/p/5153651.html</li>
+</ul>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/compile-shadowsocks-libev-and-chinadns-for-edgerouter-poe/';
+      this.page.identifier = 'https://blog.evianzhow.com/compile-shadowsocks-libev-and-chinadns-for-edgerouter-poe/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/compile-shadowsocks-libev-and-chinadns-for-edgerouter-poe/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

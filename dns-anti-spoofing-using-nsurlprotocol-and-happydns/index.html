@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>DNS Anti-spoofing using NSURLProtocol and HappyDNS | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="DNS Anti-spoofing using NSURLProtocol and HappyDNS" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="2/26/2016 更新1: NSURLConnection 在 iOS 9 中已经被标记为 deprecated，如果你想在生产环境里使用，可以将 NSURLConnection 实现替换为 NSURLSession。具体的代码可以参考 CustomHTTPProtocol。" />
+<meta property="og:description" content="2/26/2016 更新1: NSURLConnection 在 iOS 9 中已经被标记为 deprecated，如果你想在生产环境里使用，可以将 NSURLConnection 实现替换为 NSURLSession。具体的代码可以参考 CustomHTTPProtocol。" />
+<link rel="canonical" href="https://blog.evianzhow.com/dns-anti-spoofing-using-nsurlprotocol-and-happydns/" />
+<meta property="og:url" content="https://blog.evianzhow.com/dns-anti-spoofing-using-nsurlprotocol-and-happydns/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-02-19T16:00:54+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="DNS Anti-spoofing using NSURLProtocol and HappyDNS" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2016-02-19T16:00:54+00:00","datePublished":"2016-02-19T16:00:54+00:00","description":"2/26/2016 更新1: NSURLConnection 在 iOS 9 中已经被标记为 deprecated，如果你想在生产环境里使用，可以将 NSURLConnection 实现替换为 NSURLSession。具体的代码可以参考 CustomHTTPProtocol。","headline":"DNS Anti-spoofing using NSURLProtocol and HappyDNS","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/dns-anti-spoofing-using-nsurlprotocol-and-happydns/"},"url":"https://blog.evianzhow.com/dns-anti-spoofing-using-nsurlprotocol-and-happydns/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">DNS Anti-spoofing using NSURLProtocol and HappyDNS</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2016-02-19T16:00:54+00:00" itemprop="datePublished">Feb 19, 2016
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <blockquote>
+  <p>2/26/2016 更新1: NSURLConnection 在 iOS 9 中已经被标记为 deprecated，如果你想在生产环境里使用，可以将 NSURLConnection 实现替换为 NSURLSession。具体的代码可以参考 <a href="https://developer.apple.com/library/ios/samplecode/CustomHTTPProtocol/Listings/Read_Me_About_CustomHTTPProtocol_txt.html">CustomHTTPProtocol</a>。</p>
+</blockquote>
+
+<blockquote>
+  <p>2/26/2016 更新2: NSURLProtocol 可能会导致某些情况下的意外崩溃，这与 NSURLProtocol 本身实现没有关系，可能与系统内部有一定的冲突，具体原因还在调查中。</p>
+</blockquote>
+
+<p>最近在参与一个 iOS 项目的时候，遇到了一点部署在 AWS 上服务器 IP 地址解析上的问题，表现是大量用户反馈出现了 -1003 错误，即 <em>NSURLErrorCannotFindHost</em>，而且这个错误在蜂窝数据下和 WiFi 环境下都有发生。</p>
+
+<p>服务器的 DNS 解析是由 Amazon 的 Route 53 来做的，搜索了相关的关键词，也发现了遇到类似的 <a href="https://github.com/aws/aws-sdk-ios/issues/167">问题</a> 的开发者。暂时保留对 Route 53 在国内可用性的怀疑，从客户端方面着手解决。</p>
+
+<p>想解决这个问题，方法很简单，让原来通过域名访问服务器的方式，改成使用 IP 地址访问。</p>
+
+<p>在项目中使用七牛的 <a href="https://github.com/qiniu/objc-sdk">Objective-C SDK</a> 时，看到其依赖了一个有趣的库叫 <a href="https://github.com/qiniu/happy-dns-objc">HappyDNS</a>。其原理为一个 DNS Resolver，想必七牛的 SDK 也遭遇到与我类似的问题才诞生这么一个库。</p>
+
+<p>那么，我们可以在程序中内置一个 DNS Resolver，剩下的事情就是让 App 使用 IP 地址访问我们的服务器了。在 HappyDNS 的 Issues 列表里，我们发现了一些非常有用的 <a href="https://github.com/qiniu/happy-dns-objc/issues/1">讨论</a>，关于利用 HappyDNS 来解决 DNS 解析不正确 / 劫持的方法，作者推荐使用 NSURLProtocol 来完成 NSURLRequest 的域名到 IP 的转换过程。</p>
+
+<p>如果你对 NSURLProtocol 还不熟悉（<em>这当然很正常！这是一个非常冷门的 Abstract Class！</em>），可以通过 Ray Wenderlich 的 <a href="http://www.raywenderlich.com/59982/nsurlprotocol-tutorial">NSURLProtocol Tutorial</a> 教程对这个类能干什么和它的基本结构有一个大致的了解。</p>
+
+<p>在教程的 Demo 里，作者给我们演示了如何截获和更改我们的网络请求对象。阅读到这里，满怀欣喜的尝试了一下，果然看上去没有问题。原以为解决了问题，但是，如果是那么简单，也没有必要出现这篇文章了。</p>
+
+<p>如果你的服务器仅仅通过 HTTP 协议访问，那么接下来的内容可以直接略过了，遵循教程里的方法，外加使用</p>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">newRequest</span> <span class="nf">setValue</span><span class="p">:</span><span class="n">originRequest</span><span class="p">.</span><span class="n">URL</span><span class="p">.</span><span class="n">host</span> <span class="nf">forHTTPHeaderField</span><span class="p">:</span><span class="s">@"Host"</span><span class="p">];</span>
+</code></pre></div></div>
+<p>将 HTTP 头部的 Host 字段设置为原来的地址，即可完美解决问题。</p>
+
+<p>但是，</p>
+
+<p><strong>如果你的服务器 API 是通过 HTTPS 访问的话，那么更改 URL 会直接导致 SSL 验证不通过。</strong></p>
+
+<p>我们都知道，在 <a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html">HTTPS 请求过程</a> 中，会有一个协商 Session 密钥的过程。</p>
+
+<p><img src="http://image.beekka.com/blog/2014/bg2014092002.png" />
+图片来自 <a href="http://image.beekka.com/blog/2014/bg2014092002.png">图解SSL/TLS协议</a></p>
+
+<p>在这个过程中，假设我们访问的 URL 是 https://www.google.com/api ，同时 Google 服务器发送的证书是 *.google.com 的这么一个 Hostname 的话，验证通过。但我们在 NSURLProtocol 子类里更改了请求地址，变成了一个这样的地址 https://216.58.221.36/api ，但是这时访问 Google 服务器的 443 端口时，服务器仍返回的是 *.google.com。此时验证就会不通过，你可以利用浏览器测试一下，就会发现提示证书的 Host name mismatch。</p>
+
+<p><img src="/assets/img/archived/google_ssl_mismatch.png" alt="Google SSL Mismatch" /></p>
+
+<p>对于这样的问题，Apple 官方在 <a href="https://developer.apple.com/library/ios/technotes/tn2232/\_index.html#//apple_ref/doc/uid/DTS40012884-CH1-SECSERVERNAME">Technical Note TN2232</a> 里并不推荐你采用忽略错误（Disabling server trust evaluation）这一做法，这样会极大的降低 HTTPS 的安全性。其推荐在 NSURLProtocol 的 delegate 的函数中使用 Security framework 的函数添加正确的 SSL 地址名来解决。</p>
+
+<p>参考了许多资料之后，总结出大致的思路就是：</p>
+
+<ol>
+  <li>重写 NSURLProtocol 子类中 NSURLConnectionDelegate 的 <code class="language-plaintext highlighter-rouge">- (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+</code> 方法</li>
+  <li>获取上下文中的 Server Trust 对象，对其有效性进行验证，如果合法则创建对应的 Crediental Object 并继续连接</li>
+  <li>如果 Server Trust 不合法，但是是处于可以恢复的状态（kSecTrustResultRecoverableTrustFailure），在调用中使用 <code class="language-plaintext highlighter-rouge">SecPolicyCreateSSL</code> 创建一个新的 Policy 然后应用到 Trust 上，重新尝试步骤 2</li>
+</ol>
+
+<p>思路明确之后，解决问题就变得比较容易了，但是还是实现的过程中出现了一些小小的问题，这里分享给大家。</p>
+
+<ol>
+  <li>调用 SecPolicyCreateSSL 函数后还是无法通过验证</li>
+</ol>
+
+<p>根据 Stack Overflow 上 <a href="http://stackoverflow.com/questions/23786259/overriding-tls-server-validation-hostname-doesnt-seem-to-be-working">Overriding TLS server validation hostname doesn’t seem to be working</a> 这个回答，这里函数的 hostname 应该是客户端用于验证的叶证书名称，在用 IP 地址替换域名的请求里，这里原来的 hostname 应该是 IP 地址，使用被替换的域名作为参数即可。</p>
+
+<ol>
+  <li>kCFStreamErrorDomainSSL, -9802 错误</li>
+</ol>
+
+<p>这个错误并不是因为 NSURLProtocol 的实现错误造成的，而是由于 iOS 的 App Transport Security 不支持你的服务器上的加密方法造成的，解决方法为：添加加密方法或者在 Info.plist 里启用 <code class="language-plaintext highlighter-rouge">NSAllowsArbitraryLoads</code></p>
+
+<p>相关代码如下:</p>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">connection</span><span class="p">:(</span><span class="n">NSURLConnection</span> <span class="o">*</span><span class="p">)</span><span class="nv">connection</span> <span class="nf">willSendRequestForAuthenticationChallenge</span><span class="p">:(</span><span class="n">NSURLAuthenticationChallenge</span> <span class="o">*</span><span class="p">)</span><span class="nv">challenge</span>
+<span class="p">{</span>
+    <span class="n">SecTrustRef</span> <span class="n">trust</span> <span class="o">=</span> <span class="n">challenge</span><span class="p">.</span><span class="n">protectionSpace</span><span class="p">.</span><span class="n">serverTrust</span><span class="p">;</span>
+    <span class="n">SecTrustResultType</span> <span class="n">result</span><span class="p">;</span>
+    <span class="n">NSURLCredential</span> <span class="o">*</span><span class="n">cred</span><span class="p">;</span>
+
+    <span class="n">OSStatus</span> <span class="n">status</span> <span class="o">=</span> <span class="n">SecTrustEvaluate</span><span class="p">(</span><span class="n">trust</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">result</span><span class="p">);</span>
+
+    <span class="n">NSInteger</span> <span class="n">retryCount</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">NSInteger</span> <span class="n">retainCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="n">errSecSuccess</span> <span class="o">&amp;&amp;</span> <span class="n">retryCount</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">kSecTrustResultProceed</span> <span class="o">||</span> <span class="n">result</span> <span class="o">==</span> <span class="n">kSecTrustResultUnspecified</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cred</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURLCredential</span> <span class="nf">credentialForTrust</span><span class="p">:</span><span class="n">trust</span><span class="p">];</span>
+            <span class="n">retainCount</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">?</span> <span class="n">CFRelease</span><span class="p">(</span><span class="n">trust</span><span class="p">)</span> <span class="p">:</span> <span class="nb">nil</span><span class="p">;</span>
+            <span class="p">[</span><span class="n">challenge</span><span class="p">.</span><span class="n">sender</span> <span class="nf">useCredential</span><span class="p">:</span><span class="n">cred</span> <span class="nf">forAuthenticationChallenge</span><span class="p">:</span><span class="n">challenge</span><span class="p">];</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">kSecTrustResultRecoverableTrustFailure</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">retryCount</span><span class="o">--</span><span class="p">;</span>
+
+            <span class="n">CFIndex</span> <span class="n">numCerts</span> <span class="o">=</span> <span class="n">SecTrustGetCertificateCount</span><span class="p">(</span><span class="n">trust</span><span class="p">);</span>
+            <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">certs</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableArray</span> <span class="nf">arrayWithCapacity</span><span class="p">:</span><span class="n">numCerts</span><span class="p">];</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">CFIndex</span> <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="n">numCerts</span><span class="p">;</span> <span class="o">++</span><span class="n">idx</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">SecCertificateRef</span> <span class="n">cert</span> <span class="o">=</span> <span class="n">SecTrustGetCertificateAtIndex</span><span class="p">(</span><span class="n">trust</span><span class="p">,</span> <span class="n">idx</span><span class="p">);</span>
+                <span class="p">[</span><span class="n">certs</span> <span class="nf">addObject</span><span class="p">:</span><span class="n">CFBridgingRelease</span><span class="p">(</span><span class="n">cert</span><span class="p">)];</span>
+            <span class="p">}</span>
+
+            <span class="n">SecPolicyRef</span> <span class="n">policy</span> <span class="o">=</span> <span class="n">SecPolicyCreateSSL</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="p">(</span><span class="n">__bridge</span> <span class="n">CFStringRef</span><span class="p">)</span><span class="n">originalHostname</span><span class="p">);</span>
+            <span class="n">OSStatus</span> <span class="n">err</span> <span class="o">=</span> <span class="n">SecTrustCreateWithCertificates</span><span class="p">((</span><span class="n">__bridge</span> <span class="n">CFTypeRef</span> <span class="n">_Nonnull</span><span class="p">)(</span><span class="n">certs</span><span class="p">),</span> <span class="n">policy</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">trust</span><span class="p">);</span>
+            <span class="n">retainCount</span><span class="o">++</span><span class="p">;</span>
+            <span class="n">CFRelease</span><span class="p">(</span><span class="n">policy</span><span class="p">);</span>
+
+            <span class="p">[</span><span class="n">certs</span> <span class="nf">removeAllObjects</span><span class="p">];</span>
+            <span class="n">certs</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">noErr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Error creating trust: %d"</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">SecTrustEvaluate</span><span class="p">(</span><span class="n">trust</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">result</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">challenge</span><span class="p">.</span><span class="n">sender</span> <span class="nf">cancelAuthenticationChallenge</span><span class="p">:</span><span class="n">challenge</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>完整的 Demo Project 在 <a href="https://github.com/Her0n/DNS-Anti-Spoofing-Example">GitHub</a> 上以供大家参考，同时包括了 HappyDNS 的使用。</p>
+
+<p>如果你还有不清楚的地方，欢迎留言与我交流。</p>
+
+<h4 id="references">References</h4>
+
+<ul>
+  <li>http://oncenote.com/2014/10/21/Security-1-HTTPS/</li>
+  <li>http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html</li>
+  <li>https://developer.apple.com/library/ios/technotes/tn2232/_index.html#//apple_ref/doc/uid/DTS40012884-CH1-SECSERVERNAME</li>
+  <li>http://lists.apple.com/archives/cocoa-dev/2013/May/msg00354.html</li>
+  <li>https://github.com/AFNetworking/AFNetworking/issues/1157</li>
+  <li>http://stackoverflow.com/questions/23786259/overriding-tls-server-validation-hostname-doesnt-seem-to-be-working</li>
+  <li>http://stackoverflow.com/questions/30778579/kcfstreamerrordomainssl-9802-when-connecting-to-a-server-by-ip-address-through</li>
+</ul>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/dns-anti-spoofing-using-nsurlprotocol-and-happydns/';
+      this.page.identifier = 'https://blog.evianzhow.com/dns-anti-spoofing-using-nsurlprotocol-and-happydns/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/dns-anti-spoofing-using-nsurlprotocol-and-happydns/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

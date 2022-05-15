@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>使用 sniproxy 隐藏 SSL 握手时的域名以躲过 ISP 嗅探 | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="使用 sniproxy 隐藏 SSL 握手时的域名以躲过 ISP 嗅探" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="最近在论坛上有不少同学反馈，由于将家中 NAS 的服务暴露到了公网，其中包含了管理页面的 HTTP 或者 WebDAV，导致 ISP 发现并断网发文通知整改。其中有部分回帖称其没有使用 HTTPS 而导致流量被运营商嗅探到。但使用了 HTTPS 服务就万无一失吗？不是的。就算使用了 HTTPS ，也有可能在 SSL 握手时域名遭到泄漏，导致运营商可以通过域名形式访问到用户开启的网页服务。" />
+<meta property="og:description" content="最近在论坛上有不少同学反馈，由于将家中 NAS 的服务暴露到了公网，其中包含了管理页面的 HTTP 或者 WebDAV，导致 ISP 发现并断网发文通知整改。其中有部分回帖称其没有使用 HTTPS 而导致流量被运营商嗅探到。但使用了 HTTPS 服务就万无一失吗？不是的。就算使用了 HTTPS ，也有可能在 SSL 握手时域名遭到泄漏，导致运营商可以通过域名形式访问到用户开启的网页服务。" />
+<link rel="canonical" href="https://blog.evianzhow.com/hide-your-domain-using-sniproxy/" />
+<meta property="og:url" content="https://blog.evianzhow.com/hide-your-domain-using-sniproxy/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-27T06:16:44+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="使用 sniproxy 隐藏 SSL 握手时的域名以躲过 ISP 嗅探" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-11-27T06:16:44+00:00","datePublished":"2019-11-27T06:16:44+00:00","description":"最近在论坛上有不少同学反馈，由于将家中 NAS 的服务暴露到了公网，其中包含了管理页面的 HTTP 或者 WebDAV，导致 ISP 发现并断网发文通知整改。其中有部分回帖称其没有使用 HTTPS 而导致流量被运营商嗅探到。但使用了 HTTPS 服务就万无一失吗？不是的。就算使用了 HTTPS ，也有可能在 SSL 握手时域名遭到泄漏，导致运营商可以通过域名形式访问到用户开启的网页服务。","headline":"使用 sniproxy 隐藏 SSL 握手时的域名以躲过 ISP 嗅探","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/hide-your-domain-using-sniproxy/"},"url":"https://blog.evianzhow.com/hide-your-domain-using-sniproxy/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">使用 sniproxy 隐藏 SSL 握手时的域名以躲过 ISP 嗅探</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-11-27T06:16:44+00:00" itemprop="datePublished">Nov 27, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>最近在论坛上有不少同学反馈，由于将家中 NAS 的服务暴露到了公网，其中包含了管理页面的 HTTP 或者 WebDAV，导致 ISP 发现并断网发文通知整改。其中有部分回帖称其没有使用 HTTPS 而导致流量被运营商嗅探到。但使用了 HTTPS 服务就万无一失吗？不是的。就算使用了 HTTPS ，也有可能在 SSL 握手时域名遭到泄漏，导致运营商可以通过域名形式访问到用户开启的网页服务。</p>
+
+<p><strong>当然，运营商如何操作的，对于我们来说是一个黑盒，运营商可能通过抓包等方式获取请求中的明文的 SNI 信息。要确保万无一失，您还需要使用加密的 SNI。</strong></p>
+
+<blockquote>
+  <p>需要注意的是，如果您的 ISP 未分配给您互联网上的地址，此篇教程不适用您的情况。请移步 frp 进行端口映射。</p>
+</blockquote>
+
+<hr />
+
+<p>我们假设以下的这种情况：</p>
+
+<blockquote>
+  <p>某用户使用了群晖的 NAS，默认 5001 为 DSM 的 HTTPS 连接方式，默认的 5006 为 WebDAV 的 HTTPS 连接方式。而且某用户使用了群晖自带的 DDNS 服务，注册的域名为：customname.synology.me。</p>
+</blockquote>
+
+<blockquote>
+  <p>用户在路由器上做好了端口映射的设置（5001:5001，5006:5006），暴露给公网的端口，已经不包含 HTTP 明文传输的网页服务了。</p>
+</blockquote>
+
+<p>某段时间，该个用户因为使用了 BT 等软件造成短时间的流量过大，导致进入运营商的关注列表。运营商使用了端口扫描的方式嗅探该用户的端口。</p>
+
+<p>扫描下来，发现用户的路由器上开放了两个端口，5001 和 5006，且嗅探时返回可能为 HTTPS 协议。</p>
+
+<p>运营商使用：openssl s_client -connect x.x.x.x:5001 嗅探 HTTPS 的握手信息：</p>
+
+<!--kg-card-begin: markdown-->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>…
+CONNECTED(00000003)
+depth=2 O = Digital Signature Trust Co., CN = DST Root CA X3
+verify return:1
+depth=1 C = US, O = Let's Encrypt, CN = Let's Encrypt Authority X3
+verify return:1
+depth=0 CN = customname.synology.me
+…
+</code></pre></div></div>
+
+<!--kg-card-end: markdown-->
+
+<p>运营商使用 https://customname.synology.me:5001 顺利打开 NAS 的管理页面，判定用户违规架设了 HTTP 类服务。一键三连。</p>
+
+<hr />
+
+<p>在这个过程中，关键之处在于： <strong>运营商一定要掌握到你的域名地址信息，且能通过 IP + 端口或者域名 + 端口的组合形式访问到</strong> 。例如 DSM 使用的 Web 服务器，默认只绑定了一个域名和一个证书，在 SSL 握手时服务器会主动发送该证书，导致域名的泄漏。所以我们要做的，就是 <strong>始终不让运营商掌握到我们使用的域名（通过 HTTPS），而且要保证，当运营商起疑心，通过技术手段扫描我们的端口时，不能使其访问成功（通过 sniproxy）</strong> 。</p>
+
+<p>通过 <a href="https://github.com/dlundquist/sniproxy">sniproxy</a> ，我们可以做到：</p>
+
+<ul>
+  <li>不暴露自己的域名信息</li>
+  <li>阻断 IP + 端口的 HTTPS 访问（不出现证书错误页）</li>
+  <li>只有匹配到正确的域名时才允许访问</li>
+</ul>
+
+<hr />
+
+<p>下面直接给出设置的过程，以我自己的 DS918+ 为例，DS918+ 支持 Docker，我将使用 Docker 方式运行 sniproxy。如果您的 NAS 并未提供 Docker 支持，您也可以通过其他方式运行 sniproxy，例如树莓派等等。</p>
+
+<ol>
+  <li>在 DSM 的 Docker 中，搜索 Image：<em><a href="https://hub.docker.com/r/austinchou0126/sniproxy/">austinchou0126/sniproxy</a></em></li>
+  <li>下载 Image，创建一个 Container，创建时设置如下：Port Settings 中，删去容器端口为 80 的条目，手动设置一个未占用的端口，例如将 15001 映射至容器的 443 端口（请不要选择默认的 Auto，否则会由 Docker 自动分配一个端口）</li>
+  <li>Environment 中，添加环境变量：<em>SNIPROXY_LISTEN0_PROTO=tls</em>、<em>SNIPROXY_LISTEN0_PORT=443</em>、<em>SNIPROXY_LISTEN0_FALLBACK=127.0.0.1:4443</em>（这里选择任一一个无法访问的端口，以阻断不带域名的 HTTPS 请求）、<em>SNIPROXY_TABLE0_SRC0=customname.synology.me</em>（这里填入您的 DDNS 域名）、<em>SNIPROXY_TABLE0_DEST0=x.x.x.x:5001</em>（这里填入您的 NAS IP 和 DSM 的端口），更多的环境变量请参考 README</li>
+  <li>创建并运行这个 Container，此时，您就拥有了一个端口为 15001 的 sniproxy 实例，将会把带有 customname.synology.me 域名访问的 HTTPS 请求转发给 x.x.x.x:5001</li>
+  <li>使用 openssl s_client 进行验证和测试：如果通过 IP + 端口访问，将不返回任何一个证书；如果通过域名 + 端口访问，将返回一个正确的证书信息。测试方式：（openssl s_client -connect x.x.x.x:5001 与 openssl s_client -connect x.x.x.x:5001 -servername customname.synology.me）</li>
+  <li>配置您的路由器的端口映射，将原本直接映射至 NAS 的端口经由 sniproxy 进行转发</li>
+  <li>对于其他的 HTTPS 服务（例如 WebDAV），执行同样的步骤</li>
+</ol>
+
+<blockquote>
+  <p>配置后流量：Router[:5001] &lt;-—&gt; Docker on NAS[:15001] &lt;-—&gt; NAS[:5001]</p>
+</blockquote>
+
+<p>相比于使用 VPN 或者内网穿透这两种方式，使用 sniproxy 有以下的优点：</p>
+
+<ul>
+  <li>延续原来的操作方式，而不必改动其他设置，几乎兼容所有的应用</li>
+  <li>公网可访问</li>
+  <li>不需要经过中间服务器中转，速度即宽带的最大上行速度</li>
+</ul>
+
+<hr />
+
+<p>最后，我建议大家，如果您继续选择将服务暴露给在互联网上，请做好以下的防范措施：</p>
+
+<ul>
+  <li>尽量开启 NAS 管理的二步验证</li>
+  <li>在出口路由器上关闭 ICMP 响应</li>
+  <li>任何暴露的网页类型服务，请务必使用 HTTPS</li>
+  <li>使用 sniproxy 来隐藏 SSL 握手时的域名信息</li>
+</ul>
+
+<p>这里补充说明一下，使用默认端口的好处是：在群晖的 App 中，无需再次输入自定义的端口号，只需要输入域名即可。您也可以不适用默认端口，这都取决于您。</p>
+
+<p>如果您觉得这篇文章对您有帮助，欢迎在 <a href="https://www.github.com/EvianZhow/docker-sniproxy">GitHub</a> 上给我的这个项目点个 Star，并且分享给有需要的人。</p>
+
+<h2 id="拓展阅读">拓展阅读</h2>
+
+<ul>
+  <li><a href="https://www.v2ex.com/t/622336">V2EX - 论如何伪装家庭宽带 HTTP 服务</a></li>
+  <li><a href="https://www.v2ex.com/t/608821#reply407">V2EX - 家庭宽带 私设 web 被检测 魔都电信被停宽带</a></li>
+  <li><a href="https://www.v2ex.com/t/622013#reply30">V2EX - 调查一下，上海电信私设 web 服务被封的，有没有用 https 的</a></li>
+</ul>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/hide-your-domain-using-sniproxy/';
+      this.page.identifier = 'https://blog.evianzhow.com/hide-your-domain-using-sniproxy/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/hide-your-domain-using-sniproxy/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

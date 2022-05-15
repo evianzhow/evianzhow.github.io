@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>支付宝的 SPOF，去中心化与加密数字货币 | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="支付宝的 SPOF，去中心化与加密数字货币" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="7 月 22 日，支付宝华南机房发生了故障，不幸的是，我也是受影响的部分用户之一，我在微信的朋友圈中说到：" />
+<meta property="og:description" content="7 月 22 日，支付宝华南机房发生了故障，不幸的是，我也是受影响的部分用户之一，我在微信的朋友圈中说到：" />
+<link rel="canonical" href="https://blog.evianzhow.com/zhi-fu-bao-de-spof-qu-zhong-xin-hua-yu-jia-mi-shu-zi-huo-bi/" />
+<meta property="og:url" content="https://blog.evianzhow.com/zhi-fu-bao-de-spof-qu-zhong-xin-hua-yu-jia-mi-shu-zi-huo-bi/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-07-24T07:20:53+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="支付宝的 SPOF，去中心化与加密数字货币" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2016-07-24T07:20:53+00:00","datePublished":"2016-07-24T07:20:53+00:00","description":"7 月 22 日，支付宝华南机房发生了故障，不幸的是，我也是受影响的部分用户之一，我在微信的朋友圈中说到：","headline":"支付宝的 SPOF，去中心化与加密数字货币","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/zhi-fu-bao-de-spof-qu-zhong-xin-hua-yu-jia-mi-shu-zi-huo-bi/"},"url":"https://blog.evianzhow.com/zhi-fu-bao-de-spof-qu-zhong-xin-hua-yu-jia-mi-shu-zi-huo-bi/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">支付宝的 SPOF，去中心化与加密数字货币</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2016-07-24T07:20:53+00:00" itemprop="datePublished">Jul 24, 2016
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>7 月 22 日，支付宝华南机房发生了<a href="http://www.cnbeta.com/articles/522461.htm">故障</a>，不幸的是，我也是受影响的部分用户之一，我在微信的朋友圈中说到：</p>
+
+<blockquote>
+  <p>不幸躺枪，支付宝支付午饭钱始终提示失败，后换微信支付成功。晚上回家看交易记录发现三个支付宝午饭订单两个失败一个成功。</p>
+</blockquote>
+
+<blockquote>
+  <p>花了两份钱吃了一顿午饭，Good job Alipay!</p>
+</blockquote>
+
+<p>这件事情的后续结果是，我通过支付宝应用添加商家好友，再进行沟通之后，商家爽快的把多收钱退给了我。当然商家也可以完全无视我的好友申请或者是我的退款请求，发生的这一切责任都不应该归咎于商家。</p>
+
+<p>倒也不是说在乎多出来的一份午饭钱，只是这件事情让我重新思考了去中心化的数字货币系统与当下热门的加密数字货币，如 Bitcoin、Litecoin 等。</p>
+
+<p>从最初的比特币换一个 Pizza，到后来的变成投资者投机的工具，再到现在的 Big Corp 争相研究区块链技术，去中心化的数字货币系统也经历了不少跌宕起伏。</p>
+
+<p>从这次支付宝故障的事情中，我们可以得知，无论一个系统的故障恢复处理做的有多好，只要它是一个中心化的支付系统（所有用户的账簿都记载于一个中心化系统中），肯定受制于 SPOF 问题。</p>
+
+<p><strong>为了避免这个问题，只有采取去中心化的策略。</strong></p>
+
+<p>如果你现在还没有听说过或者了解 Bitcoin 的话，是时候去做点功课了。历史上从来就不乏数字货币，腾讯的 Q 币也算，但唯有 Bitcoin 是第一个在去中心化系统下的数字货币。即解决了去中心化系统下 <a href="https://en.wikipedia.org/wiki/Double-spending">Double-spending 问题</a>。其采用的解决方案即 Blockchain（区块链），一个存储于全网结点中的分布式账簿系统。而 Litecoin 等币种，是在 Bitcoin 的基础上衍生的其它项目，具有不同的参数与特性。</p>
+
+<p>试想一下，在一个使用去中心化的数字货币支付的世界里，就不会出现之前发生在我身上的事情了。一切交易在全网公开，一旦全网 51% 节点认可这比交易且由矿工打包至 Blockchain 中即可确认交易完成（Confirmed）。一笔钱花还是没有花出去，有原子性的保证，所有的参与者都清晰。同时，去中心化的账簿系统还带来了其它的优势，例如：</p>
+
+<ul>
+  <li>账户完全匿名，但交易记录完全公开</li>
+  <li>比特币的价值决定于使用者的多少，越多人的人使用即代表了越多人的认可</li>
+</ul>
+
+<p>当然这种去中心化是需要付出代价的，没有了中心化的账簿系统，对任何的交易我们都无法“即时”确认，而去中心化的数字货币的确认时间，也是目前体验所受限的地方，甚至之前有人针对了 Bitcoin 区块链的特点进行了攻击导致确认时间超长的事件发生。所以未来去中心化的数字货币想要真正替代现有的支付系统的话，我觉得还需要做到以下几点：</p>
+
+<ul>
+  <li>更快的确认时间，至多 10 分钟</li>
+  <li>便捷的支付体验，例如利用二维码技术、手机 App 进行支付</li>
+  <li>尽可能多的节点参与这个去中心化系统，防止 51% 攻击</li>
+</ul>
+
+<p>在可以预见的未来，去中心化的数字货币肯定会绽放光彩，而这样的支付系统，会变得越来越常见，也许不久人们就会习惯这样的支付系统，就像我们习惯使用支付宝一样。</p>
+
+<blockquote>
+  <p>Always be the epicenter of change.</p>
+</blockquote>
+
+<h4 id="references">References</h4>
+
+<ul>
+  <li>https://medium.com/@octskyward/the-resolution-of-the-bitcoin-experiment-dabb30201f7#.l9wknsh42</li>
+</ul>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/zhi-fu-bao-de-spof-qu-zhong-xin-hua-yu-jia-mi-shu-zi-huo-bi/';
+      this.page.identifier = 'https://blog.evianzhow.com/zhi-fu-bao-de-spof-qu-zhong-xin-hua-yu-jia-mi-shu-zi-huo-bi/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/zhi-fu-bao-de-spof-qu-zhong-xin-hua-yu-jia-mi-shu-zi-huo-bi/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

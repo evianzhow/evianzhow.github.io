@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Things you should know about using IBInspectable / IBDesignable | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Things you should know about using IBInspectable / IBDesignable" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Thanks to NSHipster’s article IBInspectable / IBDesignable" />
+<meta property="og:description" content="Thanks to NSHipster’s article IBInspectable / IBDesignable" />
+<link rel="canonical" href="https://blog.evianzhow.com/things-you-should-know-about-using-ibinspectable-ibdesignable/" />
+<meta property="og:url" content="https://blog.evianzhow.com/things-you-should-know-about-using-ibinspectable-ibdesignable/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-10-14T15:38:29+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Things you should know about using IBInspectable / IBDesignable" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2015-10-14T15:38:29+00:00","datePublished":"2015-10-14T15:38:29+00:00","description":"Thanks to NSHipster’s article IBInspectable / IBDesignable","headline":"Things you should know about using IBInspectable / IBDesignable","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/things-you-should-know-about-using-ibinspectable-ibdesignable/"},"url":"https://blog.evianzhow.com/things-you-should-know-about-using-ibinspectable-ibdesignable/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Things you should know about using IBInspectable / IBDesignable</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2015-10-14T15:38:29+00:00" itemprop="datePublished">Oct 14, 2015
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Thanks to NSHipster’s article <a href="http://nshipster.com/ibinspectable-ibdesignable/">IBInspectable / IBDesignable</a></p>
+
+<p>Apple 在 Xcode 5 中加入了新的功能 IBInspectable / IBDesignable，可以让我们自定义的 UIView 在 Storyboard 中无需编译后运行就可以看到预期的结果，不过这个功能也有一定的局限性，不过对于我这种代码 + Storyboard 的开发者来说，节省了不少的时间在编写例如 <code class="language-plaintext highlighter-rouge">button.cornerRadius = 2.0f</code> 等等的工作上。</p>
+
+<blockquote>
+  <p>But there is No Silver Bullet</p>
+</blockquote>
+
+<p><strong>首先</strong>遇到的一个局限是，对于 IBDesignable 的 UIView 在编译时遇到 Error 的话，是无法在 Build Log 里看到详细的编译过程，而且 Error 的描述也非常的简单，一般只能通过 Google 来查看其他人在什么一个情景下遇到这个错误的，然后去解决。</p>
+
+<p><strong>第二个局限</strong>，对一个 Class A（UIView 子类）添加 IBDesignable，和对一个属性添加 IBInspectable 没有问题，但是这个“性质”不会继承到这个 Class 的子类，如果你的设计中包含了继承的关系，父类的属性是无法在子类的 Inspector 里看到的。</p>
+
+<p><strong>第三个局限</strong>，对于使用 <code class="language-plaintext highlighter-rouge">#import &lt;&gt;</code> 方式引入的 UIView 子类，是无法在 Storyboard 中被 Compile 的，所以你需要将源代码添加到 Project 中才可以显示。</p>
+
+<p><strong>第四个局限</strong>，只有一部分的类型可以在添加 IBInspectable 后能在 Inspector 中被选择，目前测试下来基本上是只只吃数值类型，比如 CGFloat, NSInteger, NSUInteger 等等。</p>
+
+<p>以上是我在目前的项目中使用 IBInspectable / IBDesignable 遇到的一些问题，希望能够对你有所帮助。如果你遇到了以上的问题但是和我的描述不符合，可以留言给我，我们一起来解决你所遇到的这个问题。</p>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/things-you-should-know-about-using-ibinspectable-ibdesignable/';
+      this.page.identifier = 'https://blog.evianzhow.com/things-you-should-know-about-using-ibinspectable-ibdesignable/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/things-you-should-know-about-using-ibinspectable-ibdesignable/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

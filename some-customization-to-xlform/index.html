@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Some customizations to XLForm | Time Capsule</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Some customizations to XLForm" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="XLForm 是 Xmartlabs 开源的一个 Form 组件，其设计的核心思想类似 HTML 中 Form 的编写方法，如果你对 HTML 中的表单不是很熟悉，可以看一下这里。" />
+<meta property="og:description" content="XLForm 是 Xmartlabs 开源的一个 Form 组件，其设计的核心思想类似 HTML 中 Form 的编写方法，如果你对 HTML 中的表单不是很熟悉，可以看一下这里。" />
+<link rel="canonical" href="https://blog.evianzhow.com/some-customization-to-xlform/" />
+<meta property="og:url" content="https://blog.evianzhow.com/some-customization-to-xlform/" />
+<meta property="og:site_name" content="Time Capsule" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-11-21T04:25:12+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Some customizations to XLForm" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2015-11-21T04:25:12+00:00","datePublished":"2015-11-21T04:25:12+00:00","description":"XLForm 是 Xmartlabs 开源的一个 Form 组件，其设计的核心思想类似 HTML 中 Form 的编写方法，如果你对 HTML 中的表单不是很熟悉，可以看一下这里。","headline":"Some customizations to XLForm","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.evianzhow.com/some-customization-to-xlform/"},"url":"https://blog.evianzhow.com/some-customization-to-xlform/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://blog.evianzhow.com/feed.xml" title="Time Capsule" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54428785-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Time Capsule</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/links/">Links</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Some customizations to XLForm</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2015-11-21T04:25:12+00:00" itemprop="datePublished">Nov 21, 2015
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><a href="https://github.com/xmartlabs/XLForm">XLForm</a> 是 <a href="http://xmartlabs.com">Xmartlabs</a> 开源的一个 Form 组件，其设计的核心思想类似 HTML 中 Form 的编写方法，如果你对 HTML 中的表单不是很熟悉，可以看一下<a href="http://www.w3schools.com/html/html_forms.asp">这里</a>。</p>
+
+<p>在典型的 Web 开发中，我们通过 <code class="language-plaintext highlighter-rouge">&lt;form&gt;</code> 标记去定义一个 Form，然后通过不同的 <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> 来定义不同的输入。这样的表示方式非常的直观，也非常容易修改。但是 iOS 中并没有对 Form 类型的 UI 有任何可用的系统控件，使得开发类似表单提交的页面变得非常的麻烦。你需要处理一堆 UITableView 的 DataSource 和 Delegate 方法，还要处理一堆一堆的 Section，Row。很容易就把人弄晕了，代码也写的非常的乱。更不要说在运行时动态的改变 Form 的外观。</p>
+
+<p>所以有了 XLForm 这么一个库的存在。至于它有多么的 Elegant，你可以看一下官方 Demo 中如何用不到两百行的代码制作出一个和 iOS Calendar App 创建 Event 一模一样的 Form 页面。</p>
+
+<p>我的一个项目中，在用到了 XLForm的同时，也遇到了其设计上的一些局限性。这样的一个通用型的框架固然好，但是面对复杂的业务需求，可能你就要做一些自定义的操作了。在这里，我把我的做的一些自定义分享给大家，如果在你的项目中遇到了相同的需求，你也可以通过这种方式来解决。</p>
+
+<ol>
+  <li>Cell 的初始化过程和初始化步骤</li>
+</ol>
+
+<p>这里假设你对 XLForm 已经有大致的了解，在新建一个表单的时候，我们新建的是一个 XLFormRowDescriptor，通过设置 XLFormRowDescriptor 的三个 NSMutableDictionary，可以配置 Cell 的一些状态和行为。</p>
+
+<p>XLFormRowDescriptor 有以下三个 NSMutableDictionary</p>
+
+<ol>
+  <li>
+    <p>cellConfig - 这个字典会在 <code class="language-plaintext highlighter-rouge">-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath</code> 调用 <code class="language-plaintext highlighter-rouge">- (void)update</code> 的过程中被枚举并设值（KVC），所以不适合做一些 Control 的<strong>配置性</strong>的工作。</p>
+  </li>
+  <li>
+    <p>cellConfigAtConfigure - 这个字典会在 <code class="language-plaintext highlighter-rouge">- (void)config</code> 中被枚举并设值，此方法会在 <code class="language-plaintext highlighter-rouge">-(XLFormBaseCell *)cellForFormController:(XLFormViewController *)formController</code> 中初始化 Cell 时调用 <code class="language-plaintext highlighter-rouge">- (void)configureCellAtCreationTime</code> 被枚举并设值，非常适合做一个些 Control 的配置性的工作，且此 Dictionary 只会被调用一次。</p>
+  </li>
+  <li>
+    <p>cellConfigIfDisabled - 这个字典会在初始化 rowDescriptor 且表单为 disable 的状态下被枚举并设值。</p>
+  </li>
+</ol>
+
+<p>由于我的项目中使用到了一个需要一个 rowCount 和 columnCount 来初始化，在初始化之后再通过对一个属性设值来让这个控件布局其中的某行某列的内容。如果将初始化参数放在 cellConfigAtConfigure 中，由于这个枚举的过程是按照字典序来进行的，所以在初始化的时候无法控制 “先设置 rowCount 和 columnCount 的值，再设置属性的值” 这样的顺序（除非你的属性的 KeyPath 按照字典序排列，就像 Test Case 那样），这样会导致这个控件的显示不正常。而我们又没有办法将这些配置填写在 <code class="language-plaintext highlighter-rouge">cellConfig</code> 中，因为这样会在 <code class="language-plaintext highlighter-rouge">willDisplayCell</code> 中覆盖我们之前选中的状态（XLFormViewController 的 tableView 并没有使用 reuse 机制，所以不会自动 reuse cell 而发生配置被重置掉的问题）。</p>
+
+<p>因此，我们在 XLFormCheckboxRowDescriptor 的子类添加了一个设值词典，cellConfigAfterConfigure，这个方法继承并重写了 <code class="language-plaintext highlighter-rouge">- (void)configureCellAtCreationTime</code> ，首先调用了父类的同名方法（父类没有暴露这个接口，通过 Category 方法添加实现），然后枚举并设值，最后，如果 cell 实现了 <code class="language-plaintext highlighter-rouge">- (void)prefix_configure</code> 方法，则会调用此方法。</p>
+
+<p>至此，我们细分了 Cell 的初始化阶段，将原来只有一个的初始化阶段分成了两个。应对我们自定义的 XLFormBaseCell 的业务需求。</p>
+
+<ol>
+  <li>SelectorPush 时设置 ViewController 属性方法</li>
+</ol>
+
+<p>对于某些 Row，我们可以通过声明其 rowType 为 XLFormRowDescriptorTypeSelectorPush 来使点击时跳转到某个我们的 View Controller。官方的 Demo 里是使用了一个 MapViewController 来介绍这个问题。Form 和跳转的 View Controller 之间通过 rowDescriptor 来进行数据交换。</p>
+
+<p>但是有时候我们希望能够对 Push 过去的 View Controller 设置一些属性的值，比如某些提示信息（NSString），那么有两种方法可以解决这个问题，一种是通过面向对象的继承关系去做，继承的子 View Controller 中的初始化方法里设置需要的这些属性的值。另外一种方法可以参考 XLForm 对 Cell 的初始化过程，在 XLFormRowDescriptor 添加一个 viewControllerConfig 字典并在 Push 的过程中枚举它并用 KVC 方式设值。</p>
+
+<p>显然第二种方式更好一些，这样更灵活。但是唯一的缺点是你需要修改的 XLForm 代码，因为你没有办法通过 Method Swizzling 来达到同样的效果。所以这里我推荐使用 Developments Pods 方式引入这个库。</p>
+
+<p>以上两个自定义的内容就是目前我在项目使用到的。官方的框架本身已经非常的通用，能够满足大部分项目的开发需求。之所以分享出来的原因，是因为这两个问题在开发的需求中还是比较普遍的。但是对于不同的项目需求，自定义的内容也不一样。如果我上面说的这两点没有解决你的需求的话，可以查看一下官方 GitHub 上的 Issue 和 PR，有可能其他人的自定义能够帮到你。</p>
+
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://blog.evianzhow.com/some-customization-to-xlform/';
+      this.page.identifier = 'https://blog.evianzhow.com/some-customization-to-xlform/';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://austinchou0126.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/some-customization-to-xlform/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Time Capsule</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Time Capsule</li><li><a class="u-email" href="mailto:evianzhow@gmail.com">evianzhow@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evianzhow</span></a></li><li><a href="https://www.twitter.com/evianzhow"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">evianzhow</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>This blog talks about tech things mostly. I also wrote  articles about consumer devices, music, and art. Those  are available on my WeChat official account &quot;No Techno&quot;. </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
