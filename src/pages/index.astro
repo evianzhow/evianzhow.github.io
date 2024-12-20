@@ -9,11 +9,17 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title="Yifei's Blog"
+			href={new URL("rss.xml", Astro.site)}
+		/>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>A Whole New Chapter for My Personal Blog!</h1>
+			<h1>A Whole New Chapter!</h1>
 			<p>
 				Welcome to the new chapter of my personal blog!
 			</p>
