@@ -1,0 +1,18 @@
+---
+const { text } = Astro.props;
+---
+
+<style>
+    .footnote {
+        display: inline-block;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        padding: 2px 5px;
+        font-size: 0.8em;
+        color: #555;
+    }
+</style>
+
+<span class="footnote">
+    <slot />
+</span>
